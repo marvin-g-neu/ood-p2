@@ -15,7 +15,7 @@ public class ClassicalThreeTriosModel extends BaseTTModel {
    * {@inheritDoc}
    */
   @Override
-  public String getCurrentPlayer() {
+  public Player getCurrentPlayer() {
     // TODO: implement
     return null;
   }
@@ -24,7 +24,7 @@ public class ClassicalThreeTriosModel extends BaseTTModel {
    * {@inheritDoc}
    */
   @Override
-  public List<String> getCurrentPlayerHand() {
+  public List<CustomCard> getCurrentPlayerHand() {
     // TODO: implement
     return null;
   }
@@ -32,6 +32,11 @@ public class ClassicalThreeTriosModel extends BaseTTModel {
   @Override
   public boolean attackerWinsBattle(AttackValue attacker, AttackValue defender) {
     return false;
+  }
+
+  @Override
+  public int getScore(Player player) {
+    return 0;
   }
 
   @Override
@@ -61,5 +66,10 @@ public class ClassicalThreeTriosModel extends BaseTTModel {
   @Override
   public void endTurn() {
 
+  }
+
+  @Override
+  public Grid endGame() {
+    return null;
   }
 }

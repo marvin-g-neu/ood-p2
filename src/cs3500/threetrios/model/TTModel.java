@@ -62,13 +62,20 @@ public interface TTModel {
   void endTurn();
 
   /**
+   * End the game and return the board state.
+   *
+   * @return the final board state
+   * @throws IllegalStateException if the game has not been started or is over
+   */
+  Grid endGame();
+
+  /**
    * Gets the current player.
    *
    * @return the current player
-   * @throws IllegalStateException if the game is over
-   * @throws IllegalStateException if the game has not been started
+   * @throws IllegalStateException if the game has not been started or is over
    */
-  String getCurrentPlayer();
+  Player getCurrentPlayer();
 
   /**
    * Gets the current player's hand.
@@ -76,7 +83,7 @@ public interface TTModel {
    * @return the current player's hand
    * @throws IllegalStateException if the game has not been started
    */
-  List<String> getCurrentPlayerHand();
+  List<CustomCard> getCurrentPlayerHand();
 
   /**
    * Gets the grid currently in play.
@@ -95,4 +102,14 @@ public interface TTModel {
    * @throws IllegalArgumentException if either value is null
    */
   boolean attackerWinsBattle(AttackValue attacker, AttackValue defender);
+
+  /**
+   * Gets the score of the given player.
+   *
+   * @param player the checked player
+   * @return the score of the given player
+   * @throws IllegalArgumentException if player is null
+   * @throws IllegalStateException    if the game has not been started
+   */
+  int getScore(Player player);
 }
