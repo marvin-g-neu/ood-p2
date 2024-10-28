@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Model interface for a game of Three Trios.
  */
-public interface TTModel {
+public interface ThreeTriosModelInterface {
   // Basic interface for the Three Trios game model
   // for this homework, we'll only implement the classical version
   // but we'll leave this interface so that we can easily add

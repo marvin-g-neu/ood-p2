@@ -8,7 +8,7 @@ import cs3500.threetrios.model.grid.Grid;
 import java.util.List;
 
 public class ClassicalThreeTriosModel extends BaseTTModel {
-  // implement the methods in the TTModel interface
+  // implement the methods in the ThreeTriosModelInterface interface
   // for the classical version of the game in hw5
 
   /**
