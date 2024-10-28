@@ -1,5 +1,6 @@
 package cs3500.threetrios.model.grid;
 
+import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.card.ThreeTriosCard;
 /**
@@ -26,7 +27,7 @@ public interface Grid {
    * @throws IllegalArgumentException if the position is 
    * invalid or cell cannot accept card
    */
-  void placeCard(ThreeTriosCard card, int row, int col);
+  void placeCard(CustomCard card, int row, int col);
 
   /**
    * Gets the number of rows in the grid.
@@ -64,5 +65,5 @@ public interface Grid {
    * @return array of adjacent cells in order [north, south, east, west], null if no adjacent cell
    * @throws IllegalArgumentException if the position is invalid
    */
-  ThreeTriosCard[] getAdjacentCards(int row, int col);
+  CustomCard[] getAdjacentCards(int row, int col);
 }

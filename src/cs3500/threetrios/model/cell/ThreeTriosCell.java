@@ -1,6 +1,7 @@
 package cs3500.threetrios.model.cell;
 
 import cs3500.threetrios.model.card.CardColor;
+import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.ThreeTriosCard;
 
 /**
@@ -8,7 +9,7 @@ import cs3500.threetrios.model.card.ThreeTriosCard;
  */
 public class ThreeTriosCell implements Cell {
   private final boolean isHole;
-  private ThreeTriosCard card;
+  private CustomCard card;
 
   /**
    * Constructs a ThreeTriosCell with a boolean for whether
@@ -56,11 +57,16 @@ public class ThreeTriosCell implements Cell {
     }
   }
 
+  @Override
+  public CellState getCardState() {
+    return null;
+  }
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public ThreeTriosCard getCard() {
+  public CustomCard getCard() {
     return card;
   }
 
@@ -68,7 +74,7 @@ public class ThreeTriosCell implements Cell {
    * {@inheritDoc}
    */
   @Override
-  public void playCard(ThreeTriosCard card) {
+  public void playCard(CustomCard card) {
     if (!isHole) {
       this.card = card;
     }

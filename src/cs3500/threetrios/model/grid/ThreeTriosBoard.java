@@ -1,5 +1,6 @@
 package cs3500.threetrios.model.grid;
 
+import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.card.ThreeTriosCard;
 
@@ -59,7 +60,7 @@ public class ThreeTriosBoard implements Grid {
    * {@inheritDoc}
    */
   @Override
-  public void placeCard(ThreeTriosCard card, int row, int col) {
+  public void placeCard(CustomCard card, int row, int col) {
     validatePosition(row, col);
     Cell cell = board[row][col];
     
@@ -117,11 +118,11 @@ public class ThreeTriosBoard implements Grid {
    * {@inheritDoc}
    */
   @Override
-  public ThreeTriosCard[] getAdjacentCards(int row, int col) {
+  public CustomCard[] getAdjacentCards(int row, int col) {
     validatePosition(row, col);
     
     // in [north, south, east, west] order
-    ThreeTriosCard[] adjacent = new ThreeTriosCard[4];
+    CustomCard[] adjacent = new ThreeTriosCard[4];
     
     // Check north
     if (row > 0) {
