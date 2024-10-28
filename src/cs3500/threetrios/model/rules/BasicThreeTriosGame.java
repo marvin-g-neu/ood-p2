@@ -1,7 +1,7 @@
 package cs3500.threetrios.model.rules;
 
 import cs3500.threetrios.model.ThreeTriosModelInterface;
-import cs3500.threetrios.model.card.ThreeTriosCard;
+import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.AttackValue;
 import cs3500.threetrios.model.PlayerName;
 import cs3500.threetrios.model.grid.Grid;
@@ -23,25 +23,25 @@ public class BasicThreeTriosGame extends GameRules {
   }
 
   @Override
-  public void executeBattlePhase(ThreeTriosCard placedCard, int row, int col, PlayerName currentPlayer) {
+  public void executeBattlePhase(CustomCard placedCard, int row, int col, PlayerName currentPlayer) {
     Queue<Coordinates> battleQueue = new LinkedList<>();
     Grid grid = model.getGrid();
     battleQueue.add(new Coordinates(row, col));
 
     while (!battleQueue.isEmpty()) {
       Coordinates coor = battleQueue.remove();
-      ThreeTriosCard[] adjacentCards = grid.getAdjacentCards(coor.row, coor.col);
+      CustomCard[] adjacentCards = grid.getAdjacentCards(coor.row, coor.col);
             
       // Check battles in all directions [north, south, east, west]
       String[] directions = {"NORTH", "SOUTH", "EAST", "WEST"};
       for (int i = 0; i < adjacentCards.length; i++) {
-        ThreeTriosCard adjacentCard = adjacentCards[i];
+        CustomCard adjacentCard = adjacentCards[i];
         if (adjacentCard == null || 
             adjacentCard.getCurrentColor() == getPlayerCardColor(currentPlayer)) {
           continue;
         }
 
-        ThreeTriosCard attackingCard = grid.getCell(coor.row, coor.col).getCard();
+        CustomCard attackingCard = grid.getCell(coor.row, coor.col).getCard();
         AttackValue attackValue = getAttackValue(attackingCard, directions[i]);
         AttackValue defendValue = getAttackValue(adjacentCard, getOppositeDirection(directions[i]));
 
@@ -64,7 +64,7 @@ public class BasicThreeTriosGame extends GameRules {
   }
 
   // Gets the attack value of a card based on the direction.
-  private AttackValue getAttackValue(ThreeTriosCard card, String direction) {
+  private AttackValue getAttackValue(CustomCard card, String direction) {
     switch (direction) {
       case "NORTH": return card.getNorthStrength();
       case "SOUTH": return card.getSouthStrength();

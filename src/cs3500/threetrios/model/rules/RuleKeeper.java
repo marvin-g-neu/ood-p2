@@ -1,7 +1,7 @@
 package cs3500.threetrios.model.rules;
 
 import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.card.ThreeTriosCard;
+import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.PlayerName;
 
 /**
@@ -16,7 +16,7 @@ public interface RuleKeeper {
    * @param card the card being placed
    * @return true if the move is legal, false otherwise
    */
-    boolean isLegalMove(Cell cell, ThreeTriosCard card);
+    boolean isLegalMove(Cell cell, CustomCard card);
 
   /**
    * Executes the battle phase after a card is placed.
@@ -26,7 +26,7 @@ public interface RuleKeeper {
    * @param col the column where the card was placed
    * @param currentPlayer the player who placed the card
    */
-  void executeBattlePhase(ThreeTriosCard placedCard, int row, int col, PlayerName currentPlayer);
+  void executeBattlePhase(CustomCard placedCard, int row, int col, PlayerName currentPlayer);
 
   /**
    * Gets the opposite direction of a given direction.

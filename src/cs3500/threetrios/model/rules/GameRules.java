@@ -2,8 +2,8 @@ package cs3500.threetrios.model.rules;
 
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.card.ThreeTriosCard;
 import cs3500.threetrios.model.card.CardColor;
+import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.PlayerName;
 
 /**
@@ -26,7 +26,7 @@ public abstract class GameRules implements RuleKeeper {
   }
 
   @Override
-  public boolean isLegalMove(Cell cell, ThreeTriosCard card) {
+  public boolean isLegalMove(Cell cell, CustomCard card) {
     return cell != null && !cell.isHole() && cell.isEmpty();
   }
 
