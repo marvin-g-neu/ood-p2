@@ -8,7 +8,8 @@ public class ThreeTriosCell implements Cell {
   private ThreeTriosCard card;
   
   /**
-   * Constructs a ThreeTriosCell with the given isHole value.
+   * Constructs a ThreeTriosCell with a boolean for whether 
+   * the cell is a hole.
    * 
    * @param isHole whether the cell is a hole
    */
