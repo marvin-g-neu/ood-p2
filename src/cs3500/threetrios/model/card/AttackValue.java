@@ -19,11 +19,6 @@ public enum AttackValue {
   // the strength of the attack value
   private final int strength;
 
-  /**
-   * Constructs an AttackValue with the given strength.
-   *
-   * @param strength the strength of the attack value
-   */
   AttackValue(int strength) {
     this.strength = strength;
   }

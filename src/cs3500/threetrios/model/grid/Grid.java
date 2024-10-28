@@ -1,7 +1,8 @@
 package cs3500.threetrios.model.grid;
 
+import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.card.ThreeTriosCard;
+
 /**
  * Represents a game board grid for Three Trios.
  * The grid consists of cells that can either be holes or spaces for cards.
@@ -13,7 +14,7 @@ public interface Grid {
    * @param row the row index
    * @param col the column index
    * @return the cell at the specified position
-   * @throws IllegalArgumentException if the position is invalid
+   * @throws IllegalArgumentException if the row or column is out of range
    */
   Cell getCell(int row, int col);
 
@@ -21,12 +22,14 @@ public interface Grid {
    * Places a card at the specified position.
    *
    * @param card the card to place
-   * @param row the row index
-   * @param col the column index
-   * @throws IllegalArgumentException if the position is 
-   * invalid or cell cannot accept card
+   * @param row  the row index
+   * @param col  the column index
+   * @throws IllegalArgumentException if the card is null
+   * @throws IllegalArgumentException if the card color is UNASSIGNED
+   * @throws IllegalArgumentException if the row or column is out of range
+   * @throws IllegalStateException    if the cell is not empty or is a hole
    */
-  void placeCard(ThreeTriosCard card, int row, int col);
+  void placeCard(CustomCard card, int row, int col);
 
   /**
    * Gets the number of rows in the grid.
@@ -62,7 +65,7 @@ public interface Grid {
    * @param row the row index
    * @param col the column index
    * @return array of adjacent cells in order [north, south, east, west], null if no adjacent cell
-   * @throws IllegalArgumentException if the position is invalid
+   * @throws IllegalArgumentException if the row or column is out of range
    */
-  ThreeTriosCard[] getAdjacentCards(int row, int col);
+  CustomCard[] getAdjacentCards(int row, int col);
 }

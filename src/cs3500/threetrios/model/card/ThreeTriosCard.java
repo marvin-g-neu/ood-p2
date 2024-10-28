@@ -1,7 +1,7 @@
 package cs3500.threetrios.model.card;
 
 /**
- * {@inheritDoc}
+ * A basic card implementation for the game Three Trios.
  */
 public class ThreeTriosCard implements CustomCard {
   private final String name;
@@ -78,68 +78,43 @@ public class ThreeTriosCard implements CustomCard {
 
   // Getters and setters
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public AttackValue getNorthStrength() {
     return north;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public AttackValue getSouthStrength() {
     return south;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public AttackValue getEastStrength() {
     return east;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public AttackValue getWestStrength() {
     return west;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getName() {
     return name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public CardColor getCurrentColor() {
     return currentColor;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setNewColor(CardColor newColor) {
     this.currentColor = newColor;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
-    return String.format("%s %s %s %s %s", 
-                          name, north, south, east, west);
+    return String.format("%s %s %s %s %s", name, north, south, east, west);
   }
 }

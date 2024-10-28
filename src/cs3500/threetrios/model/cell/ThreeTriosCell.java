@@ -1,40 +1,40 @@
 package cs3500.threetrios.model.cell;
 
 import cs3500.threetrios.model.card.CardColor;
-import cs3500.threetrios.model.card.ThreeTriosCard;
+import cs3500.threetrios.model.card.CustomCard;
 
 /**
- * {@inheritDoc}
+ * An implementation of a cell from ThreeTrios.
  */
 public class ThreeTriosCell implements Cell {
-  private final boolean isHole;
-  private ThreeTriosCard card;
+  private CustomCard card;
+  private CellState cellState;
 
   /**
-   * Constructs a ThreeTriosCell with a boolean for whether
-   * the cell is a hole.
+   * Creates a cell which is either a hole or empty.
    *
-   * @param isHole whether the cell is a hole
+   * @param isHole if true, cellState is hole, otherwise it is empty
    */
   public ThreeTriosCell(boolean isHole) {
-    this.isHole = isHole;
+    if (isHole) {
+      this.cellState = CellState.HOLE;
+    } else {
+      this.cellState = CellState.EMPTY;
+    }
     this.card = null;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean isHole() {
-    return isHole;
+    return cellState == CellState.HOLE;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean isEmpty() {
-    return !isHole && card == null;
+    if (isHole()) {
+      throw new IllegalStateException("Cell is a hole");
+    }
+    return cellState == CellState.EMPTY;
   }
 
   /**
@@ -42,10 +42,10 @@ public class ThreeTriosCell implements Cell {
    */
   @Override
   public CellState getCellColor() {
-    if (isHole) {
-      return CellState.HOLE;
+    if (isHole()) {
+      throw new IllegalStateException("Cell is a hole");
     } else if (isEmpty()) {
-      return CellState.EMPTY;
+      throw new IllegalStateException("Cell is empty");
     } else {
       switch (card.getCurrentColor()) {
         case RED:
@@ -59,31 +59,59 @@ public class ThreeTriosCell implements Cell {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public ThreeTriosCard getCard() {
+  public CellState getCardState() {
+    return null;
+  }
+
+  @Override
+  public CustomCard getCard() {
+    if (isHole()) {
+      throw new IllegalStateException("Cell is a hole");
+    } else if (isEmpty()) {
+      throw new IllegalStateException("Cell is empty");
+    }
     return card;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public void playCard(ThreeTriosCard card) {
-    if (!isHole) {
-      this.card = card;
+  public void playCard(CustomCard card) {
+    if (card == null) {
+      throw new IllegalArgumentException("Card is null");
+    } else if (card.getCurrentColor() == CardColor.UNASSIGNED) {
+      throw new IllegalArgumentException("Card is unassigned");
+    } else if (cellState == CellState.HOLE) {
+      throw new IllegalStateException("Cell is a hole");
+    } else if (!isEmpty()) {
+      throw new IllegalStateException("Cell has a card");
+    }
+    this.card = card;
+    if (card.getCurrentColor() == CardColor.RED) {
+      this.cellState = CellState.RED;
+    } else {
+      this.cellState = CellState.BLUE;
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void flipCard(CardColor opponentColor) {
-    if (card != null) {
-      card.setNewColor(opponentColor);
+    if (card == null) {
+      throw new IllegalArgumentException("Card is null");
+    } else if (opponentColor == CardColor.UNASSIGNED) {
+      throw new IllegalArgumentException("Opponent color is unassigned");
+    } else if (this.card.getCurrentColor() == opponentColor) {
+      throw new IllegalArgumentException("Cell already has this color");
+    } else if (cellState == CellState.HOLE) {
+      throw new IllegalStateException("Cell is a hole");
+    } else if (cellState == CellState.EMPTY) {
+      throw new IllegalStateException("Cell is empty");
+    }
+
+    card.setNewColor(opponentColor);
+    if (card.getCurrentColor() == CardColor.RED) {
+      this.cellState = CellState.RED;
+    } else {
+      this.cellState = CellState.BLUE;
     }
   }
 }
