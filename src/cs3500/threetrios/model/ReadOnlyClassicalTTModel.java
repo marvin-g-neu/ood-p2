@@ -1,15 +1,12 @@
 package cs3500.threetrios.model;
 
-import cs3500.threetrios.model.cell.CellColor;
 import java.util.List;
+import cs3500.threetrios.model.cell.CellColor;
 
-public class ClassicalThreeTriosModel extends BaseTTModel {
-  // implement the methods in the TTModel interface
-  // for the classical version of the game in hw5
-
+public class ReadOnlyClassicalTTModel extends BaseTTModel {
   /**
-   * {@inheritDoc}
-   */
+     * {@inheritDoc}
+     */
   @Override
   public String getCurrentPlayer() {
     // TODO: implement

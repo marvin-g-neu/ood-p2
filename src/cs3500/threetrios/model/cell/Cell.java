@@ -30,7 +30,7 @@ public interface Cell {
    * 
    * @return the color of the card in the cell
    */
-  CardColor getColor();
+  CellColor getCellColor();
 
   /**
    * Gets the card in a cell.

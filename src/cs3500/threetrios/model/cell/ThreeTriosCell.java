@@ -41,8 +41,19 @@ public class ThreeTriosCell implements Cell {
    * {@inheritDoc}
    */
   @Override
-  public CardColor getColor() {
-    return card != null ? card.getCurrentColor() : CardColor.UNASSIGNED;
+  public CellColor getCellColor() {
+    if (isHole) {
+      return CellColor.HOLE;
+    } else if (isEmpty()) {
+      return CellColor.EMPTY;
+    } else {
+      switch (card.getCurrentColor()) {
+        case RED: return CellColor.RED;
+        case BLUE: return CellColor.BLUE;
+        // should never happen
+        default: throw new IllegalStateException("Invalid card color");
+      }
+    }
   }
 
   /**
