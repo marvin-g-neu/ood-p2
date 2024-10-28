@@ -57,4 +57,11 @@ public interface CustomCard {
    * @param newColor the new color of a custom card
    */
   public void setNewColor(CardColor newColor);
+
+  /**
+   * Converts a custom card to a string representation.
+   * 
+   * @return the string representation of a custom card
+   */
+  public String toString();
 }

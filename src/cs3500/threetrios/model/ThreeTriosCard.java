@@ -127,4 +127,12 @@ public class ThreeTriosCard implements CustomCard {
   public void setNewColor(CardColor newColor) { 
     this.currentColor = newColor; 
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    return String.format("%s %s %s %s %s", name, north, south, east, west);
+  }
 }
