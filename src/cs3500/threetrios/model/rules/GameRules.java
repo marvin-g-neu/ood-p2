@@ -32,8 +32,13 @@ public abstract class GameRules implements RuleKeeper {
 
   @Override
   public String getOppositeDirection(String direction) {
-    return direction.equals("NORTH") ? "SOUTH" : direction.equals("SOUTH") ? "NORTH" :
-           direction.equals("EAST") ? "WEST" : direction.equals("WEST") ? "EAST" : null;
+    switch (direction) {
+      case "NORTH": return "SOUTH";
+      case "SOUTH": return "NORTH";
+      case "EAST": return "WEST";
+      case "WEST": return "EAST";
+      default: return null; // should never happen
+    }
   }
 
   /**
