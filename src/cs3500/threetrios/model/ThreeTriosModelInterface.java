@@ -2,7 +2,7 @@ package cs3500.threetrios.model;
 
 import cs3500.threetrios.model.card.AttackValue;
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.cell.CellColor;
+import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public interface ThreeTriosModelInterface {
    * @throws IllegalArgumentException if the row or column is not in range
    * @throws IllegalStateException    if the game has not been started
    */
-  CellColor getCellAt(int row, int col);
+  CellState getCellAt(int row, int col);
 
   /**
    * Plays the given card to the cell at the given coordinates,
@@ -75,7 +75,7 @@ public interface ThreeTriosModelInterface {
    * @return the current player
    * @throws IllegalStateException if the game has not been started or is over
    */
-  Player getCurrentPlayer();
+  PlayerName getCurrentPlayer();
 
   /**
    * Gets the current player's hand.
@@ -111,5 +111,5 @@ public interface ThreeTriosModelInterface {
    * @throws IllegalArgumentException if player is null
    * @throws IllegalStateException    if the game has not been started
    */
-  int getScore(Player player);
+  int getScore(PlayerName player);
 }

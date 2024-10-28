@@ -1,18 +1,21 @@
 package cs3500.threetrios.model;
 
-import java.util.List;
-
 import cs3500.threetrios.model.card.AttackValue;
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.cell.CellColor;
+import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
-public class ReadOnlyClassicalTTModel extends BaseTTModel {
+import java.util.List;
+
+/**
+ * A read only implementation of the Three Trios game for testing.
+ */
+public class ReadOnlyClassicalThreeTriosModel extends BaseThreeTriosModel {
   /**
    * {@inheritDoc}
    */
   @Override
-  public Player getCurrentPlayer() {
+  public PlayerName getCurrentPlayer() {
     // TODO: implement
     return null;
   }
@@ -32,7 +35,7 @@ public class ReadOnlyClassicalTTModel extends BaseTTModel {
   }
 
   @Override
-  public int getScore(Player player) {
+  public int getScore(PlayerName player) {
     return 0;
   }
 
@@ -50,7 +53,7 @@ public class ReadOnlyClassicalTTModel extends BaseTTModel {
    * {@inheritDoc}
    */
   @Override
-  public CellColor getCellAt(int row, int col) {
+  public CellState getCellAt(int row, int col) {
     // TODO: implement
     return null;
   }

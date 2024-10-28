@@ -9,11 +9,11 @@ import cs3500.threetrios.model.card.ThreeTriosCard;
 public class ThreeTriosCell implements Cell {
   private final boolean isHole;
   private ThreeTriosCard card;
-  
+
   /**
-   * Constructs a ThreeTriosCell with a boolean for whether 
+   * Constructs a ThreeTriosCell with a boolean for whether
    * the cell is a hole.
-   * 
+   *
    * @param isHole whether the cell is a hole
    */
   public ThreeTriosCell(boolean isHole) {
@@ -25,33 +25,33 @@ public class ThreeTriosCell implements Cell {
    * {@inheritDoc}
    */
   @Override
-  public boolean isHole() { 
-    return isHole; 
+  public boolean isHole() {
+    return isHole;
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean isEmpty() { 
-    return !isHole && card == null; 
+  public boolean isEmpty() {
+    return !isHole && card == null;
   }
-  
- /**
-   * {@inheritDoc}
-   */
+
   @Override
-  public CellColor getCellColor() {
+  public CellState getCellColor() {
     if (isHole) {
-      return CellColor.HOLE;
+      return CellState.HOLE;
     } else if (isEmpty()) {
-      return CellColor.EMPTY;
+      return CellState.EMPTY;
     } else {
       switch (card.getCurrentColor()) {
-        case RED: return CellColor.RED;
-        case BLUE: return CellColor.BLUE;
+        case RED:
+          return CellState.RED;
+        case BLUE:
+          return CellState.BLUE;
         // should never happen
-        default: throw new IllegalStateException("Invalid card color");
+        default:
+          throw new IllegalStateException("Invalid card color");
       }
     }
   }
@@ -60,10 +60,10 @@ public class ThreeTriosCell implements Cell {
    * {@inheritDoc}
    */
   @Override
-  public ThreeTriosCard getCard() { 
-    return card; 
+  public ThreeTriosCard getCard() {
+    return card;
   }
-  
+
   /**
    * {@inheritDoc}
    */

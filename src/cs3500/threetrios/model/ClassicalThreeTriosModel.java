@@ -2,12 +2,15 @@ package cs3500.threetrios.model;
 
 import cs3500.threetrios.model.card.AttackValue;
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.cell.CellColor;
+import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
 import java.util.List;
 
-public class ClassicalThreeTriosModel extends BaseTTModel {
+/**
+ * Implementation of a Three Trios game model using classic rules.
+ */
+public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
   // implement the methods in the ThreeTriosModelInterface interface
   // for the classical version of the game in hw5
 
@@ -15,7 +18,7 @@ public class ClassicalThreeTriosModel extends BaseTTModel {
    * {@inheritDoc}
    */
   @Override
-  public Player getCurrentPlayer() {
+  public PlayerName getCurrentPlayer() {
     // TODO: implement
     return null;
   }
@@ -35,7 +38,7 @@ public class ClassicalThreeTriosModel extends BaseTTModel {
   }
 
   @Override
-  public int getScore(Player player) {
+  public int getScore(PlayerName player) {
     return 0;
   }
 
@@ -53,7 +56,7 @@ public class ClassicalThreeTriosModel extends BaseTTModel {
    * {@inheritDoc}
    */
   @Override
-  public CellColor getCellAt(int row, int col) {
+  public CellState getCellAt(int row, int col) {
     // TODO: implement
     return null;
   }
