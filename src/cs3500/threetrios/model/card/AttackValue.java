@@ -1,4 +1,4 @@
-package cs3500.threetrios.model;
+package cs3500.threetrios.model.card;
 
 /**
  * Represents the strength of an attack value ranging from 

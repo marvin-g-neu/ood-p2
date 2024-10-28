@@ -1,4 +1,7 @@
-package cs3500.threetrios.model;
+package cs3500.threetrios.model.cell;
+
+import cs3500.threetrios.model.card.CardColor;
+import cs3500.threetrios.model.card.ThreeTriosCard;
 
 /**
  * Represents a cell in the Three Trios game, where 

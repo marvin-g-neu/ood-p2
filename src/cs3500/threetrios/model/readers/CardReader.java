@@ -1,10 +1,13 @@
-package cs3500.threetrios.model;
+package cs3500.threetrios.model.readers;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import cs3500.threetrios.model.card.AttackValue;
+import cs3500.threetrios.model.card.ThreeTriosCard;
 
 /**
  * Reads and parses card database configuration files 

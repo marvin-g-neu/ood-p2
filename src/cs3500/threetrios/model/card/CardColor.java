@@ -1,4 +1,4 @@
-package cs3500.threetrios.model;
+package cs3500.threetrios.model.card;
 
 /**
  * Represents the color of a card, either RED, BLUE, 
