@@ -27,6 +27,8 @@ public class GridReader {
   public static Cell[][] readGrid(String filePath) throws IllegalArgumentException {
     try (FileReader reader = new FileReader(filePath);
          Scanner scanner = new Scanner(reader)) {
+        
+      int countCardCells = 0;
       
       // Read and ensure valid dimensions
       if (!scanner.hasNextInt()) {
@@ -73,10 +75,17 @@ public class GridReader {
           // if cell is a hole, create a ThreeTriosCell with 
           // isHole set to true otherwise, create a ThreeTriosCell 
           // with isHole set to false
-          grid[row][col] = new ThreeTriosCell(cell == 'X');
+          boolean isHole = cell == 'X';
+          if (!isHole) {
+            countCardCells++;
+          }
+          grid[row][col] = new ThreeTriosCell(isHole);
         }
       }
-      
+
+      if (countCardCells % 2 == 0) {
+        throw new IllegalArgumentException("Invalid grid configuration: the number of card cells must be odd");
+      }
       // Created grid successfully
       return grid;
     } catch (IOException e) {
