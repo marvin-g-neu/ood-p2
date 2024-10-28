@@ -54,6 +54,10 @@ public interface Cell {
    * Sets the card in a cell.
    *
    * @param card the card to set in the cell
+   * @throws IllegalArgumentException if card is null
+   * @throws IllegalArgumentException if card color is UNASSIGNED
+   * @throws IllegalStateException    if the cell is a hole
+   * @throws IllegalStateException    if the cell has a card
    */
   void playCard(CustomCard card);
 
@@ -61,6 +65,10 @@ public interface Cell {
    * Flips the color of the card in a cell to the opponent's color.
    *
    * @param opponentColor the color of the opponent
+   * @throws IllegalArgumentException if opponentColor is null
+   * @throws IllegalArgumentException if opponentColor is UNASSIGNED
+   * @throws IllegalArgumentException if color wouldn't change
+   * @throws IllegalStateException    if the cell is a hole or is empty
    */
   void flipCard(CardColor opponentColor);
 }
