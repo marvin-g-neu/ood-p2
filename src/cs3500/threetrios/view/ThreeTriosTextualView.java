@@ -1,16 +1,21 @@
 package cs3500.threetrios.view;
 
-import cs3500.threetrios.model.ReadOnlyClassicalTTModel;
+import cs3500.threetrios.model.ReadOnlyClassicalThreeTriosModel;
+import cs3500.threetrios.model.card.CustomCard;
 
+/**
+ * A Three Trios view implementation using text to display game state.
+ */
 public class ThreeTriosTextualView implements TextualView {
-    private final ReadOnlyClassicalTTModel model;
+  private final ReadOnlyClassicalThreeTriosModel model;
 
   /**
    * Constructs a textual view for the Three Trios game.
+   *
    * @param model the game model to visualize
    * @throws IllegalArgumentException if model is null
    */
-  public ThreeTriosTextualView(ReadOnlyClassicalTTModel model) {
+  public ThreeTriosTextualView(ReadOnlyClassicalThreeTriosModel model) {
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null");
     }
@@ -23,10 +28,10 @@ public class ThreeTriosTextualView implements TextualView {
   @Override
   public String render() {
     StringBuilder result = new StringBuilder();
-    
+
     // Add current player
-    result.append("Player: ").append(model.getCurrentPlayer()).append("\n");
-    
+    result.append("PlayerName: ").append(model.getCurrentPlayer()).append("\n");
+
     // Add board state
     for (int row = 0; row < 5; row++) {
       for (int col = 0; col < 5; col++) {
@@ -43,17 +48,19 @@ public class ThreeTriosTextualView implements TextualView {
           case BLUE:
             result.append("B");
             break;
+          default: // Should do something
+            break;
         }
       }
       result.append("\n");
     }
-    
+
     // Add hand information
     result.append("Hand:\n");
-    for (String card : model.getCurrentPlayerHand()) {
+    for (CustomCard card : model.getCurrentPlayerHand()) {
       result.append(card).append("\n");
     }
-    
+
     return result.toString();
   }
 }

@@ -8,12 +8,9 @@ import cs3500.threetrios.model.grid.Grid;
 import java.util.List;
 
 /**
- * Implementation of a Three Trios game model using classic rules.
+ * A read only implementation of the Three Trios game for testing.
  */
-public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
-  // implement the methods in the ThreeTriosModelInterface interface
-  // for the classical version of the game in hw5
-
+public class ReadOnlyClassicalThreeTriosModel extends BaseThreeTriosModel {
   /**
    * {@inheritDoc}
    */

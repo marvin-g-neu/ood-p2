@@ -10,23 +10,24 @@ public class ThreeTriosCard implements CustomCard {
   private final AttackValue east;
   private final AttackValue west;
   private CardColor currentColor;
-  
+
   /**
    * Constructs a ThreeTriosCard with the given name and attack values.
-   * 
-   * @param name the name of the custom card
+   *
+   * @param name  the name of the custom card
    * @param north the attack value of the custom card for the north direction
    * @param south the attack value of the custom card for the south direction
-   * @param east the attack value of the custom card for the east direction
-   * @param west the attack value of the custom card for the west direction
+   * @param east  the attack value of the custom card for the east direction
+   * @param west  the attack value of the custom card for the west direction
+   * @throws IllegalArgumentException if any parameters are null
    */
-  public ThreeTriosCard(String name, 
-                         AttackValue north, 
-                         AttackValue south, 
-                         AttackValue east, 
-                         AttackValue west) {
-    if (name == null || north == null || south == null || east == null || west == null) {
-      throw new IllegalArgumentException("Name and/or attack values cannot be null");
+  public ThreeTriosCard(String name,
+                        AttackValue north, AttackValue south, AttackValue east, AttackValue west) {
+    if (name == null) {
+      throw new IllegalArgumentException("Name cannot be null");
+    }
+    if (north == null || south == null || east == null || west == null) {
+      throw new IllegalArgumentException("Attack values cannot be null");
     }
     // assigns the name and attack values to the card
     this.name = name;
@@ -35,30 +36,35 @@ public class ThreeTriosCard implements CustomCard {
     this.east = east;
     this.west = west;
 
-    // the default color is UNASSIGNED until a player 
-    // is given the card or the card is flipped to 
-    // the opposing player
+    // the default color is UNASSIGNED until a player is given the card
     this.currentColor = CardColor.UNASSIGNED;
   }
 
   /**
    * Constructs a ThreeTriosCard with the given name, attack values, and color.
-   * 
-   * @param name the name of the custom card
-   * @param north the attack value of the custom card for the north direction
-   * @param south the attack value of the custom card for the south direction
-   * @param east the attack value of the custom card for the east direction
-   * @param west the attack value of the custom card for the west direction
+   *
+   * @param name         the name of the custom card
+   * @param north        the attack value of the custom card for the north direction
+   * @param south        the attack value of the custom card for the south direction
+   * @param east         the attack value of the custom card for the east direction
+   * @param west         the attack value of the custom card for the west direction
    * @param currentColor the color of the custom card
+   * @throws IllegalArgumentException if any parameter is null
    */
-  public ThreeTriosCard(String name, 
-                         AttackValue north, 
-                         AttackValue south, 
-                         AttackValue east, 
-                         AttackValue west,
-                         CardColor currentColor) {
-    if (name == null || north == null || south == null || east == null || west == null || currentColor == null) {
-      throw new IllegalArgumentException("Name and/or attack values and/or current color cannot be null");
+  public ThreeTriosCard(String name,
+                        AttackValue north,
+                        AttackValue south,
+                        AttackValue east,
+                        AttackValue west,
+                        CardColor currentColor) {
+    if (name == null) {
+      throw new IllegalArgumentException("Name cannot be null");
+    }
+    if (currentColor == null) {
+      throw new IllegalArgumentException("Current color cannot be null");
+    }
+    if (north == null || south == null || east == null || west == null) {
+      throw new IllegalArgumentException("Attack values cannot be null");
     }
     // assigns the name and attack values to the card
     this.name = name;
@@ -69,63 +75,63 @@ public class ThreeTriosCard implements CustomCard {
     // the color is set to the color of the player
     this.currentColor = currentColor;
   }
-  
+
   // Getters and setters
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public int getNorthStrength() { 
-    return north.getStrength(); 
+  public AttackValue getNorthStrength() {
+    return north;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public int getSouthStrength() { 
-    return south.getStrength(); 
+  public AttackValue getSouthStrength() {
+    return south;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public int getEastStrength() { 
-    return east.getStrength(); 
+  public AttackValue getEastStrength() {
+    return east;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public int getWestStrength() { 
-    return west.getStrength(); 
+  public AttackValue getWestStrength() {
+    return west;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String getName() { 
-    return name; 
+  public String getName() {
+    return name;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public CardColor getCurrentColor() { 
-    return currentColor; 
+  public CardColor getCurrentColor() {
+    return currentColor;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setNewColor(CardColor newColor) { 
-    this.currentColor = newColor; 
+  public void setNewColor(CardColor newColor) {
+    this.currentColor = newColor;
   }
 
   /**
