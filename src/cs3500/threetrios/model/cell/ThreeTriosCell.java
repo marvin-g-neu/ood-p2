@@ -37,6 +37,9 @@ public class ThreeTriosCell implements Cell {
     return !isHole && card == null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public CellState getCellColor() {
     if (isHole) {

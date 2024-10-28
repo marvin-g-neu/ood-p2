@@ -139,6 +139,7 @@ public class ThreeTriosCard implements CustomCard {
    */
   @Override
   public String toString() {
-    return String.format("%s %s %s %s %s", name, north, south, east, west);
+    return String.format("%s %s %s %s %s", 
+                          name, north, south, east, west);
   }
 }
