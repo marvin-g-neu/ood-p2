@@ -42,7 +42,8 @@ public class ThreeTriosBoard implements Grid {
           cardCells++;
         }
       }
-    }
+    }  
+    
     this.cardCellCount = cardCells;
   }
   
