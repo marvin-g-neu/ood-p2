@@ -1,7 +1,7 @@
 package cs3500.threetrios.model;
 
-import cs3500.threetrios.model.card.AttackValue;
 import cs3500.threetrios.model.card.CustomCard;
+import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
@@ -30,7 +30,7 @@ public class ReadOnlyClassicalThreeTriosModel extends BaseThreeTriosModel {
   }
 
   @Override
-  public boolean attackerWinsBattle(AttackValue attacker, AttackValue defender) {
+  public boolean attackerWinsBattle(CustomCard attacker, CustomCard defender, Direction attackDirection) {
     return false;
   }
 
