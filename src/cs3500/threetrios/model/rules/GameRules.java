@@ -1,10 +1,10 @@
 package cs3500.threetrios.model.rules;
 
 import cs3500.threetrios.model.ThreeTriosModelInterface;
+import cs3500.threetrios.model.card.PlayerColor;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.PlayerName;
 
 /**
  * Abstract class containing common rule implementations for Three Trios.
@@ -47,7 +47,7 @@ public abstract class GameRules implements RuleKeeper {
    * @param player the player
    * @return the corresponding CardColor
    */
-  protected CardColor getPlayerCardColor(PlayerName player) {
-    return player == PlayerName.RED ? CardColor.RED : CardColor.BLUE;
+  protected CardColor getPlayerCardColor(PlayerColor player) {
+    return player == PlayerColor.RED ? CardColor.RED : CardColor.BLUE;
   }
 }

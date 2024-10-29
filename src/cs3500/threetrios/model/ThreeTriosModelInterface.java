@@ -2,6 +2,7 @@ package cs3500.threetrios.model;
 
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
+import cs3500.threetrios.model.card.PlayerColor;
 import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
@@ -30,7 +31,21 @@ public interface ThreeTriosModelInterface {
   void startGame(Grid gameGrid, List<CustomCard> deck);
 
   /**
-   * Gets the cell at a given position.
+   * Starts a game with the given grid and deck.
+   *
+   * @param gameGrid the grid for the game
+   * @param deck     the deck for the game
+   * @param shuffle  whether to shuffle the deck before drawing hands
+   * @throws IllegalArgumentException if the Grid is null or contains null values
+   * @throws IllegalArgumentException if the deck contains null values
+   * @throws IllegalArgumentException if the grid has an even number of card cells
+   * @throws IllegalArgumentException if the deck does not have more cards than card cells
+   * @throws IllegalStateException    if there is a game in play
+   */
+  void startGame(Grid gameGrid, List<CustomCard> deck, boolean shuffle);
+
+  /**
+   * Gets the state of the cell at a given position.
    *
    * @param row the row of the cell
    * @param col the column of the cell
@@ -38,7 +53,7 @@ public interface ThreeTriosModelInterface {
    * @throws IllegalArgumentException if the row or column is not in range
    * @throws IllegalStateException    if the game has not been started
    */
-  CellState getCellAt(int row, int col);
+  CellState getCellStateAt(int row, int col);
 
   /**
    * Plays the given card to the cell at the given coordinates,
@@ -76,7 +91,7 @@ public interface ThreeTriosModelInterface {
    * @return the current player
    * @throws IllegalStateException if the game has not been started or is over
    */
-  PlayerName getCurrentPlayer();
+  PlayerColor getCurrentPlayer();
 
   /**
    * Gets the current player's hand.
@@ -113,5 +128,5 @@ public interface ThreeTriosModelInterface {
    * @throws IllegalArgumentException if player is null
    * @throws IllegalStateException    if the game has not been started
    */
-  int getScore(PlayerName player);
+  int getScore(PlayerColor player);
 }

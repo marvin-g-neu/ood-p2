@@ -2,7 +2,7 @@ package cs3500.threetrios.model.rules;
 
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.PlayerName;
+import cs3500.threetrios.model.card.PlayerColor;
 
 /**
  * Interface for managing game rules in Three Trios.
@@ -26,7 +26,7 @@ public interface RuleKeeper {
    * @param col the column where the card was placed
    * @param currentPlayer the player who placed the card
    */
-  void executeBattlePhase(CustomCard placedCard, int row, int col, PlayerName currentPlayer);
+  void executeBattlePhase(CustomCard placedCard, int row, int col, PlayerColor currentPlayer);
 
   /**
    * Gets the opposite direction of a given direction.

@@ -2,6 +2,7 @@ package cs3500.threetrios.model.cell;
 
 import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
+import cs3500.threetrios.model.card.PlayerColor;
 
 /**
  * Represents a cell in the Three Trios game, where
@@ -32,7 +33,7 @@ public interface Cell {
    * @return the color of the card in the cell
    * @throws IllegalStateException if the cell is a hole or empty
    */
-  CellState getCellColor();
+  PlayerColor getCellColor();
 
   /**
    * Gets the state of the cell.

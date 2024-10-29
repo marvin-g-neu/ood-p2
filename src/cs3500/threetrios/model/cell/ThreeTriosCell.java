@@ -2,6 +2,7 @@ package cs3500.threetrios.model.cell;
 
 import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
+import cs3500.threetrios.model.card.PlayerColor;
 
 /**
  * An implementation of a cell from ThreeTrios.
@@ -41,20 +42,19 @@ public class ThreeTriosCell implements Cell {
    * {@inheritDoc}
    */
   @Override
-  public CellState getCellColor() {
+  public PlayerColor getCellColor() {
     if (isHole()) {
       throw new IllegalStateException("Cell is a hole");
     } else if (isEmpty()) {
       throw new IllegalStateException("Cell is empty");
     } else {
       switch (card.getCurrentColor()) {
-        case RED:
-          return CellState.RED;
         case BLUE:
-          return CellState.BLUE;
-        // should never happen
-        default:
-          throw new IllegalStateException("Invalid card color");
+          return PlayerColor.BLUE;
+        case RED:
+          return PlayerColor.RED;
+        default: // should never happen
+          throw new IllegalStateException("Unknown color");
       }
     }
   }
