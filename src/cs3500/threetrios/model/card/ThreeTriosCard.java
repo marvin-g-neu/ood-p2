@@ -79,23 +79,18 @@ public class ThreeTriosCard implements CustomCard {
   // Getters and setters
 
   @Override
-  public AttackValue getNorthStrength() {
-    return north;
-  }
-
-  @Override
-  public AttackValue getSouthStrength() {
-    return south;
-  }
-
-  @Override
-  public AttackValue getEastStrength() {
-    return east;
-  }
-
-  @Override
-  public AttackValue getWestStrength() {
-    return west;
+  public AttackValue getStrength(Direction direction) {
+    switch (direction) {
+      case NORTH:
+        return north;
+      case SOUTH:
+        return south;
+      case EAST:
+        return east;
+      case WEST:
+        return west;
+    }
+    throw new IllegalArgumentException("Invalid direction");
   }
 
   @Override

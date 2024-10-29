@@ -10,58 +10,37 @@ public interface CustomCard {
    *
    * @return the name of the custom card
    */
-  public String getName();
+  String getName();
 
   /**
    * Gets the attack value strength of a custom card
-   * in integer form for the north direction.
+   * in integer form for the given direction.
    *
-   * @return the attack value of a custom card for the north
+   * @return the attack value of a custom card for the given direction
+   * @throws IllegalArgumentException if direction is null
    */
-  public AttackValue getNorthStrength();
+  AttackValue getStrength(Direction direction);
 
   /**
-   * Gets the attack value strength of a custom card
-   * in integer form for the south direction.
+   * Gets the color of the card.
    *
-   * @return the attack value of a custom card for the south
+   * @return the color of the card
    */
-  public AttackValue getSouthStrength();
-
-  /**
-   * Gets the attack value strength of a custom card
-   * in integer form for the east direction.
-   *
-   * @return the attack value strength of a custom card for the east
-   */
-  public AttackValue getEastStrength();
-
-  /**
-   * Gets the attack value strength of a custom card
-   * in integer form for the west direction.
-   *
-   * @return the attack value strength of a custom card for the west
-   */
-  public AttackValue getWestStrength();
-
-  /**
-   * Gets the color of a custom card.
-   *
-   * @return the color of a custom card
-   */
-  public CardColor getCurrentColor();
+  CardColor getCurrentColor();
 
   /**
    * Sets the color of a custom card.
    *
    * @param newColor the new color of a custom card
+   * @throws IllegalArgumentException if newColor is null
+   * @throws IllegalArgumentException if the card is already this color
    */
-  public void setNewColor(CardColor newColor);
+  void setNewColor(CardColor newColor);
 
   /**
    * Converts a custom card to a string representation.
    *
    * @return the string representation of a custom card
    */
-  public String toString();
+  String toString();
 }

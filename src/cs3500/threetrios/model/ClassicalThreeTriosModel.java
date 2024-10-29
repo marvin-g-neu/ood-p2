@@ -1,7 +1,7 @@
 package cs3500.threetrios.model;
 
-import cs3500.threetrios.model.card.AttackValue;
 import cs3500.threetrios.model.card.CustomCard;
+import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
@@ -13,19 +13,26 @@ import java.util.List;
 public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
   // implement the methods in the ThreeTriosModelInterface interface
   // for the classical version of the game in hw5
+  private Grid grid;
+  private List<CustomCard> deck;
+  private PlayerName currentPlayer;
+  private GameState gameState;
 
   /**
-   * {@inheritDoc}
+   * Creates a model for a classic game of Three Trios
    */
+  public ClassicalThreeTriosModel() {
+    this.gameState = GameState.NOT_STARTED;
+  }
+
   @Override
   public PlayerName getCurrentPlayer() {
-    // TODO: implement
+    if (gameState != GameState.NOT_STARTED) {
+      throw new IllegalStateException("Game is not in progress");
+    }
     return null;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<CustomCard> getCurrentPlayerHand() {
     // TODO: implement
@@ -33,7 +40,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
   }
 
   @Override
-  public boolean attackerWinsBattle(AttackValue attacker, AttackValue defender) {
+  public boolean attackerWinsBattle(CustomCard attacker, CustomCard defender, Direction attackDirection) {
     return false;
   }
 
@@ -52,9 +59,6 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public CellState getCellAt(int row, int col) {
     // TODO: implement

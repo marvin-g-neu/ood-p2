@@ -1,7 +1,7 @@
 package cs3500.threetrios.model;
 
-import cs3500.threetrios.model.card.AttackValue;
 import cs3500.threetrios.model.card.CustomCard;
+import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
@@ -21,7 +21,8 @@ public interface ThreeTriosModelInterface {
    *
    * @param gameGrid the grid for the game
    * @param deck     the deck for the game
-   * @throws IllegalArgumentException if the Grid is null or the deck contains null values
+   * @throws IllegalArgumentException if the Grid is null or contains null values
+   * @throws IllegalArgumentException if the deck contains null values
    * @throws IllegalArgumentException if the grid has an even number of card cells
    * @throws IllegalArgumentException if the deck does not have more cards than card cells
    * @throws IllegalStateException    if there is a game in play
@@ -94,14 +95,15 @@ public interface ThreeTriosModelInterface {
   Grid getGrid();
 
   /**
-   * Determines whether the attacker has a higher attack value.
+   * Determines whether the attacker wins a battle.
    *
-   * @param attacker the value used by the attacker
-   * @param defender the value used by the defender
-   * @return true if the attacker's value is higher, false otherwise
-   * @throws IllegalArgumentException if either value is null
+   * @param attacker        the value used by the attacker
+   * @param defender        the value used by the defender
+   * @param attackDirection the direction the attacking card is fighting
+   * @return returns true if the attacker wins based on the direction, false otherwise
+   * @throws IllegalArgumentException if any value is null
    */
-  boolean attackerWinsBattle(AttackValue attacker, AttackValue defender);
+  boolean attackerWinsBattle(CustomCard attacker, CustomCard defender, Direction attackDirection);
 
   /**
    * Gets the score of the given player.
