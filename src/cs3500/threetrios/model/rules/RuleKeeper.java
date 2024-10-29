@@ -16,7 +16,7 @@ public interface RuleKeeper {
    * @param card the card being placed
    * @return true if the move is legal, false otherwise
    */
-    boolean isLegalMove(Cell cell, CustomCard card);
+  boolean isLegalMove(Cell cell, CustomCard card);
 
   /**
    * Executes the battle phase after a card is placed.
