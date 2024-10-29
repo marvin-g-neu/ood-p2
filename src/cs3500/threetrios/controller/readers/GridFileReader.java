@@ -1,46 +1,33 @@
-package cs3500.threetrios.model.readers;
+package cs3500.threetrios.controller.readers;
+
+import cs3500.threetrios.model.cell.Cell;
+import cs3500.threetrios.model.cell.ThreeTriosCell;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.cell.ThreeTriosCell;
-
 /**
- * Reads and parses grid configuration files for 
- * the Three Trios game, given in the following format:
- * ROWS COLS
- * ROW_0
- * ROW_1
- * ROW_2
- * ...
+ * Translates a file representing the game grid into a grid of Cells.
  */
-public class GridReader {
-  /**
-   * Reads a grid configuration file and creates a list of cells.
-   *
-   * @param filePath the path to the grid configuration file
-   * @return a 2D array of cells representing the grid
-   * @throws IllegalArgumentException if the file format is invalid or file cannot be read
-   */
-  public static Cell[][] readGrid(String filePath) throws IllegalArgumentException {
+public class GridFileReader implements ConfigurationFileReader<Cell[][]> {
+  @Override
+  public Cell[][] readFile(String filePath) {
     try (FileReader reader = new FileReader(filePath);
          Scanner scanner = new Scanner(reader)) {
-        
       int countCardCells = 0;
-      
+
       // Read and ensure valid dimensions
       if (!scanner.hasNextInt()) {
-        throw new IllegalArgumentException("Invalid grid configuration: missing rows");
+        throw new IllegalArgumentException("Invalid grid configuration: missing row count");
       }
       int rows = scanner.nextInt();
-      
+
       if (!scanner.hasNextInt()) {
-        throw new IllegalArgumentException("Invalid grid configuration: missing columns");
+        throw new IllegalArgumentException("Invalid grid configuration: missing column count");
       }
       int cols = scanner.nextInt();
-      
+
       if (rows <= 0 || cols <= 0) {
         throw new IllegalArgumentException("Invalid dimensions: rows and cols must have positive values");
       }
@@ -70,10 +57,10 @@ public class GridReader {
           // Ensure valid cell type
           if (cell != 'X' && cell != 'C') {
             throw new IllegalArgumentException(
-               "Invalid cell type: " + cell + " at position (" + row + "," + col + ")");
+                "Invalid cell type: " + cell + " at position (" + row + "," + col + ")");
           }
-          // if cell is a hole, create a ThreeTriosCell with 
-          // isHole set to true otherwise, create a ThreeTriosCell 
+          // if cell is a hole, create a ThreeTriosCell with
+          // isHole set to true otherwise, create a ThreeTriosCell
           // with isHole set to false
           boolean isHole = cell == 'X';
           if (!isHole) {
@@ -84,11 +71,13 @@ public class GridReader {
       }
 
       if (countCardCells % 2 == 0) {
-        throw new IllegalArgumentException("Invalid grid configuration: the number of card cells must be odd");
+        throw new IllegalArgumentException(
+            "Invalid grid configuration: the number of card cells must be odd");
       }
       // Created grid successfully
       return grid;
-    } catch (IOException e) {
+    } catch (
+        IOException e) {
       throw new IllegalArgumentException("Error reading grid file: " + e.getMessage());
     }
   }
