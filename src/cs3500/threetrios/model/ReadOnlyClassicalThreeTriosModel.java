@@ -2,6 +2,7 @@ package cs3500.threetrios.model;
 
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
+import cs3500.threetrios.model.card.PlayerColor;
 import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
@@ -11,18 +12,12 @@ import java.util.List;
  * A read only implementation of the Three Trios game for testing.
  */
 public class ReadOnlyClassicalThreeTriosModel extends BaseThreeTriosModel {
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public PlayerName getCurrentPlayer() {
+  public PlayerColor getCurrentPlayer() {
     // TODO: implement
     return null;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<CustomCard> getCurrentPlayerHand() {
     // TODO: implement
@@ -35,7 +30,7 @@ public class ReadOnlyClassicalThreeTriosModel extends BaseThreeTriosModel {
   }
 
   @Override
-  public int getScore(PlayerName player) {
+  public int getScore(PlayerColor player) {
     return 0;
   }
 
@@ -49,11 +44,13 @@ public class ReadOnlyClassicalThreeTriosModel extends BaseThreeTriosModel {
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public CellState getCellAt(int row, int col) {
+  public void startGame(Grid gameGrid, List<CustomCard> deck, boolean shuffle) {
+
+  }
+
+  @Override
+  public CellState getCellStateAt(int row, int col) {
     // TODO: implement
     return null;
   }

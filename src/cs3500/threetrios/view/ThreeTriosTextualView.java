@@ -30,12 +30,12 @@ public class ThreeTriosTextualView implements TextualView {
     StringBuilder result = new StringBuilder();
 
     // Add current player
-    result.append("PlayerName: ").append(model.getCurrentPlayer()).append("\n");
+    result.append("PlayerColor: ").append(model.getCurrentPlayer()).append("\n");
 
     // Add board state
     for (int row = 0; row < 5; row++) {
       for (int col = 0; col < 5; col++) {
-        switch (model.getCellAt(row, col)) {
+        switch (model.getCellStateAt(row, col)) {
           case EMPTY:
             result.append("_");
             break;
