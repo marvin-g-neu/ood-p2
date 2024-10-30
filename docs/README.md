@@ -153,7 +153,7 @@ These classes facilitate loading game configurations from external files.
 The following diagram shows the source organization of the project:\
 
 ood-p2/
-- subdirectories I | docs:
+#### subdirectories I | docs:
 |- docs/
 ||- boards/
 |--- boardWithNoHoles.config
@@ -165,7 +165,7 @@ ood-p2/
 |-- design_documentation.txt
 |-- player_interface_design.txt
 |-- README.md
-- subdirectories II | src:
+#### subdirectories II | src:
 |- src/
 ||- cs3500/
 |||- threetrios/
@@ -201,5 +201,5 @@ ood-p2/
 |------ GameRules.java
 |------ BasicThreeTriosGame.java
 |------ Coordinates.java
-- subdirectories III | test:
+#### subdirectories III | test:
 NOTE: Has the same structure as the src directory but with the addition of test classes for each of the classes in the src directory that are relevant to testing for the purpose of a working implementation for the model running the game.
