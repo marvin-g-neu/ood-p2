@@ -53,9 +53,10 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
     if (gameState == null) {
       throw new IllegalArgumentException("Parameter cannot be null");
     }
-    if (gameState != GameState.NOT_STARTED && this.gameState == null) {
-      throw new IllegalArgumentException("Game state must be initialized as NOT_STARTED");
-
+    if (this.gameState == null) {
+      if (gameState != GameState.NOT_STARTED) {
+        throw new IllegalArgumentException("Game state must be initialized as NOT_STARTED");
+      }
     } else if (gameState.ordinal() != this.gameState.ordinal() + 1 || this.gameState.ordinal() > 1) {
       throw new IllegalArgumentException("Illegal game state change");
     }
