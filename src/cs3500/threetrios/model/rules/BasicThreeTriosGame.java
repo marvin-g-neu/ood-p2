@@ -3,7 +3,7 @@ package cs3500.threetrios.model.rules;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
-import cs3500.threetrios.model.card.PlayerColor;
+import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.grid.Grid;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -30,7 +30,7 @@ public class BasicThreeTriosGame extends GameRules {
 
     while (!battleQueue.isEmpty()) {
       Coordinates coor = battleQueue.remove();
-      CustomCard[] adjacentCards = grid.getAdjacentCards(coor.row, coor.col);
+      CustomCard[] adjacentCards = grid.getAdjacentCards(coor.getRow(), coor.getColumn());
             
       // Check battles in all directions [NORTH, SOUTH, EAST, WEST]
       Direction[] directions = Direction.values();
@@ -41,12 +41,12 @@ public class BasicThreeTriosGame extends GameRules {
           continue;
         }
 
-        CustomCard attackingCard = grid.getCell(coor.row, coor.col).getCard();
+        CustomCard attackingCard = grid.getCell(coor.getRow(), coor.getColumn()).getCard();
 
         if (model.attackerWinsBattle(attackingCard, adjacentCard, directions[i])) {
           // Flip card and add to combo queue
-          Coordinates adjPos = getAdjacentPosition(coor.row, coor.col, directions[i]);
-          grid.getCell(adjPos.row, adjPos.col)
+          Coordinates adjPos = getAdjacentPosition(coor.getRow(), coor.getColumn(), directions[i]);
+          grid.getCell(adjPos.getRow(), adjPos.getColumn())
               .flipCard(getPlayerCardColor(currentPlayer));
           battleQueue.add(adjPos);
         }
