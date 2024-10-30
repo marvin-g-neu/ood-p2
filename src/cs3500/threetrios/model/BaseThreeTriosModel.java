@@ -1,7 +1,6 @@
 package cs3500.threetrios.model;
 
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
