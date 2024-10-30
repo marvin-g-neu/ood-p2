@@ -19,7 +19,7 @@ public interface CustomCard {
    * @return the attack value of a custom card for the given direction
    * @throws IllegalArgumentException if direction is null
    */
-  AttackValue getStrength(Direction direction);
+  AttackValue getAttackValue(Direction direction);
 
   /**
    * Gets the color of the card.

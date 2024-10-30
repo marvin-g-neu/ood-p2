@@ -1,7 +1,6 @@
 package cs3500.threetrios.model;
 
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.rules.BasicThreeTriosGame;
@@ -33,27 +32,6 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
   public ClassicalThreeTriosModel(boolean shuffle) {
     this.gameState = GameState.NOT_STARTED;
     this.shuffle = shuffle;
-    rules = new BasicThreeTriosGame(this);
-  }
-
-  @Override
-  public boolean attackerWinsBattle(CustomCard attacker, CustomCard defender, Direction attackDirection) {
-    if (attacker == null || defender == null || attackDirection == null) {
-      throw new IllegalArgumentException("Parameters cannot be null");
-    }
-    int attackerStrength = attacker.getStrength(attackDirection).getStrength();
-    switch (attackDirection) {
-      case NORTH:
-        return attackerStrength > defender.getStrength(Direction.SOUTH).getStrength();
-      case EAST:
-        return attackerStrength > defender.getStrength(Direction.WEST).getStrength();
-      case SOUTH:
-        return attackerStrength > defender.getStrength(Direction.NORTH).getStrength();
-      case WEST:
-        return attackerStrength > defender.getStrength(Direction.EAST).getStrength();
-      default: // should never happen
-        throw new IllegalArgumentException("Unknown Direction");
-    }
   }
 
   @Override
@@ -98,6 +76,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
     this.shuffle = shuffle;
     currentPlayer = PlayerColor.RED;
     gameState = GameState.IN_PROGRESS;
+    rules = new BasicThreeTriosGame(this);
 
     int cardCellCount = grid.getCardCells().size();
     if (cardCellCount % 2 == 0) {

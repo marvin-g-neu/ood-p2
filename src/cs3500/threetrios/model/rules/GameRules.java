@@ -1,7 +1,9 @@
 package cs3500.threetrios.model.rules;
 
+import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
+import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
@@ -17,27 +19,45 @@ public abstract class GameRules implements RuleKeeper {
    *
    * @param model the game model
    * @throws IllegalArgumentException if model is null
+   * @throws IllegalArgumentException if model game state is not IN_PROGRESS
    */
   public GameRules(ThreeTriosModelInterface model) {
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null");
+    }
+    if (model.getGameState() != GameState.IN_PROGRESS) {
+      throw new IllegalArgumentException("Game must be in progress");
     }
     this.model = model;
   }
 
   @Override
   public boolean isLegalMove(Cell cell, CustomCard card) {
-    return cell != null && !cell.isHole() && cell.isEmpty();
+    if (cell == null || card == null) {
+      throw new IllegalArgumentException("Parameters cannot be null");
+    }
+    if (model.getGameState() != GameState.IN_PROGRESS) {
+      throw new IllegalArgumentException("Game is not in progress");
+    }
+      return !cell.isHole() && cell.isEmpty();
   }
 
   @Override
-  public String getOppositeDirection(String direction) {
+  public Direction getOppositeDirection(Direction direction) {
+    if (direction == null) {
+      throw new IllegalArgumentException("Direction cannot be null");
+    }
     switch (direction) {
-      case "NORTH": return "SOUTH";
-      case "SOUTH": return "NORTH";
-      case "EAST": return "WEST";
-      case "WEST": return "EAST";
-      default: return null; // should never happen
+      case NORTH:
+        return Direction.SOUTH;
+      case SOUTH:
+        return Direction.NORTH;
+      case EAST:
+        return Direction.EAST;
+      case WEST:
+        return Direction.WEST;
+      default:
+        throw new IllegalArgumentException("Invalid direction"); // should never happen
     }
   }
 

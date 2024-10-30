@@ -69,5 +69,5 @@ public interface Grid {
    * @return array of adjacent cells in order [north, south, east, west], null if no adjacent cell
    * @throws IllegalArgumentException if the row or column is out of range
    */
-  CustomCard[] getAdjacentCards(int row, int col);
+  Cell[] getAdjacentCells(int row, int col);
 }

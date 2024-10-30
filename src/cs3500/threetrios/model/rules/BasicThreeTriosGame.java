@@ -1,74 +1,100 @@
 package cs3500.threetrios.model.rules;
 
+import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.grid.Grid;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Implementation of the basic Three Trios game rules.
  */
 public class BasicThreeTriosGame extends GameRules {
-    
+  private final Grid grid;
+
   /**
    * Constructs a BasicThreeTriosGame with the given model.
    *
    * @param model the game model
+   * @throws IllegalArgumentException if model is null
+   * @throws IllegalArgumentException if model game state is not IN_PROGRESS
    */
   public BasicThreeTriosGame(ThreeTriosModelInterface model) {
     super(model);
+    grid = model.getGrid();
   }
 
   @Override
-  public void executeBattlePhase(CustomCard placedCard, int row, int col, PlayerColor currentPlayer) {
-    Queue<Coordinates> battleQueue = new LinkedList<>();
-    Grid grid = model.getGrid();
-    battleQueue.add(new Coordinates(row, col));
+  public boolean attackerWinsBattle(CustomCard attacker, CustomCard defender, Direction attackDirection) {
+    if (attacker == null || defender == null || attackDirection == null) {
+      throw new IllegalArgumentException("Parameters cannot be null");
+    }
+    int attackerStrength = attacker.getAttackValue(attackDirection).getStrength();
+    return attackerStrength > defender.getAttackValue(getOppositeDirection(attackDirection)).getStrength();
+  }
 
-    while (!battleQueue.isEmpty()) {
-      Coordinates coor = battleQueue.remove();
-      CustomCard[] adjacentCards = grid.getAdjacentCards(coor.getRow(), coor.getColumn());
-            
-      // Check battles in all directions [NORTH, SOUTH, EAST, WEST]
-      Direction[] directions = Direction.values();
-      for (int i = 0; i < adjacentCards.length; i++) {
-        CustomCard adjacentCard = adjacentCards[i];
-        if (adjacentCard == null || 
-            adjacentCard.getCurrentColor() == getPlayerCardColor(currentPlayer)) {
-          continue;
-        }
+  @Override
+  public void executeBattlePhase(int row, int col, PlayerColor currentPlayer) {
+    if (currentPlayer == null) {
+      throw new IllegalArgumentException("Current player cannot be null");
+    }
+    if (row < 0 || row >= grid.getRows() || col < 0 || col >= grid.getCols()) {
+      throw new IllegalArgumentException("Coordinates must be in range");
+    }
+    if (model.getGameState() != GameState.IN_PROGRESS) {
+      throw new IllegalStateException("Game state is not in progress");
+    }
 
-        CustomCard attackingCard = grid.getCell(coor.getRow(), coor.getColumn()).getCard();
+    Cell cell = grid.getCell(row, col);
+    if (cell.isHole() || cell.isEmpty()) {
+      throw new IllegalArgumentException("Cell does not have a card");
+    }
+    Cell[] adjacentCells = grid.getAdjacentCells(row, col);
 
-        if (model.attackerWinsBattle(attackingCard, adjacentCard, directions[i])) {
-          // Flip card and add to combo queue
-          Coordinates adjPos = getAdjacentPosition(coor.getRow(), coor.getColumn(), directions[i]);
-          grid.getCell(adjPos.getRow(), adjPos.getColumn())
-              .flipCard(getPlayerCardColor(currentPlayer));
-          battleQueue.add(adjPos);
-        }
+    for (int d = 0; d < Direction.values().length; d++) {
+      Cell adjacentCell = adjacentCells[d];
+      if (adjacentCell == null || adjacentCell.isHole() || adjacentCell.isEmpty()
+          || cell.getCellColor() == adjacentCell.getCellColor()) {
+        continue;
+      }
+      Direction attackDirection = Direction.values()[d];
+      if (attackerWinsBattle(cell.getCard(), adjacentCell.getCard(), attackDirection)) {
+        // Recursively completes future battles
+        adjacentCell.flipCard(getPlayerCardColor(cell.getCellColor()));
+        battle(row, col, attackDirection, currentPlayer);
       }
     }
   }
 
-  @Override
-  public boolean isGameOver() {
-    Grid grid = model.getGrid();
-    return grid.getEmptyCellCount() == 0 || 
-           model.getCurrentPlayerHand().isEmpty();
+  private void battle(int row, int col, Direction attackDirection, PlayerColor currentPlayer) {
+    int newRow = row;
+    int newCol = col;
+    switch (attackDirection) {
+      case NORTH:
+        newRow += 1;
+        break;
+      case SOUTH:
+        newRow -= 1;
+        break;
+      case EAST:
+        newCol += 1;
+        break;
+      case WEST:
+        newCol -= 1;
+        break;
+      default: // should never happen
+        throw new IllegalArgumentException("Unknown Direction");
+    }
+    executeBattlePhase(newRow, newCol, currentPlayer);
   }
 
-  // Gets the adjacent position based on the direction.
-  private Coordinates getAdjacentPosition(int row, int col, Direction direction) {
-    switch (direction) {
-      case NORTH: return new Coordinates(row - 1, col);
-      case SOUTH: return new Coordinates(row + 1, col);
-      case EAST: return new Coordinates(row, col + 1);
-      case WEST: return new Coordinates(row, col - 1);
-      default: throw new IllegalArgumentException("Invalid direction");
+  @Override
+  public boolean isGameCompleted() {
+    if (model.getGameState() == GameState.NOT_STARTED) {
+      throw new IllegalStateException("Game is not started");
     }
+    return grid.getEmptyCellCount() == 0;
   }
 }
