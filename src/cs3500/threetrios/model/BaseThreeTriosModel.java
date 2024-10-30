@@ -14,10 +14,18 @@ import java.util.List;
 public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
   protected RuleKeeper rules;
   protected Grid grid;
-  protected List<CustomCard> fullDeck;
   protected List<CustomCard> deck;
   protected PlayerColor currentPlayer;
-  protected GameState gameState;
+
+  /*
+   * Class invariant: only progresses NOT_STARTED -> IN_PROGRESS -> RED_WIN/BLUE_WIN/EARLY_QUIT.
+   * It can only change in this order externally through setGameState() which has checks that it
+   * is increasing in order. Only other place it is set internally is in endGame(), where it must
+   * be IN_PROGRESS and only can change to one of the final states. An exception is thrown if any
+   * calls try to break this rule when calling setGameState() or endGame().
+   */
+  private GameState gameState;
+
   protected List<CustomCard> redHand;
   protected List<CustomCard> blueHand;
   protected boolean shuffle;
@@ -30,6 +38,28 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
   @Override
   public GameState getGameState() {
     return gameState;
+  }
+
+  /**
+   * Set game state externally, only in order of
+   * NOT_STARTED -> IN_PROGRESS -> RED_WIN/BLUE_WIN/EARLY_QUIT.
+   *
+   * @param gameState the state to set this.gameState to
+   * @throws IllegalArgumentException if game state is not changed in order
+   *                                  or changes between final states
+   * @throws IllegalArgumentException if parameter is null
+   */
+  protected void setGameState(GameState gameState) {
+    if (gameState == null) {
+      throw new IllegalArgumentException("Parameter cannot be null");
+    }
+    if (gameState != GameState.NOT_STARTED && this.gameState == null) {
+      throw new IllegalArgumentException("Game state must be initialized as NOT_STARTED");
+
+    } else if (gameState.ordinal() != this.gameState.ordinal() + 1 || this.gameState.ordinal() > 1) {
+      throw new IllegalArgumentException("Illegal game state change");
+    }
+    this.gameState = gameState;
   }
 
   @Override
@@ -71,7 +101,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
    *
    * @throws IllegalStateException if the game has not been started or is over
    */
-  protected void endTurn() {
+  private void endTurn() {
     checkGameInProgress();
     if (rules.isGameCompleted()) {
       endGame();
@@ -89,6 +119,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
 
   @Override
   public Grid endGame() {
+    // Only changes gameState to a final state and only if it is currently IN_PROGRESS
     checkGameInProgress();
     if (rules.isGameCompleted()) {
       if (getScore(PlayerColor.RED) > getScore(PlayerColor.BLUE)) {

@@ -2,7 +2,8 @@ package cs3500.threetrios.model.cell;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * For testing constructors and implementation-specific edge cases or helpers.
