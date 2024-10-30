@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class ThreeTriosTextualViewTest {
   private ClassicalThreeTriosModel model;
@@ -40,10 +39,9 @@ public class ThreeTriosTextualViewTest {
         cells[r][c] = new ThreeTriosCell(false);
       }
     }
-    
+
     // Initialize grid
     grid = new ThreeTriosBoard(cells);
-    assertNotNull("Grid should not be null", grid);
 
     // Initialize deck with 10 cards
     deck = Arrays.asList(
@@ -68,80 +66,83 @@ public class ThreeTriosTextualViewTest {
             new ThreeTriosCard("Blue5", AttackValue.TWO, AttackValue.ONE,
                     AttackValue.FOUR, AttackValue.THREE, CardColor.BLUE)
     );
-    assertNotNull("Deck should not be null", deck);
-    assertEquals("Deck should contain 10 cards", 10, deck.size());
 
     // Initialize model
-    model = new ClassicalThreeTriosModel(true);
-    assertNotNull("Model should not be null", model);
+    model = new ClassicalThreeTriosModel();
 
     // Start the game
-    model.startGame(grid, deck);
+    model.startGame(grid, deck, false);
 
     // Initialize view
     view = new ThreeTriosTextualView(model);
-    assertNotNull("View should not be null", view);
   }
 
   @Test
   public void testRenderInitialState() {
-    String expected = "PlayerColor: RED\n" +
+    String expected = "Player: RED\n" +
             "___\n" +
             "___\n" +
             "___\n" +
             "Hand:\n" +
-            "Red1\n" +
-            "Red2\n";
-
+            "Red1 3 2 1 1\n" +
+            "Red2 4 1 2 3\n" +
+            "Red3 2 2 3 1\n" +
+            "Red4 1 3 2 4\n" +
+            "Red5 3 4 1 2\n";
+    
     assertEquals(expected, view.render());
   }
 
   @Test
   public void testRenderAfterMoves() {
     // Red plays Red1 at (0,0)
-    model.playTurn(0, 0, 0); // Assuming hand index 0 is Red1
+    model.playTurn(0, 0, 0);
     model.endTurn();
 
     // Blue plays Blue1 at (0,1)
-    model.playTurn(0, 1, 0); // Assuming hand index 0 is Blue1
+    model.playTurn(0, 1, 0);
     model.endTurn();
 
     // Red plays Red2 at (1,1)
-    model.playTurn(1, 1, 0); // Assuming hand index 0 is Red2
+    model.playTurn(1, 1, 0);
     model.endTurn();
 
     // Blue plays Blue2 at (2,2)
-    model.playTurn(2, 2, 0); // Assuming hand index 0 is Blue2
+    model.playTurn(2, 2, 0);
     model.endTurn();
 
-    String expected = "PlayerColor: RED\n" +
+    String expected = "Player: RED\n" +
             "R B _\n" +
             "_ R _\n" +
             "_ _ B\n" +
             "Hand:\n" +
-            "Red2\n" +
-            "Blue2\n";
+            "Red3 2 2 3 1\n" +
+            "Red4 1 3 2 4\n" +
+            "Red5 3 4 1 2\n";
 
     assertEquals(expected, view.render());
   }
 
   @Test
   public void testRenderAfterInvalidMove() {
-    // Attempt to play Red1 at a hole (if any), but since no holes, simulate by trying to play out of bounds
+    // Attempt to play at invalid position
     try {
-      model.playTurn(3, 3, 0); // Invalid position
+      model.playTurn(3, 3, 0);
     } catch (IllegalArgumentException e) {
       // Expected exception
     }
 
     // Render should remain the same as initial
-    String expected = "PlayerColor: RED\n" +
+    String expected = "Player: RED\n" +
             "___\n" +
             "___\n" +
             "___\n" +
             "Hand:\n" +
-            "Red1\n" +
-            "Red2\n";
+            "Red1 3 2 1 1\n" +
+            "Red2 4 1 2 3\n" +
+            "Red3 2 2 3 1\n" +
+            "Red4 1 3 2 4\n" +
+            "Red5 3 4 1 2\n";
 
     assertEquals(expected, view.render());
   }
@@ -149,28 +150,29 @@ public class ThreeTriosTextualViewTest {
   @Test
   public void testRenderAfterFlipCard() {
     // Red plays Red1 at (0,0)
-    model.playTurn(0, 0, 0); // Red1
+    model.playTurn(0, 0, 0);
     model.endTurn();
 
     // Blue plays Blue1 at (0,1)
-    model.playTurn(0, 1, 0); // Blue1
+    model.playTurn(0, 1, 0);
     model.endTurn();
 
     // Red plays Red2 at (1,1)
-    model.playTurn(1, 1, 0); // Red2
+    model.playTurn(1, 1, 0);
     model.endTurn();
 
     // Blue plays Blue2 at (0,0) to battle Red1
-    model.playTurn(0, 0, 0); // Blue2 attempts to place on (0,0)
+    model.playTurn(0, 0, 0);
     model.endTurn();
 
-    String expected = "PlayerColor: RED\n" +
+    String expected = "Player: RED\n" +
             "B B _\n" +
             "_ R _\n" +
             "_ _ _\n" +
             "Hand:\n" +
-            "Red2\n" +
-            "Blue2\n";
+            "Red3 2 2 3 1\n" +
+            "Red4 1 3 2 4\n" +
+            "Red5 3 4 1 2\n";
 
     assertEquals(expected, view.render());
   }

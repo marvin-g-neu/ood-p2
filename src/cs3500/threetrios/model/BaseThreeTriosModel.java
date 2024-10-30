@@ -66,8 +66,12 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
     endTurn();
   }
 
-  @Override
-  public void endTurn() {
+  /**
+   * If the game should end, end the game. Otherwise, pass the turn.
+   *
+   * @throws IllegalStateException if the game has not been started or is over
+   */
+  protected void endTurn() {
     checkGameInProgress();
     if (rules.isGameCompleted()) {
       endGame();
