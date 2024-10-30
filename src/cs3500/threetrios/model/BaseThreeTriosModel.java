@@ -61,13 +61,17 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
       throw new IllegalStateException("Cell already has a card");
     }
 
-    grid.placeCard(card, row, col);
+    grid.placeCard(getActualPlayerHand().remove(handIndex), row, col);
     rules.executeBattlePhase(row, col, currentPlayer);
     endTurn();
   }
 
-  @Override
-  public void endTurn() {
+  /**
+   * If the game should end, end the game. Otherwise, pass the turn.
+   *
+   * @throws IllegalStateException if the game has not been started or is over
+   */
+  protected void endTurn() {
     checkGameInProgress();
     if (rules.isGameCompleted()) {
       endGame();
@@ -128,6 +132,18 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
         return new ArrayList<>(redHand);
       case BLUE:
         return new ArrayList<>(blueHand);
+      default: // should never happen
+        throw new IllegalStateException("Unknown current player");
+    }
+  }
+
+  private List<CustomCard> getActualPlayerHand() {
+    checkGameInProgress();
+    switch (currentPlayer) {
+      case RED:
+        return redHand;
+      case BLUE:
+        return blueHand;
       default: // should never happen
         throw new IllegalStateException("Unknown current player");
     }

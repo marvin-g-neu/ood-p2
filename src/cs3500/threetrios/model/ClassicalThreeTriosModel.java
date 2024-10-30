@@ -14,24 +14,25 @@ import java.util.Random;
  * Implementation of a Three Trios game model using classic rules.
  */
 public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
-  private final Random rand = new Random();
+  private final Random rand;
 
   /**
    * Creates a model for a classic game of Three Trios
    */
   public ClassicalThreeTriosModel() {
-    this(false);
+    this.gameState = GameState.NOT_STARTED;
+    this.rand = new Random();
   }
 
   /**
    * Creates a model for a classic game of Three Trios where
    * the deck may be shuffled before the game
    *
-   * @param shuffle whether the deck should be shuffled
+   * @param seed whether the deck should be shuffled
    */
-  public ClassicalThreeTriosModel(boolean shuffle) {
+  public ClassicalThreeTriosModel(long seed) {
     this.gameState = GameState.NOT_STARTED;
-    this.shuffle = shuffle;
+    this.rand = new Random(seed);
   }
 
   @Override
@@ -55,12 +56,12 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
     if (gameState != GameState.NOT_STARTED) {
       throw new IllegalStateException("Game is already started");
     }
-    if (grid == null || deck == null) {
+    if (gameGrid == null || deck == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
-    for (int r = 0; r < grid.getRows(); r++) {
-      for (int c = 0; c < grid.getCols(); c++) {
-        if (grid.getCell(r, c) == null) {
+    for (int r = 0; r < gameGrid.getRows(); r++) {
+      for (int c = 0; c < gameGrid.getCols(); c++) {
+        if (gameGrid.getCell(r, c) == null) {
           throw new IllegalArgumentException("Grid cells cannot be null");
         }
       }
@@ -89,7 +90,10 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
     if (shuffle) {
       Collections.shuffle(this.deck, rand);
     }
-    for (int i = 0; i < (grid.getCardCells().size() + 1) / 2; i++) {
+
+    redHand = new ArrayList<>();
+    blueHand = new ArrayList<>();
+    for (int i = 0; i < (cardCellCount + 1) / 2; i++) {
       redHand.add(this.deck.remove(0));
       blueHand.add(this.deck.remove(0));
     }

@@ -27,11 +27,11 @@ public class ThreeTriosTextualView implements TextualView {
     StringBuilder result = new StringBuilder();
 
     // Add current player
-    result.append("PlayerColor: ").append(model.getCurrentPlayer()).append("\n");
+    result.append("Player: ").append(model.getCurrentPlayer()).append("\n");
 
     // Add board state
-    for (int row = 0; row < 5; row++) {
-      for (int col = 0; col < 5; col++) {
+    for (int row = 0; row < model.getGrid().getRows(); row++) {
+      for (int col = 0; col < model.getGrid().getCols(); col++) {
         switch (model.getCellStateAt(row, col)) {
           case EMPTY:
             result.append("_");

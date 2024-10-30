@@ -68,21 +68,29 @@ public class BasicThreeTriosGame extends GameRules {
     }
   }
 
+  /**
+   * Executes a battle at the given coordinates with the given direction.
+   *
+   * @param row the row of the cell
+   * @param col the column of the cell
+   * @param attackDirection the direction of the attack
+   * @param currentPlayer the current player
+   */
   private void battle(int row, int col, Direction attackDirection, PlayerColor currentPlayer) {
     int newRow = row;
     int newCol = col;
     switch (attackDirection) {
       case NORTH:
-        newRow += 1;
-        break;
-      case SOUTH:
         newRow -= 1;
         break;
+      case SOUTH:
+        newRow += 1;
+        break;
       case EAST:
-        newCol += 1;
+        newCol -= 1;
         break;
       case WEST:
-        newCol -= 1;
+        newCol += 1;
         break;
       default: // should never happen
         throw new IllegalArgumentException("Unknown Direction");

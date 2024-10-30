@@ -64,13 +64,6 @@ public interface ThreeTriosModelInterface {
   void playTurn(int row, int col, int handIndex);
 
   /**
-   * If the game should end, end the game. Otherwise, pass the turn.
-   *
-   * @throws IllegalStateException if the game has not been started or is over
-   */
-  void endTurn();
-
-  /**
    * End the game and return the board state.
    *
    * @return the final board state
