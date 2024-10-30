@@ -22,8 +22,6 @@ import static org.junit.Assert.assertEquals;
 public class ThreeTriosTextualViewTest {
   private ClassicalThreeTriosModel model;
   private ThreeTriosTextualView view;
-  private Grid grid;
-  private List<CustomCard> deck;
 
   @Before
   public void setUp() {
@@ -41,10 +39,10 @@ public class ThreeTriosTextualViewTest {
     }
 
     // Initialize grid
-    grid = new ThreeTriosBoard(cells);
+    Grid grid = new ThreeTriosBoard(cells);
 
     // Initialize deck with 10 cards
-    deck = Arrays.asList(
+    List<CustomCard> deck = Arrays.asList(
             new ThreeTriosCard("Red1", AttackValue.THREE, AttackValue.TWO,
                     AttackValue.ONE, AttackValue.ONE, CardColor.RED),
             new ThreeTriosCard("Blue1", AttackValue.TWO, AttackValue.THREE,
@@ -89,7 +87,7 @@ public class ThreeTriosTextualViewTest {
             "Red3 2 2 3 1\n" +
             "Red4 1 3 2 4\n" +
             "Red5 3 4 1 2\n";
-    
+
     assertEquals(expected, view.render());
   }
 
@@ -97,27 +95,25 @@ public class ThreeTriosTextualViewTest {
   public void testRenderAfterMoves() {
     // Red plays Red1 at (0,0)
     model.playTurn(0, 0, 0);
-    model.endTurn();
 
     // Blue plays Blue1 at (0,1)
     model.playTurn(0, 1, 0);
-    model.endTurn();
 
     // Red plays Red2 at (1,1)
-    model.playTurn(1, 1, 0);
-    model.endTurn();
+    model.playTurn(1, 1, 2);
 
     // Blue plays Blue2 at (2,2)
     model.playTurn(2, 2, 0);
-    model.endTurn();
+
+    System.out.println(view.render());
 
     String expected = "Player: RED\n" +
-            "R B _\n" +
-            "_ R _\n" +
-            "_ _ B\n" +
+            "RB_\n" +
+            "_R_\n" +
+            "__B\n" +
             "Hand:\n" +
+            "Red2 4 1 2 3\n" +
             "Red3 2 2 3 1\n" +
-            "Red4 1 3 2 4\n" +
             "Red5 3 4 1 2\n";
 
     assertEquals(expected, view.render());
@@ -151,24 +147,20 @@ public class ThreeTriosTextualViewTest {
   public void testRenderAfterFlipCard() {
     // Red plays Red1 at (0,0)
     model.playTurn(0, 0, 0);
-    model.endTurn();
 
     // Blue plays Blue1 at (0,1)
     model.playTurn(0, 1, 0);
-    model.endTurn();
 
     // Red plays Red2 at (1,1)
     model.playTurn(1, 1, 0);
-    model.endTurn();
 
     // Blue plays Blue2 at (0,0) to battle Red1
-    model.playTurn(0, 0, 0);
-    model.endTurn();
+    model.playTurn(1, 2, 0);
 
     String expected = "Player: RED\n" +
-            "B B _\n" +
-            "_ R _\n" +
-            "_ _ _\n" +
+            "RR_\n" +
+            "_RB\n" +
+            "___\n" +
             "Hand:\n" +
             "Red3 2 2 3 1\n" +
             "Red4 1 3 2 4\n" +

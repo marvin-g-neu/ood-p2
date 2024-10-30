@@ -81,16 +81,16 @@ public class BasicThreeTriosGame extends GameRules {
     int newCol = col;
     switch (attackDirection) {
       case NORTH:
-        newRow += 1;
-        break;
-      case SOUTH:
         newRow -= 1;
         break;
+      case SOUTH:
+        newRow += 1;
+        break;
       case EAST:
-        newCol += 1;
+        newCol -= 1;
         break;
       case WEST:
-        newCol -= 1;
+        newCol += 1;
         break;
       default: // should never happen
         throw new IllegalArgumentException("Unknown Direction");

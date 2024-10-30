@@ -88,17 +88,11 @@ public class ThreeTriosBoard implements Grid {
     cell.playCard(card);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int getRows() {
     return rows;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int getCols() {
     return cols;
@@ -118,9 +112,6 @@ public class ThreeTriosBoard implements Grid {
     return cells;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int getEmptyCellCount() {
     int count = 0;
