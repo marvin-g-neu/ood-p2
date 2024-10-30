@@ -16,7 +16,7 @@ import java.util.Random;
  * Implementation of a Three Trios game model using classic rules.
  */
 public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
-  private Random rand = new Random();
+  private final Random rand = new Random();
 
   /**
    * Creates a model for a classic game of Three Trios

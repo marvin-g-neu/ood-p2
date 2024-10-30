@@ -68,8 +68,10 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
       switch (currentPlayer) {
         case RED:
           currentPlayer = PlayerColor.BLUE;
+          break;
         case BLUE:
           currentPlayer = PlayerColor.RED;
+          break;
       }
     }
   }

@@ -15,7 +15,6 @@ public class ThreeTriosBoard implements Grid {
   private final Cell[][] board;
   private final int rows;
   private final int cols;
-  private final int cardCellCount;
 
   /**
    * Constructs a ThreeTriosBoard from a 2D array of empty and hole cells.
@@ -60,7 +59,6 @@ public class ThreeTriosBoard implements Grid {
     if (cardCells % 2 == 0) {
       throw new IllegalArgumentException("Even number of card cells not allowed");
     }
-    this.cardCellCount = cardCells;
   }
 
   @Override
