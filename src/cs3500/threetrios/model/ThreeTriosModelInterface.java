@@ -1,7 +1,6 @@
 package cs3500.threetrios.model;
 
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
@@ -102,18 +101,6 @@ public interface ThreeTriosModelInterface {
    * @throws IllegalStateException if the game has not been started
    */
   Grid getGrid();
-
-  /**
-   * Determines whether the attacker wins a battle.
-   *
-   * @param attacker        the value used by the attacker
-   * @param defender        the value used by the defender
-   * @param attackDirection the direction the attacking card is fighting
-   * @return returns true if the attacker wins based on the direction, false otherwise
-   * @throws IllegalArgumentException if any value is null
-   */
-  boolean attackerWinsBattle(CustomCard attacker, CustomCard defender, Direction attackDirection);
-
   /**
    * Gets the score of the given player.
    *
@@ -123,4 +110,11 @@ public interface ThreeTriosModelInterface {
    * @throws IllegalStateException    if the game has not been started
    */
   int getScore(PlayerColor player);
+
+  /**
+   * Gets the current state of the game.
+   *
+   * @return the game state
+   */
+  GameState getGameState();
 }

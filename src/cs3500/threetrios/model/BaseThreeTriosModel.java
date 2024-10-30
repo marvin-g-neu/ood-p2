@@ -28,6 +28,11 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
   }
 
   @Override
+  public GameState getGameState() {
+    return gameState;
+  }
+
+  @Override
   public PlayerColor getCurrentPlayer() {
     checkGameInProgress();
     return currentPlayer;
@@ -49,8 +54,11 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
 
     Cell cell = grid.getCell(row, col);
     CustomCard card = getCurrentPlayerHand().get(handIndex);
-    if (!rules.isLegalMove(cell, card)) {
+    if (cell.isHole()) {
       throw new IllegalStateException("Cell is a hole");
+    }
+    if (!rules.isLegalMove(cell, card)) {
+      throw new IllegalStateException("Cell already has a card");
     }
 
     grid.placeCard(card, row, col);

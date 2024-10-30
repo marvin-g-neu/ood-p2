@@ -3,7 +3,7 @@ package cs3500.threetrios.model.grid;
 import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.card.ThreeTriosCard;
+import cs3500.threetrios.model.cell.ThreeTriosCell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,32 +136,27 @@ public class ThreeTriosBoard implements Grid {
   }
 
   @Override
-  public CustomCard[] getAdjacentCards(int row, int col) {
+  public Cell[] getAdjacentCells(int row, int col) {
     validatePosition(row, col);
-
     // in [north, south, east, west] order
-    CustomCard[] adjacent = new ThreeTriosCard[4];
+    Cell[] adjacent = new ThreeTriosCell[4];
 
     // Check north
     if (row > 0) {
-      adjacent[0] = board[row - 1][col].getCard();
+      adjacent[0] = board[row - 1][col];
     }
-
     // Check south
     if (row < rows - 1) {
-      adjacent[1] = board[row + 1][col].getCard();
+      adjacent[1] = board[row + 1][col];
     }
-
     // Check east
     if (col < cols - 1) {
-      adjacent[2] = board[row][col + 1].getCard();
+      adjacent[2] = board[row][col + 1];
     }
-
     // Check west
     if (col > 0) {
-      adjacent[3] = board[row][col - 1].getCard();
+      adjacent[3] = board[row][col - 1];
     }
-
     return adjacent;
   }
 
