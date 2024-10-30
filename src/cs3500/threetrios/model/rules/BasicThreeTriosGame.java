@@ -31,19 +31,8 @@ public class BasicThreeTriosGame extends GameRules {
     if (attacker == null || defender == null || attackDirection == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
-    int attackerStrength = attacker.getStrength(attackDirection).getStrength();
-    switch (attackDirection) {
-      case NORTH:
-        return attackerStrength > defender.getStrength(Direction.SOUTH).getStrength();
-      case EAST:
-        return attackerStrength > defender.getStrength(Direction.WEST).getStrength();
-      case SOUTH:
-        return attackerStrength > defender.getStrength(Direction.NORTH).getStrength();
-      case WEST:
-        return attackerStrength > defender.getStrength(Direction.EAST).getStrength();
-      default: // should never happen
-        throw new IllegalArgumentException("Unknown Direction");
-    }
+    int attackerStrength = attacker.getAttackValue(attackDirection).getStrength();
+    return attackerStrength > defender.getAttackValue(getOppositeDirection(attackDirection)).getStrength();
   }
 
   @Override

@@ -79,7 +79,7 @@ public class ThreeTriosCard implements CustomCard {
   // Getters and setters
 
   @Override
-  public AttackValue getStrength(Direction direction) {
+  public AttackValue getAttackValue(Direction direction) {
     switch (direction) {
       case NORTH:
         return north;
