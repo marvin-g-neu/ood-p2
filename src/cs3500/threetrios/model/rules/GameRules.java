@@ -1,7 +1,7 @@
 package cs3500.threetrios.model.rules;
 
-import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;

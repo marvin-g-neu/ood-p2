@@ -1,8 +1,8 @@
 package cs3500.threetrios.model.cell;
 
+import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.PlayerColor;
 
 /**
  * An implementation of a cell from ThreeTrios.
