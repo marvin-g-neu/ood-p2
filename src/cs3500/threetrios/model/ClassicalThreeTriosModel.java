@@ -15,23 +15,26 @@ import java.util.Random;
  */
 public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
   private final Random rand;
+  private List<CustomCard> fullDeck;
 
   /**
-   * Creates a model for a classic game of Three Trios
+   * Creates a model for a classic game of Three Trios.
    */
   public ClassicalThreeTriosModel() {
-    this.gameState = GameState.NOT_STARTED;
+    // gameState is only set to NOT_STARTED in the constructor, so it can't go back to NOT_STARTED
+    setGameState(GameState.NOT_STARTED);
     this.rand = new Random();
   }
 
   /**
    * Creates a model for a classic game of Three Trios where
-   * the deck may be shuffled before the game
+   * the deck may be shuffled before the game.
    *
    * @param seed whether the deck should be shuffled
    */
   public ClassicalThreeTriosModel(long seed) {
-    this.gameState = GameState.NOT_STARTED;
+    // gameState is only set to NOT_STARTED in the constructor, so it can't go back to NOT_STARTED
+    setGameState(GameState.NOT_STARTED);
     this.rand = new Random(seed);
   }
 
@@ -53,7 +56,8 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
 
   @Override
   public void startGame(Grid gameGrid, List<CustomCard> deck, boolean shuffle) {
-    if (gameState != GameState.NOT_STARTED) {
+    // gameState is only set to IN_PROGRESS in startGame which checks that it is NOT_STARTED first
+    if (getGameState() != GameState.NOT_STARTED) {
       throw new IllegalStateException("Game is already started");
     }
     if (gameGrid == null || deck == null) {
@@ -76,7 +80,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
     this.deck = new ArrayList<>(deck);
     this.shuffle = shuffle;
     currentPlayer = PlayerColor.RED;
-    gameState = GameState.IN_PROGRESS;
+    setGameState(GameState.IN_PROGRESS);
     rules = new BasicThreeTriosGame(this);
 
     int cardCellCount = grid.getCardCells().size();
