@@ -20,24 +20,11 @@ public class ThreeTriosCard implements CustomCard {
    * @param east  the attack value of the custom card for the east direction
    * @param west  the attack value of the custom card for the west direction
    * @throws IllegalArgumentException if any parameters are null
+   * @throws IllegalArgumentException if name is empty
    */
   public ThreeTriosCard(String name,
                         AttackValue north, AttackValue south, AttackValue east, AttackValue west) {
-    if (name == null) {
-      throw new IllegalArgumentException("Name cannot be null");
-    }
-    if (north == null || south == null || east == null || west == null) {
-      throw new IllegalArgumentException("Attack values cannot be null");
-    }
-    // assigns the name and attack values to the card
-    this.name = name;
-    this.north = north;
-    this.south = south;
-    this.east = east;
-    this.west = west;
-
-    // the default color is UNASSIGNED until a player is given the card
-    this.currentColor = CardColor.UNASSIGNED;
+    this(name, north, south, east, west, CardColor.UNASSIGNED);
   }
 
   /**
@@ -50,6 +37,7 @@ public class ThreeTriosCard implements CustomCard {
    * @param west         the attack value of the custom card for the west direction
    * @param currentColor the color of the custom card
    * @throws IllegalArgumentException if any parameter is null
+   * @throws IllegalArgumentException if name size is 0
    */
   public ThreeTriosCard(String name,
                         AttackValue north,
@@ -58,13 +46,13 @@ public class ThreeTriosCard implements CustomCard {
                         AttackValue west,
                         CardColor currentColor) {
     if (name == null) {
-      throw new IllegalArgumentException("Name cannot be null");
-    }
-    if (currentColor == null) {
-      throw new IllegalArgumentException("Current color cannot be null");
+      throw new IllegalArgumentException("Parameters cannot be null");
     }
     if (north == null || south == null || east == null || west == null) {
       throw new IllegalArgumentException("Attack values cannot be null");
+    }
+    if (name.isEmpty()) {
+      throw new IllegalArgumentException("Name cannot be empty");
     }
     // assigns the name and attack values to the card
     this.name = name;
