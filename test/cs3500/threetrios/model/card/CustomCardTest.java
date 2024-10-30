@@ -10,58 +10,58 @@ import static org.junit.Assert.assertThrows;
  * For tests of common functionality among implementations, and tests of used enums.
  */
 public class CustomCardTest {
-  CustomCard bob;
+  CustomCard ttcBob;
 
   @Before
   public void setUp() {
-    bob = new ThreeTriosCard("Bob", AttackValue.THREE, AttackValue.TWO,
+    ttcBob = new ThreeTriosCard("Bob", AttackValue.THREE, AttackValue.TWO,
         AttackValue.A, AttackValue.ONE);
   }
 
   @Test
   public void getNameGetsName() {
-    assertEquals("Bob", bob.getName());
+    assertEquals("Bob", ttcBob.getName());
   }
 
   @Test
   public void toStringConvertsToStringCorrectly() {
-    assertEquals("Bob 3 2 A 1", bob.toString());
+    assertEquals("Bob 3 2 A 1", ttcBob.toString());
   }
 
   @Test
   public void getAttackValueGetsCorrectValue() {
-    assertEquals(AttackValue.THREE, bob.getAttackValue(Direction.NORTH));
-    assertEquals(AttackValue.TWO, bob.getAttackValue(Direction.SOUTH));
-    assertEquals(AttackValue.A, bob.getAttackValue(Direction.EAST));
-    assertEquals(AttackValue.ONE, bob.getAttackValue(Direction.WEST));
+    assertEquals(AttackValue.THREE, ttcBob.getAttackValue(Direction.NORTH));
+    assertEquals(AttackValue.TWO, ttcBob.getAttackValue(Direction.SOUTH));
+    assertEquals(AttackValue.A, ttcBob.getAttackValue(Direction.EAST));
+    assertEquals(AttackValue.ONE, ttcBob.getAttackValue(Direction.WEST));
   }
 
   @Test
   public void getAttackValueThrowsForNullDir() {
     assertThrows(IllegalArgumentException.class,
-        () -> bob.getAttackValue(null));
+        () -> ttcBob.getAttackValue(null));
   }
 
   @Test
   public void getCurrentColorGetsCorrectColor() {
-    assertEquals(bob.getCurrentColor(), CardColor.UNASSIGNED);
-    bob.setNewColor(CardColor.RED);
-    assertEquals(bob.getCurrentColor(), CardColor.RED);
-    bob.setNewColor(CardColor.BLUE);
-    assertEquals(bob.getCurrentColor(), CardColor.BLUE);
+    assertEquals(ttcBob.getCurrentColor(), CardColor.UNASSIGNED);
+    ttcBob.setNewColor(CardColor.RED);
+    assertEquals(ttcBob.getCurrentColor(), CardColor.RED);
+    ttcBob.setNewColor(CardColor.BLUE);
+    assertEquals(ttcBob.getCurrentColor(), CardColor.BLUE);
   }
 
   @Test
   public void setNewColorThrowsForNullColor() {
     assertThrows(IllegalArgumentException.class,
-        () -> bob.setNewColor(null));
+        () -> ttcBob.setNewColor(null));
   }
 
   @Test
   public void setNewColorThrowsForSameColor() {
-    bob.setNewColor(CardColor.RED);
+    ttcBob.setNewColor(CardColor.RED);
     assertThrows(IllegalArgumentException.class,
-        () -> bob.setNewColor(CardColor.RED));
+        () -> ttcBob.setNewColor(CardColor.RED));
   }
 
   // Enum tests

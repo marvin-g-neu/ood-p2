@@ -2,7 +2,11 @@ package cs3500.threetrios.model.card;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThrows;
+
+/**
+ * For testing constructors and implementation-specific edge cases or helpers.
+ */
 public class ThreeTriosCardTest {
   AttackValue avl = AttackValue.A;
   CardColor clr = CardColor.RED;
