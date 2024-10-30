@@ -14,7 +14,7 @@ public class CustomCardTest {
 
   @Before
   public void setUp() {
-    CustomCard bob = new ThreeTriosCard("Bob", AttackValue.THREE, AttackValue.TWO,
+    bob = new ThreeTriosCard("Bob", AttackValue.THREE, AttackValue.TWO,
         AttackValue.A, AttackValue.ONE);
   }
 
@@ -25,7 +25,7 @@ public class CustomCardTest {
 
   @Test
   public void toStringConvertsToStringCorrectly() {
-    assertEquals("Bob, 3, 2, A, 1", bob.toString());
+    assertEquals("Bob 3 2 A 1", bob.toString());
   }
 
   @Test
