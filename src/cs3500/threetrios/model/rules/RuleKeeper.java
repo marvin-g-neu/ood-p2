@@ -1,8 +1,8 @@
 package cs3500.threetrios.model.rules;
 
 import cs3500.threetrios.model.cell.Cell;
+import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.card.PlayerColor;
 
 /**
  * Interface for managing game rules in Three Trios.

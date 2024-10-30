@@ -1,9 +1,9 @@
 package cs3500.threetrios.model.rules;
 
+import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
-import cs3500.threetrios.model.card.PlayerColor;
 import cs3500.threetrios.model.grid.Grid;
 import java.util.LinkedList;
 import java.util.Queue;
