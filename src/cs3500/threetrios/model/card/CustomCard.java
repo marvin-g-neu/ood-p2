@@ -13,6 +13,13 @@ public interface CustomCard {
   String getName();
 
   /**
+   * Converts a custom card to a string representation.
+   *
+   * @return the string representation of a custom card
+   */
+  String toString();
+
+  /**
    * Gets the attack value strength of a custom card
    * in integer form for the given direction.
    *
@@ -36,11 +43,4 @@ public interface CustomCard {
    * @throws IllegalArgumentException if the card is already this color
    */
   void setNewColor(CardColor newColor);
-
-  /**
-   * Converts a custom card to a string representation.
-   *
-   * @return the string representation of a custom card
-   */
-  String toString();
 }

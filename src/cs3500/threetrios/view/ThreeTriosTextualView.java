@@ -22,9 +22,6 @@ public class ThreeTriosTextualView implements TextualView {
     this.model = model;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String render() {
     StringBuilder result = new StringBuilder();

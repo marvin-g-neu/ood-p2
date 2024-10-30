@@ -38,9 +38,6 @@ public class ThreeTriosCell implements Cell {
     return cellState == CellState.EMPTY;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PlayerColor getCellColor() {
     if (isHole()) {
@@ -61,7 +58,7 @@ public class ThreeTriosCell implements Cell {
 
   @Override
   public CellState getCellState() {
-    return null;
+    return cellState;
   }
 
   @Override
@@ -95,16 +92,16 @@ public class ThreeTriosCell implements Cell {
 
   @Override
   public void flipCard(CardColor opponentColor) {
-    if (card == null) {
-      throw new IllegalArgumentException("Card is null");
-    } else if (opponentColor == CardColor.UNASSIGNED) {
-      throw new IllegalArgumentException("Opponent color is unassigned");
-    } else if (this.card.getCurrentColor() == opponentColor) {
-      throw new IllegalArgumentException("Cell already has this color");
+    if (opponentColor == null) {
+      throw new IllegalArgumentException("Opponent color is null");
     } else if (cellState == CellState.HOLE) {
       throw new IllegalStateException("Cell is a hole");
     } else if (cellState == CellState.EMPTY) {
       throw new IllegalStateException("Cell is empty");
+    } else if (opponentColor == CardColor.UNASSIGNED) {
+      throw new IllegalArgumentException("Opponent color is unassigned");
+    } else if (this.card.getCurrentColor() == opponentColor) {
+      throw new IllegalArgumentException("Cell already has this color");
     }
 
     card.setNewColor(opponentColor);

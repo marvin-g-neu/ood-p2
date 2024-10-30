@@ -31,4 +31,12 @@ public enum AttackValue {
   public int getStrength() {
     return strength;
   }
+
+  @Override
+  public String toString() {
+    if (strength == 10) {
+      return "A";
+    }
+    return strength + "";
+  }
 }
