@@ -5,6 +5,9 @@ import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.card.ThreeTriosCard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Implementation of the Grid interface for the Three Trios game.
  */
@@ -12,7 +15,6 @@ public class ThreeTriosBoard implements Grid {
   private final Cell[][] board;
   private final int rows;
   private final int cols;
-  private final int cardCellCount;
 
   /**
    * Constructs a ThreeTriosBoard from a 2D array of empty and hole cells.
@@ -57,7 +59,6 @@ public class ThreeTriosBoard implements Grid {
     if (cardCells % 2 == 0) {
       throw new IllegalArgumentException("Even number of card cells not allowed");
     }
-    this.cardCellCount = cardCells;
   }
 
   @Override
@@ -103,12 +104,18 @@ public class ThreeTriosBoard implements Grid {
     return cols;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public int getCardCellCount() {
-    return cardCellCount;
+  public List<Cell> getCardCells() {
+    List<Cell> cells = new ArrayList<>();
+    for (int r = 0; r < board.length; r++) {
+      for (int c = 0; c < board[0].length; c++) {
+        Cell cell = board[r][c];
+        if (!cell.isHole()) {
+          cells.add(cell);
+        }
+      }
+    }
+    return cells;
   }
 
   /**

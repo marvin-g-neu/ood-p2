@@ -1,13 +1,13 @@
 package cs3500.threetrios.model;
 
-import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
+import cs3500.threetrios.model.rules.BasicThreeTriosGame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -15,16 +15,7 @@ import java.util.Random;
  * Implementation of a Three Trios game model using classic rules.
  */
 public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
-  // implement the methods in the ThreeTriosModelInterface interface
-  // for the classical version of the game in hw5
-  private Grid grid;
-  private List<CustomCard> fullDeck;
-  private List<CustomCard> deck;
-  private PlayerColor currentPlayer;
-  private GameState gameState;
-  private List<CustomCard> redHand;
-  private List<CustomCard> blueHand;
-  private boolean shuffle;
+  private final Random rand = new Random();
 
   /**
    * Creates a model for a classic game of Three Trios
@@ -42,25 +33,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
   public ClassicalThreeTriosModel(boolean shuffle) {
     this.gameState = GameState.NOT_STARTED;
     this.shuffle = shuffle;
-  }
-
-  @Override
-  public PlayerColor getCurrentPlayer() {
-    checkGameInProgress();
-    return currentPlayer;
-  }
-
-  @Override
-  public List<CustomCard> getCurrentPlayerHand() {
-    checkGameInProgress();
-    switch (currentPlayer) {
-      case RED:
-        return redHand;
-      case BLUE:
-        return blueHand;
-      default: // should never happen
-        throw new IllegalStateException("Unknown current player");
-    }
+    rules = new BasicThreeTriosGame(this);
   }
 
   @Override
@@ -91,7 +64,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
     checkGameInProgress();
 
     int score = 0;
-    for (Cell cell : getCardCells()) {
+    for (Cell cell : grid.getCardCells()) {
       if (cell.getCellColor() == player) {
         score++;
       }
@@ -99,104 +72,47 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
     return score;
   }
 
-  private List<Cell> getCardCells() {
-    List<Cell> cells = new ArrayList<>();
-    for (int r = 0; r < grid.getCols(); r++) {
-      for (int c = 0; c < grid.getRows(); c++) {
-        Cell cell = grid.getCell(r, c);
-        if (!cell.isHole()) {
-          cells.add(cell);
+  @Override
+  public void startGame(Grid gameGrid, List<CustomCard> deck, boolean shuffle) {
+    if (gameState != GameState.NOT_STARTED) {
+      throw new IllegalStateException("Game is already started");
+    }
+    if (grid == null || deck == null) {
+      throw new IllegalArgumentException("Parameters cannot be null");
+    }
+    for (int r = 0; r < grid.getRows(); r++) {
+      for (int c = 0; c < grid.getCols(); c++) {
+        if (grid.getCell(r, c) == null) {
+          throw new IllegalArgumentException("Grid cells cannot be null");
         }
       }
     }
-    return cells;
-  }
-
-  @Override
-  public Grid getGrid() {
-    checkGameInProgress();
-    return grid;
-  }
-
-  @Override
-  public void startGame(Grid gameGrid, List<CustomCard> deck, boolean shuffle) {
+    for (CustomCard card : deck) {
+      if (card == null) {
+        throw new IllegalArgumentException("Deck cards cannot be null");
+      }
+    }
     grid = gameGrid;
     fullDeck = new ArrayList<>(deck);
     this.deck = new ArrayList<>(deck);
     this.shuffle = shuffle;
-  }
+    currentPlayer = PlayerColor.RED;
+    gameState = GameState.IN_PROGRESS;
 
-  @Override
-  public void startGame(Grid gameGrid, List<CustomCard> deck) {
-    startGame(gameGrid, deck, true);
-  }
-
-  @Override
-  public CellState getCellStateAt(int row, int col) {
-    checkGameInProgress();
-    checkInRange(row, col);
-    return grid.getCell(row, col).getCardState();
-  }
-
-  @Override
-  public void playTurn(int row, int col, int handIndex) {
-    checkGameInProgress();
-    checkInRange(col, row);
-    if (handIndex < 0 || handIndex >= getCurrentPlayerHand().size()) {
-      throw new IllegalArgumentException("Hand index out of bounds");
+    int cardCellCount = grid.getCardCells().size();
+    if (cardCellCount % 2 == 0) {
+      throw new IllegalArgumentException("Cards cannot be even");
     }
-    if (grid.getCell(row, col).isHole()) {
-      throw new IllegalStateException("Cell is a hole");
-    }
-    if (!grid.getCell(row, col).isEmpty()) {
-      throw new IllegalStateException("Cell already occupied");
+    if (cardCellCount >= this.deck.size()) {
+      throw new IllegalArgumentException("There must be more cards than card cells");
     }
 
-    grid.placeCard(getCurrentPlayerHand().get(handIndex), row, col);
-  }
-
-  @Override
-  public void endTurn() {
-    checkGameInProgress();
-    if (blueHand.isEmpty() && redHand.isEmpty()) {
-      endGame();
-    } else {
-      switch (currentPlayer) {
-        case RED:
-          currentPlayer = PlayerColor.BLUE;
-        case BLUE:
-          currentPlayer = PlayerColor.RED;
-      }
+    if (shuffle) {
+      Collections.shuffle(this.deck, rand);
     }
-  }
-
-  @Override
-  public Grid endGame() {
-    checkGameInProgress();
-    if (redHand.isEmpty() && blueHand.isEmpty()) {
-      if (getScore(PlayerColor.RED) > getScore(PlayerColor.BLUE)) {
-        gameState = GameState.RED_WIN;
-      } else {
-        gameState = GameState.BLUE_WIN;
-      }
-    } else {
-      gameState = GameState.EARLY_QUIT;
-    }
-    return grid;
-  }
-
-  private void checkGameInProgress() {
-    if (gameState != GameState.IN_PROGRESS) {
-      throw new IllegalStateException("Game is not in progress");
-    }
-  }
-
-  private void checkInRange(int col, int row) {
-    if (col < 0 || col >= grid.getCols()) {
-      throw new IllegalArgumentException("Column out of bounds");
-    }
-    if (row < 0 || row >= grid.getRows()) {
-      throw new IllegalArgumentException("Row out of bounds");
+    for (int i = 0; i < (grid.getCardCells().size() + 1) / 2; i++) {
+      redHand.add(this.deck.remove(0));
+      blueHand.add(this.deck.remove(0));
     }
   }
 }

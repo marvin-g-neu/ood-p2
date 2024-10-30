@@ -17,7 +17,7 @@ public interface ThreeTriosModelInterface {
   // new versions of the game in the future into the abstract class
 
   /**
-   * Starts a game with the given grid and deck.
+   * Starts a game with the given grid and (shuffled) deck.
    *
    * @param gameGrid the grid for the game
    * @param deck     the deck for the game
@@ -30,13 +30,13 @@ public interface ThreeTriosModelInterface {
   void startGame(Grid gameGrid, List<CustomCard> deck);
 
   /**
-   * Starts a game with the given grid and deck.
+   * Starts a game with the given grid and deck, may shuffle deck.
    *
    * @param gameGrid the grid for the game
    * @param deck     the deck for the game
    * @param shuffle  whether to shuffle the deck before drawing hands
    * @throws IllegalArgumentException if the Grid is null or contains null values
-   * @throws IllegalArgumentException if the deck contains null values
+   * @throws IllegalArgumentException if the deck is null or contains null values
    * @throws IllegalArgumentException if the grid has an even number of card cells
    * @throws IllegalArgumentException if the deck does not have more cards than card cells
    * @throws IllegalStateException    if there is a game in play

@@ -60,7 +60,7 @@ public class ThreeTriosCell implements Cell {
   }
 
   @Override
-  public CellState getCardState() {
+  public CellState getCellState() {
     return null;
   }
 

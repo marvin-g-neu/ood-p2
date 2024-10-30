@@ -3,6 +3,8 @@ package cs3500.threetrios.model.grid;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
 
+import java.util.List;
+
 /**
  * Represents a game board grid for Three Trios.
  * The grid consists of cells that can either be holes or spaces for cards.
@@ -46,11 +48,11 @@ public interface Grid {
   int getCols();
 
   /**
-   * Counts the number of card cells (non-hole cells) in the grid.
+   * Gets all card cells (non-hole cells) in the grid.
    *
-   * @return the number of card cells
+   * @return all card cells
    */
-  int getCardCellCount();
+  List<Cell> getCardCells();
 
   /**
    * Gets the number of empty card cells in the grid.
