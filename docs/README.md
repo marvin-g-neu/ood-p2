@@ -150,8 +150,9 @@ These classes facilitate loading game configurations from external files.
 
 ## Source Organization
 
-The following diagram shows the source organization of the project:\
+The following diagram shows the source organization of the project:
 
+```
 ood-p2/
 #### subdirectories I | docs:
 |- docs/
@@ -201,5 +202,6 @@ ood-p2/
 |------ GameRules.java
 |------ BasicThreeTriosGame.java
 |------ Coordinates.java
+```
 #### subdirectories III | test:
-NOTE: Has the same structure as the src directory but with the addition of test classes for each of the classes in the src directory that are relevant to testing for the purpose of a working implementation for the model running the game.
+NOTE: Has the same structure as the src directory but with test classes for each of the classes in the src directory that are relevant to testing for the purpose of a working implementation for the model running the game.
