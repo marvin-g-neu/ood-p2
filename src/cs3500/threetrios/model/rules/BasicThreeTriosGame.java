@@ -3,7 +3,7 @@ package cs3500.threetrios.model.rules;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
-import cs3500.threetrios.model.PlayerName;
+import cs3500.threetrios.model.card.PlayerColor;
 import cs3500.threetrios.model.grid.Grid;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -23,7 +23,7 @@ public class BasicThreeTriosGame extends GameRules {
   }
 
   @Override
-  public void executeBattlePhase(CustomCard placedCard, int row, int col, PlayerName currentPlayer) {
+  public void executeBattlePhase(CustomCard placedCard, int row, int col, PlayerColor currentPlayer) {
     Queue<Coordinates> battleQueue = new LinkedList<>();
     Grid grid = model.getGrid();
     battleQueue.add(new Coordinates(row, col));

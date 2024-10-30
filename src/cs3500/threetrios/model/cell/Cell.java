@@ -40,7 +40,7 @@ public interface Cell {
    *
    * @return the cell state
    */
-  CellState getCardState();
+  CellState getCellState();
 
   /**
    * Gets the card in a cell.
