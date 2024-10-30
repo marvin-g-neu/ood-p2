@@ -23,7 +23,8 @@ public class BasicThreeTriosGame extends GameRules {
   }
 
   @Override
-  public void executeBattlePhase(CustomCard placedCard, int row, int col, PlayerColor currentPlayer) {
+  public void executeBattlePhase(int row, int col, PlayerColor currentPlayer) {
+    CustomCard placedCard = model.getGrid().getCell(row, col).getCard();
     Queue<Coordinates> battleQueue = new LinkedList<>();
     Grid grid = model.getGrid();
     battleQueue.add(new Coordinates(row, col));
@@ -55,7 +56,7 @@ public class BasicThreeTriosGame extends GameRules {
   }
 
   @Override
-  public boolean isGameOver() {
+  public boolean isGameCompleted() {
     Grid grid = model.getGrid();
     return grid.getEmptyCellCount() == 0 || 
            model.getCurrentPlayerHand().isEmpty();

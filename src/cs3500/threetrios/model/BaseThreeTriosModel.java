@@ -54,14 +54,14 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
     }
 
     grid.placeCard(card, row, col);
-    rules.executeBattlePhase(card, row, col, currentPlayer);
+    rules.executeBattlePhase(row, col, currentPlayer);
     endTurn();
   }
 
   @Override
   public void endTurn() {
     checkGameInProgress();
-    if (rules.isGameOver()) {
+    if (rules.isGameCompleted()) {
       endGame();
     } else {
       switch (currentPlayer) {
@@ -78,7 +78,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
   @Override
   public Grid endGame() {
     checkGameInProgress();
-    if (rules.isGameOver()) {
+    if (rules.isGameCompleted()) {
       if (getScore(PlayerColor.RED) > getScore(PlayerColor.BLUE)) {
         gameState = GameState.RED_WIN;
       } else {

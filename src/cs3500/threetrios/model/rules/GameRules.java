@@ -2,6 +2,7 @@ package cs3500.threetrios.model.rules;
 
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
+import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
@@ -31,13 +32,18 @@ public abstract class GameRules implements RuleKeeper {
   }
 
   @Override
-  public String getOppositeDirection(String direction) {
+  public Direction getOppositeDirection(Direction direction) {
     switch (direction) {
-      case "NORTH": return "SOUTH";
-      case "SOUTH": return "NORTH";
-      case "EAST": return "WEST";
-      case "WEST": return "EAST";
-      default: return null; // should never happen
+      case NORTH:
+        return Direction.SOUTH;
+      case SOUTH:
+        return Direction.NORTH;
+      case EAST:
+        return Direction.EAST;
+      case WEST:
+        return Direction.WEST;
+      default:
+        throw new IllegalArgumentException("Invalid direction"); // should never happen
     }
   }
 
