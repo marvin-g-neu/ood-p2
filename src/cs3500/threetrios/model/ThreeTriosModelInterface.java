@@ -83,7 +83,7 @@ public interface ThreeTriosModelInterface {
    * Gets the current player's hand.
    *
    * @return the current player's hand
-   * @throws IllegalStateException if the game has not been started
+   * @throws IllegalStateException if the game has not been started or is over
    */
   List<CustomCard> getCurrentPlayerHand();
 
