@@ -69,18 +69,11 @@ while (model.getGameState() == GameState.IN_PROGRESS) {
 }
 ```
 
-## Design Rationale
+## Analysis
 
-1. **Separation of Concerns**: The Player interface is focused solely on decision-making, while the model handles game logic and state management.
+1. The Player interface is focused solely on decision-making, while the model handles game logic and state management. The interface supports both human and AI implementations without modifying the core game logic. Invalid moves are caught and can be handled appropriately, allowing for retry attempts. This interface makes it easy to create mock players for testing game logic.  
 
-2. **Flexibility**: The interface supports both human and AI implementations without modifying the core game logic.
-
-3. **Error Handling**: Invalid moves are caught and can be handled appropriately, allowing for retry attempts.
-
-4. **Future Extensibility**: The design allows for:
-   - More sophisticated AI implementations
-   - Network-based remote players
-   - GUI-based human players
-   - Replay/recording of games
-
-5. **Testing**: The interface makes it easy to create mock players for testing game logic.
+2. And the design allows for:
+   - AI Player implementations
+   - Remote human players
+   - Live human players w/ the GUI
