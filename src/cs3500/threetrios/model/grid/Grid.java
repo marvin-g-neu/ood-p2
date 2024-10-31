@@ -48,9 +48,9 @@ public interface Grid {
   int getCols();
 
   /**
-   * Gets all card cells (non-hole cells) in the grid.
+   * Gets all card cells (non-hole cells) in the grid and returns copies of them.
    *
-   * @return all card cells
+   * @return copies of all card cells
    */
   List<Cell> getCardCells();
 

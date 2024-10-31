@@ -74,15 +74,14 @@ public class ThreeTriosBoard implements Grid {
     } else if (card.getCurrentColor() == CardColor.UNASSIGNED) {
       throw new IllegalArgumentException("Card must have a color");
     }
-
     validatePosition(row, col);
     Cell cell = board[row][col];
 
     if (cell.isHole()) {
-      throw new IllegalArgumentException("Cannot place card in a hole");
+      throw new IllegalStateException("Cannot place card in a hole");
     }
     if (!cell.isEmpty()) {
-      throw new IllegalArgumentException("Cell is already occupied");
+      throw new IllegalStateException("Cell is already occupied");
     }
 
     cell.playCard(card);
@@ -105,11 +104,19 @@ public class ThreeTriosBoard implements Grid {
       for (int c = 0; c < board[0].length; c++) {
         Cell cell = board[r][c];
         if (!cell.isHole()) {
-          cells.add(cell);
+          cells.add(makeCellCopy(cell));
         }
       }
     }
     return cells;
+  }
+
+  private Cell makeCellCopy(Cell cell) {
+    Cell copy = new ThreeTriosCell(cell.isHole());
+    if (!copy.isHole() && !cell.isEmpty()) {
+      copy.playCard(cell.getCard());
+    }
+    return copy;
   }
 
   @Override
