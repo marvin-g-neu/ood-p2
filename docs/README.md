@@ -81,13 +81,13 @@ The **model** is the core of the game logic, managing the state of the game, inc
   - An abstract class providing common implementations for different game variants, facilitating future extensions with additional rules.
 
 - **`ClassicalThreeTriosModel`**
-  - Implements the classic rules of Three Trios, handling game flow, move validations, and score calculations. The readonly version allows the controller and view to interact with the model without modifying its state, currently used by the textual view; we have NOT implemented the readonly version in this homework, but plan to do so in future homeworks as we will supply it to the GUI version of the view.
+  - Implements the classic rules of Three Trios, handling game flow, move validations, and score calculations. The readonly version allows the controller and view to interact with the model without modifying its state; we have NOT implemented the readonly version in this homework, but plan to do so in future homeworks as we will supply it to the GUI version of the view.
 
 - **`GameState`**
   - An enum representing the possible states of the game, used to transition between different phases within the model.
 
 - **`PlayerColor`**
-  - An enum representing the possible colors of a player (RED or BLUE). `CardColor` includes an `UNASSIGNED` value to represent cards without a player color.
+  - An enum representing the possible colors of a player (RED or BLUE). `CardColor` includes an `UNASSIGNED` value to represent cards without a player color which is used in our model.card subcomponent.
 
 #### Subcomponents
 
