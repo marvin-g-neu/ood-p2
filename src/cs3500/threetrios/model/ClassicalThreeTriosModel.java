@@ -48,7 +48,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
 
     int score = 0;
     for (Cell cell : grid.getCardCells()) {
-      if (cell.getCellColor() == player) {
+      if (!cell.isEmpty() && cell.getCellColor() == player) {
         score++;
       }
     }
