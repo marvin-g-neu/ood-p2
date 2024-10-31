@@ -27,7 +27,7 @@ import cs3500.threetrios.view.DeckFileReader;
 3. Use the File.separator to create the path to the config files for the grid and deck in the docs folder that works for any operating system:
 
 ```java
-String gridWithNoReachableCardCells = "docs" + File.separator + "boards" + File.separator + "boardWithNoReachableCardCells.config";
+String gridWithNoReachableCardCells = "docs" + File.separator + "boards" + File.separator + "boardWithNoUnreachableCardCells.config";
 String deckWithSomeCardsMissing = "docs" + File.separator + "cards" + File.separator + "someCards.config";
 ```
 
@@ -204,4 +204,6 @@ ood-p2/
 |------ Coordinates.java
 ```
 #### subdirectories III | test:
-NOTE: Has the same structure as the src directory but with test classes for each of the classes in the src directory that are relevant to testing for the purpose of a working implementation for the model running the game.
+NOTE: Has the same structure as the src directory but with test classes for each of the classes 
+in the src directory that are relevant to testing for the purpose of a working implementation 
+for the model running the game.

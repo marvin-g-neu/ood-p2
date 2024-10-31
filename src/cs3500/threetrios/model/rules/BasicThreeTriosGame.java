@@ -41,6 +41,7 @@ public class BasicThreeTriosGame extends GameRules {
       throw new IllegalArgumentException("Current player cannot be null");
     }
     if (row < 0 || row >= grid.getRows() || col < 0 || col >= grid.getCols()) {
+      System.out.print(row + " " + col);
       throw new IllegalArgumentException("Coordinates must be in range");
     }
     if (model.getGameState() != GameState.IN_PROGRESS) {
@@ -87,10 +88,10 @@ public class BasicThreeTriosGame extends GameRules {
         newRow += 1;
         break;
       case EAST:
-        newCol -= 1;
+        newCol += 1;
         break;
       case WEST:
-        newCol += 1;
+        newCol -= 1;
         break;
       default: // should never happen
         throw new IllegalArgumentException("Unknown Direction");

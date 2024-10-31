@@ -13,6 +13,7 @@ import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.cell.ThreeTriosCell;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
+import cs3500.threetrios.view.ThreeTriosTextualView;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,6 +31,7 @@ public class BasicThreeTriosGameTest {
   private List<CustomCard> deck;
   private Cell testCell;
   private CustomCard testCard;
+  private ThreeTriosTextualView view;
 
   @Before
   public void setUp() {
@@ -75,6 +77,9 @@ public class BasicThreeTriosGameTest {
     testCell = new ThreeTriosCell(false);
     testCard = new ThreeTriosCard("Test", AttackValue.THREE, AttackValue.TWO,
             AttackValue.ONE, AttackValue.ONE, CardColor.RED);
+
+    // Render the board to the console via the view for debugging
+    view = new ThreeTriosTextualView(model);
   }
 
   // Tests for isLegalMove
@@ -128,7 +133,16 @@ public class BasicThreeTriosGameTest {
             AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.BLUE);
 
     assertTrue(rules.attackerWinsBattle(attacker, defender, Direction.NORTH));
-    assertFalse(rules.attackerWinsBattle(defender, attacker, Direction.NORTH));
+  }
+
+  @Test
+  public void testAttackerLosesBattle() {
+    CustomCard attacker = new ThreeTriosCard("Attacker", AttackValue.THREE,
+            AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.BLUE);
+    CustomCard defender = new ThreeTriosCard("Defender", AttackValue.FOUR,
+            AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.RED);
+
+    assertFalse(rules.attackerWinsBattle(attacker, defender, Direction.SOUTH));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -160,17 +174,22 @@ public class BasicThreeTriosGameTest {
   @Test
   public void testExecuteBattlePhaseComboFlip() {
     // Setup a scenario for combo flips
-    model.playTurn(1, 1, 0); // Red1 in center
-    model.playTurn(0, 1, 0); // Blue1 above center
-    model.playTurn(1, 0, 0); // Red2 left of center
-    model.playTurn(2, 1, 0); // Blue2 below center
+    System.out.print(view.render());
+    model.playTurn(1, 1, 0);
+    System.out.print(view.render());
+    model.playTurn(2, 2, 4);
+    System.out.print(view.render());
+    model.playTurn(1, 0, 0);
+    System.out.print(view.render());
+    model.playTurn(2, 1, 0);
+    System.out.print(view.render());
 
-    // Place a strong card that will trigger multiple flips
-    model.playTurn(1, 2, 0); // Red3 right of center
+    // combo flip move
+    model.playTurn(1, 2, 1);
+    System.out.print(view.render());
 
     // Verify the combo flip occurred
-    assertEquals(CardColor.RED.getColor(), model.getCellStateAt(1, 1).getName());
-    assertEquals(CardColor.RED.getColor(), model.getCellStateAt(0, 1).getName());
+    assertEquals(CardColor.RED.getColor(), model.getCellStateAt(2, 2).getName());
     assertEquals(CardColor.RED.getColor(), model.getCellStateAt(2, 1).getName());
   }
 

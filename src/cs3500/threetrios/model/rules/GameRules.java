@@ -53,9 +53,9 @@ public abstract class GameRules implements RuleKeeper {
       case SOUTH:
         return Direction.NORTH;
       case EAST:
-        return Direction.EAST;
-      case WEST:
         return Direction.WEST;
+      case WEST:
+        return Direction.EAST;
       default:
         throw new IllegalArgumentException("Invalid direction"); // should never happen
     }
