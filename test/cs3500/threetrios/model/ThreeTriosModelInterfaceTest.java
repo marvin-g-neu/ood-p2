@@ -2,10 +2,7 @@ package cs3500.threetrios.model;
 
 import cs3500.threetrios.controller.readers.DeckFileReader;
 import cs3500.threetrios.controller.readers.GridFileReader;
-import cs3500.threetrios.model.card.AttackValue;
-import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.card.ThreeTriosCard;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
@@ -19,9 +16,6 @@ import static org.junit.Assert.*;
 public class ThreeTriosModelInterfaceTest {
   private Grid ttbNoUnreachableGrid;
   private Grid ttbOneByOneGrid;
-  private CustomCard redCard;
-  private CustomCard unassignedCard;
-  private Cell[][] noUnreachableBoard;
   private List<CustomCard> allNecessaryCards;
 
   private ThreeTriosModelInterface basicModel;
@@ -32,17 +26,12 @@ public class ThreeTriosModelInterfaceTest {
     DeckFileReader deckReader = new DeckFileReader();
     Cell[][] oneByOneBoard = gridReader.readFile(
         "docs/boards/oneByOneBoard.config");
-    noUnreachableBoard = gridReader.readFile(
+    Cell[][] noUnreachableBoard = gridReader.readFile(
         "docs/boards/boardWithNoUnreachableCardCells.config");
     allNecessaryCards = deckReader.readFile(
         "docs/cards/AllNecessaryCards.config");
     ttbNoUnreachableGrid = new ThreeTriosBoard(noUnreachableBoard);
     ttbOneByOneGrid = new ThreeTriosBoard(oneByOneBoard);
-
-    redCard = new ThreeTriosCard("Card", AttackValue.A,
-        AttackValue.A, AttackValue.A, AttackValue.A, CardColor.RED);
-    unassignedCard = new ThreeTriosCard("Card", AttackValue.A,
-        AttackValue.A, AttackValue.A, AttackValue.A);
 
     basicModel = new ClassicalThreeTriosModel();
   }
