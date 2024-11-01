@@ -104,14 +104,14 @@ public class ThreeTriosTextualViewTest {
 
     System.out.println(view.render());
 
-    String expected = "Player: RED\n" +
-        "RB_\n" +
-        "_R_\n" +
-        "__B\n" +
-        "Hand:\n" +
-        "Red2 4 1 2 3\n" +
-        "Red3 2 2 3 1\n" +
-        "Red5 3 4 1 2\n";
+    String expected = "Player: RED\n"
+        + "RB_\n"
+        + "_R_\n"
+        + "__B\n"
+        + "Hand:\n"
+        + "Red2 4 1 2 3\n"
+        + "Red3 2 2 3 1\n"
+        + "Red5 3 4 1 2\n";
 
     assertEquals(expected, view.render());
   }
@@ -126,16 +126,16 @@ public class ThreeTriosTextualViewTest {
     }
 
     // Render should remain the same as initial
-    String expected = "Player: RED\n" +
-        "___\n" +
-        "___\n" +
-        "___\n" +
-        "Hand:\n" +
-        "Red1 3 2 1 1\n" +
-        "Red2 4 1 2 3\n" +
-        "Red3 2 2 3 1\n" +
-        "Red4 1 3 2 4\n" +
-        "Red5 3 4 1 2\n";
+    String expected = "Player: RED\n"
+        + "___\n"
+        + "___\n"
+        + "___\n"
+        + "Hand:\n"
+        + "Red1 3 2 1 1\n"
+        + "Red2 4 1 2 3\n"
+        + "Red3 2 2 3 1\n"
+        + "Red4 1 3 2 4\n"
+        + "Red5 3 4 1 2\n";
 
     assertEquals(expected, view.render());
   }
@@ -197,13 +197,13 @@ public class ThreeTriosTextualViewTest {
       secondBattle = "RB";
     }
 
-    return "Player: RED\n" + firstBattle +
-        "_\n" +
-        "_" + secondBattle + "\n" +
-        "___\n" +
-        "Hand:\n" +
-        "Red3 2 2 3 1\n" +
-        "Red4 1 3 2 4\n" +
-        "Red5 3 4 1 2\n";
+    return "Player: RED\n" + firstBattle
+        + "_\n"
+        + "_" + secondBattle + "\n"
+        + "___\n"
+        + "Hand:\n"
+        + "Red3 2 2 3 1\n"
+        + "Red4 1 3 2 4\n"
+        + "Red5 3 4 1 2\n";
   }
 }
