@@ -1,15 +1,13 @@
 package cs3500.threetrios.model;
 
-import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.card.ThreeTriosCard;
-import cs3500.threetrios.model.card.AttackValue;
-import cs3500.threetrios.model.card.CardColor;
+import cs3500.threetrios.controller.readers.DeckFileReader;
+import cs3500.threetrios.controller.readers.GridFileReader;
+import cs3500.threetrios.model.card.*;
+import cs3500.threetrios.model.cell.Cell;
+import cs3500.threetrios.model.cell.CellState;
+import cs3500.threetrios.model.cell.ThreeTriosCell;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
-import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.cell.ThreeTriosCell;
-import cs3500.threetrios.view.TextualView;
-import cs3500.threetrios.view.ThreeTriosTextualView;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,15 +15,32 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+public class ThreeTriosModelInterfaceTest {
+  private Grid ttbNoUnreachableGrid;
+  private Grid ttbOneByOneGrid;
+  private List<CustomCard> allNecessaryCards;
 
-public class ClassicalThreeTriosModelTest {
+  private ThreeTriosModelInterface basicModel;
+
   private ClassicalThreeTriosModel model;
   private Grid grid;
   private List<CustomCard> deck;
-  private TextualView view;
 
   @Before
   public void setUp() {
+    GridFileReader gridReader = new GridFileReader();
+    DeckFileReader deckReader = new DeckFileReader();
+    Cell[][] oneByOneBoard = gridReader.readFile(
+        "docs/boards/oneByOneBoard.config");
+    Cell[][] noUnreachableBoard = gridReader.readFile(
+        "docs/boards/boardWithNoUnreachableCardCells.config");
+    allNecessaryCards = deckReader.readFile(
+        "docs/cards/AllNecessaryCards.config");
+    ttbNoUnreachableGrid = new ThreeTriosBoard(noUnreachableBoard);
+    ttbOneByOneGrid = new ThreeTriosBoard(oneByOneBoard);
+
+    basicModel = new ClassicalThreeTriosModel();
+
     // Initialize a simple 3x3 grid with no holes
     Cell[][] cells = new Cell[3][3];
     for (int r = 0; r < 3; r++) {
@@ -37,20 +52,106 @@ public class ClassicalThreeTriosModelTest {
 
     // Initialize a deck with 10 cards
     deck = Arrays.asList(
-            new ThreeTriosCard("Red1", AttackValue.THREE, AttackValue.TWO, AttackValue.ONE, AttackValue.ONE, CardColor.RED),
-            new ThreeTriosCard("Blue1", AttackValue.TWO, AttackValue.THREE, AttackValue.ONE, AttackValue.ONE, CardColor.BLUE),
-            new ThreeTriosCard("Red2", AttackValue.FOUR, AttackValue.ONE, AttackValue.TWO, AttackValue.THREE, CardColor.RED),
-            new ThreeTriosCard("Blue2", AttackValue.ONE, AttackValue.FOUR, AttackValue.TWO, AttackValue.THREE, CardColor.BLUE),
-            new ThreeTriosCard("Red3", AttackValue.TWO, AttackValue.TWO, AttackValue.THREE, AttackValue.ONE, CardColor.RED),
-            new ThreeTriosCard("Blue3", AttackValue.THREE, AttackValue.TWO, AttackValue.ONE, AttackValue.FOUR, CardColor.BLUE),
-            new ThreeTriosCard("Red4", AttackValue.ONE, AttackValue.THREE, AttackValue.TWO, AttackValue.FOUR, CardColor.RED),
-            new ThreeTriosCard("Blue4", AttackValue.FOUR, AttackValue.ONE, AttackValue.THREE, AttackValue.TWO, CardColor.BLUE),
-            new ThreeTriosCard("Red5", AttackValue.THREE, AttackValue.FOUR, AttackValue.ONE, AttackValue.TWO, CardColor.RED),
-            new ThreeTriosCard("Blue5", AttackValue.TWO, AttackValue.ONE, AttackValue.FOUR, AttackValue.THREE, CardColor.BLUE)
+        new ThreeTriosCard("Red1", AttackValue.THREE, AttackValue.TWO, AttackValue.ONE, AttackValue.ONE, CardColor.RED),
+        new ThreeTriosCard("Blue1", AttackValue.TWO, AttackValue.THREE, AttackValue.ONE, AttackValue.ONE, CardColor.BLUE),
+        new ThreeTriosCard("Red2", AttackValue.FOUR, AttackValue.ONE, AttackValue.TWO, AttackValue.THREE, CardColor.RED),
+        new ThreeTriosCard("Blue2", AttackValue.ONE, AttackValue.FOUR, AttackValue.TWO, AttackValue.THREE, CardColor.BLUE),
+        new ThreeTriosCard("Red3", AttackValue.TWO, AttackValue.TWO, AttackValue.THREE, AttackValue.ONE, CardColor.RED),
+        new ThreeTriosCard("Blue3", AttackValue.THREE, AttackValue.TWO, AttackValue.ONE, AttackValue.FOUR, CardColor.BLUE),
+        new ThreeTriosCard("Red4", AttackValue.ONE, AttackValue.THREE, AttackValue.TWO, AttackValue.FOUR, CardColor.RED),
+        new ThreeTriosCard("Blue4", AttackValue.FOUR, AttackValue.ONE, AttackValue.THREE, AttackValue.TWO, CardColor.BLUE),
+        new ThreeTriosCard("Red5", AttackValue.THREE, AttackValue.FOUR, AttackValue.ONE, AttackValue.TWO, CardColor.RED),
+        new ThreeTriosCard("Blue5", AttackValue.TWO, AttackValue.ONE, AttackValue.FOUR, AttackValue.THREE, CardColor.BLUE)
     );
 
     model = new ClassicalThreeTriosModel();
-    view = new ThreeTriosTextualView(model);
+  }
+
+  @Test
+  public void getCellStateAtThrowsWhenExpected() {
+    assertThrows(IllegalStateException.class, () -> basicModel.getCellStateAt(0, 0));
+    basicModel.startGame(ttbNoUnreachableGrid, allNecessaryCards);
+    assertThrows(IllegalArgumentException.class, () -> basicModel.getCellStateAt(4, 6));
+    assertThrows(IllegalArgumentException.class, () -> basicModel.getCellStateAt(3, 7));
+    assertThrows(IllegalArgumentException.class, () -> basicModel.getCellStateAt(-1, 1));
+    assertThrows(IllegalArgumentException.class, () -> basicModel.getCellStateAt(1, -1));
+  }
+
+  @Test
+  public void getCellStateAtGetsStateCorrectly() {
+    basicModel.startGame(ttbNoUnreachableGrid, allNecessaryCards, false);
+    assertEquals(CellState.EMPTY, basicModel.getCellStateAt(0, 0));
+    assertEquals(CellState.HOLE, basicModel.getCellStateAt(3, 6));
+    basicModel.playTurn(0, 0, 0);
+    assertEquals(CellState.RED, basicModel.getCellStateAt(0, 0));
+    basicModel.playTurn(0, 2, 0);
+    assertEquals(CellState.BLUE, basicModel.getCellStateAt(0, 2));
+    assertEquals(CellState.RED, basicModel.getCellStateAt(0, 0));
+  }
+
+  @Test
+  public void endGameThrowsWhenGameNotInProgress() {
+    assertThrows(IllegalStateException.class, () -> basicModel.endGame());
+    basicModel.startGame(ttbOneByOneGrid, allNecessaryCards);
+    basicModel.playTurn(0, 0, 0);
+    assertEquals(GameState.RED_WIN, basicModel.getGameState());
+    assertThrows(IllegalStateException.class, () -> basicModel.endGame());
+  }
+
+  @Test
+  public void endGameEndsGameWhenExpected() {
+    basicModel.startGame(ttbNoUnreachableGrid, allNecessaryCards);
+    basicModel.endGame();
+    assertEquals(GameState.EARLY_QUIT, basicModel.getGameState());
+
+    basicModel = new ClassicalThreeTriosModel();
+    basicModel.startGame(ttbNoUnreachableGrid, allNecessaryCards);
+    basicModel.playTurn(0, 0, 0);
+    assertEquals(GameState.IN_PROGRESS, basicModel.getGameState());
+    basicModel.playTurn(0, 2, 0);
+    assertEquals(GameState.IN_PROGRESS, basicModel.getGameState());
+    basicModel.endGame();
+    assertEquals(GameState.EARLY_QUIT, basicModel.getGameState());
+  }
+
+  @Test
+  public void getCurrentPlayerThrowsWhenGameNotInProgress() {
+    assertThrows(IllegalStateException.class, () -> basicModel.getCurrentPlayer());
+  }
+
+  @Test
+  public void getCurrentPlayerReturnsCurrentPlayer() {
+    basicModel.startGame(ttbNoUnreachableGrid, allNecessaryCards);
+    assertEquals(PlayerColor.RED, basicModel.getCurrentPlayer());
+    basicModel.playTurn(0, 0, 0);
+    assertEquals(PlayerColor.BLUE, basicModel.getCurrentPlayer());
+    basicModel.playTurn(0, 2, 0);
+    assertEquals(PlayerColor.RED, basicModel.getCurrentPlayer());
+  }
+
+  @Test
+  public void getCurrentPlayerHandThrowsWhenGameNotStarted() {
+    assertThrows(IllegalStateException.class, () -> basicModel.getCurrentPlayerHand());
+    basicModel.startGame(ttbOneByOneGrid, allNecessaryCards);
+    basicModel.playTurn(0, 0, 0);
+    assertThrows(IllegalStateException.class, () -> basicModel.getCurrentPlayerHand());
+  }
+
+  @Test
+  public void getCurrentPlayerHandGetsCorrectHand() {
+    basicModel.startGame(ttbNoUnreachableGrid, allNecessaryCards);
+    List<CustomCard> originalRedHand = basicModel.getCurrentPlayerHand();
+    assertEquals(10, originalRedHand.size());
+    basicModel.playTurn(0, 0, 0);
+    List<CustomCard> originalBlueHand = basicModel.getCurrentPlayerHand();
+    assertEquals(10, originalBlueHand.size());
+    for (int i = 0; i < originalRedHand.size(); i++) {
+      assertNotEquals(originalRedHand.get(i), originalBlueHand.get(i));
+    }
+    basicModel.playTurn(0, 2, 0);
+    List<CustomCard> newRedHand = basicModel.getCurrentPlayerHand();
+    assertEquals(9, newRedHand.size());
+    assertFalse(newRedHand.contains(originalRedHand.get(0)));
   }
 
   // Tests for startGame methods
@@ -144,21 +245,43 @@ public class ClassicalThreeTriosModelTest {
   @Test
   public void testGetScoreAfterPlays() {
     model.startGame(grid, deck);
+    CustomCard redPlay = model.getCurrentPlayerHand().get(0);
+    boolean blueBeatRed = false;
 
     // RED plays at (0,0)
     model.playTurn(0, 0, 0);
     assertEquals(1, model.getScore(PlayerColor.RED));
     assertEquals(0, model.getScore(PlayerColor.BLUE));
 
+    CustomCard bluePlay = model.getCurrentPlayerHand().get(0);
     // BLUE plays at (0,1)
     model.playTurn(0, 1, 0);
-    assertEquals(1, model.getScore(PlayerColor.RED));
-    assertEquals(1, model.getScore(PlayerColor.BLUE));
+    if (redPlay.getAttackValue(Direction.EAST).getStrength()
+        >= bluePlay.getAttackValue(Direction.WEST).getStrength()) {
+      assertEquals(1, model.getScore(PlayerColor.RED));
+      assertEquals(1, model.getScore(PlayerColor.BLUE));
+    } else {
+      assertEquals(0, model.getScore(PlayerColor.RED));
+      assertEquals(2, model.getScore(PlayerColor.BLUE));
+      blueBeatRed = true;
+    }
 
     // RED plays at (1,1)
+    CustomCard secondRedPlay = model.getCurrentPlayerHand().get(1);
     model.playTurn(1, 1, 1);
-    assertEquals(2, model.getScore(PlayerColor.RED));
-    assertEquals(1, model.getScore(PlayerColor.BLUE));
+    if (secondRedPlay.getAttackValue(Direction.NORTH).getStrength()
+        > bluePlay.getAttackValue(Direction.SOUTH).getStrength()) {
+      assertEquals(3, model.getScore(PlayerColor.RED));
+      assertEquals(0, model.getScore(PlayerColor.BLUE));
+    } else {
+      if (blueBeatRed) {
+        assertEquals(1, model.getScore(PlayerColor.RED));
+        assertEquals(2, model.getScore(PlayerColor.BLUE));
+      } else {
+        assertEquals(2, model.getScore(PlayerColor.RED));
+        assertEquals(1, model.getScore(PlayerColor.BLUE));
+      }
+    }
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -194,8 +317,8 @@ public class ClassicalThreeTriosModelTest {
     }
 
     assertTrue(model.getGameState() == GameState.RED_WIN ||
-            model.getGameState() == GameState.BLUE_WIN ||
-            model.getGameState() == GameState.EARLY_QUIT);
+        model.getGameState() == GameState.BLUE_WIN ||
+        model.getGameState() == GameState.EARLY_QUIT);
   }
 
   // Tests for playTurn
@@ -247,7 +370,7 @@ public class ClassicalThreeTriosModelTest {
     model.playTurn(0, 0, 10);
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testPlayTurnOnHoleCell() {
     // Create a grid with a hole at (0,0)
     Cell[][] cellsWithHole = new Cell[3][3];
@@ -304,8 +427,8 @@ public class ClassicalThreeTriosModelTest {
       }
     }
     assertTrue(model.getGameState() == GameState.RED_WIN ||
-            model.getGameState() == GameState.BLUE_WIN ||
-            model.getGameState() == GameState.EARLY_QUIT);
+        model.getGameState() == GameState.BLUE_WIN ||
+        model.getGameState() == GameState.EARLY_QUIT);
   }
 
   @Test(expected = IllegalStateException.class)

@@ -78,7 +78,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
   @Override
   public void playTurn(int row, int col, int handIndex) {
     checkGameInProgress();
-    checkInRange(col, row);
+    checkInRange(row, col);
     if (handIndex < 0 || handIndex >= getCurrentPlayerHand().size()) {
       throw new IllegalArgumentException("Hand index out of bounds");
     }
@@ -140,7 +140,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
     }
   }
 
-  private void checkInRange(int col, int row) {
+  private void checkInRange(int row, int col) {
     if (col < 0 || col >= grid.getCols()) {
       throw new IllegalArgumentException("Column out of bounds");
     }

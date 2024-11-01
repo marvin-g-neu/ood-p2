@@ -1,5 +1,6 @@
 package cs3500.threetrios.model;
 
+import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.grid.Grid;
@@ -74,6 +75,9 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
       if (card == null) {
         throw new IllegalArgumentException("Deck cards cannot be null");
       }
+      if (card.getCurrentColor() != CardColor.UNASSIGNED) {
+        card.setNewColor(CardColor.UNASSIGNED);
+      }
     }
     grid = gameGrid;
     fullDeck = new ArrayList<>(deck);
@@ -97,9 +101,11 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
 
     redHand = new ArrayList<>();
     blueHand = new ArrayList<>();
-    for (int i = 0; i < (cardCellCount + 1) / 2; i++) {
+    for (int i = 0; i < Math.ceil(((cardCellCount + 1) / 2.0)); i++) {
       redHand.add(this.deck.remove(0));
+      redHand.get(redHand.size() - 1).setNewColor(CardColor.RED);
       blueHand.add(this.deck.remove(0));
+      blueHand.get(blueHand.size() - 1).setNewColor(CardColor.BLUE);
     }
   }
 }
