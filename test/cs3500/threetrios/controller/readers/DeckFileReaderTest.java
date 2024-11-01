@@ -7,7 +7,12 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
+/**
+ * Tests for DeckFileReader readFile() implementation.
+ */
 public class DeckFileReaderTest {
   @Test
   public void readFileThrowsIAEWhenFileCannotBeRead() {

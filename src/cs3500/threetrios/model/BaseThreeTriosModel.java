@@ -8,6 +8,7 @@ import cs3500.threetrios.model.rules.RuleKeeper;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * An abstract class with common Three Trios model implementations.
  */
@@ -57,7 +58,8 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
       if (gameState != GameState.NOT_STARTED) {
         throw new IllegalArgumentException("Game state must be initialized as NOT_STARTED");
       }
-    } else if (gameState.ordinal() != this.gameState.ordinal() + 1 || this.gameState.ordinal() > 1) {
+    } else if (gameState.ordinal() != this.gameState.ordinal() + 1
+        || this.gameState.ordinal() > 1) {
       throw new IllegalArgumentException("Illegal game state change");
     }
     this.gameState = gameState;
@@ -114,6 +116,8 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
         case BLUE:
           currentPlayer = PlayerColor.RED;
           break;
+        default: // should never happen
+          throw new IllegalStateException("Invalid player color");
       }
     }
   }

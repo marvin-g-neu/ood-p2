@@ -24,6 +24,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Tests of the implemented methods in BasicThreeTriosGame.
+ */
 public class BasicThreeTriosGameTest {
   private ThreeTriosModelInterface model;
   private RuleKeeper rules;

@@ -1,7 +1,11 @@
 package cs3500.threetrios.view;
 
 import cs3500.threetrios.model.ClassicalThreeTriosModel;
-import cs3500.threetrios.model.card.*;
+import cs3500.threetrios.model.card.AttackValue;
+import cs3500.threetrios.model.card.CardColor;
+import cs3500.threetrios.model.card.CustomCard;
+import cs3500.threetrios.model.card.Direction;
+import cs3500.threetrios.model.card.ThreeTriosCard;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.cell.ThreeTriosCell;
 import cs3500.threetrios.model.grid.Grid;
@@ -15,6 +19,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test of the interface methods in implementations of ClassicalThreeTriosModel.
+ */
 public class ThreeTriosTextualViewTest {
   private ClassicalThreeTriosModel model;
   private ThreeTriosTextualView view;
@@ -67,16 +74,16 @@ public class ThreeTriosTextualViewTest {
 
   @Test
   public void testRenderInitialState() {
-    String expected = "Player: RED\n" +
-        "___\n" +
-        "___\n" +
-        "___\n" +
-        "Hand:\n" +
-        "Red1 3 2 1 1\n" +
-        "Red2 4 1 2 3\n" +
-        "Red3 2 2 3 1\n" +
-        "Red4 1 3 2 4\n" +
-        "Red5 3 4 1 2\n";
+    String expected = "Player: RED\n"
+        + "___\n"
+        + "___\n"
+        + "___\n"
+        + "Hand:\n"
+        + "Red1 3 2 1 1\n"
+        + "Red2 4 1 2 3\n"
+        + "Red3 2 2 3 1\n"
+        + "Red4 1 3 2 4\n"
+        + "Red5 3 4 1 2\n";
 
     assertEquals(expected, view.render());
   }
@@ -162,7 +169,8 @@ public class ThreeTriosTextualViewTest {
     assertEquals(expected, view.render());
   }
 
-  private static String getExpectedOutput(boolean blueWinFirst, boolean redWinSecond, boolean blueWinThird) {
+  private static String getExpectedOutput(boolean blueWinFirst,
+                                          boolean redWinSecond, boolean blueWinThird) {
     String firstBattle;
     String secondBattle;
 

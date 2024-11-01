@@ -2,7 +2,11 @@ package cs3500.threetrios.model;
 
 import cs3500.threetrios.controller.readers.DeckFileReader;
 import cs3500.threetrios.controller.readers.GridFileReader;
-import cs3500.threetrios.model.card.*;
+import cs3500.threetrios.model.card.AttackValue;
+import cs3500.threetrios.model.card.CardColor;
+import cs3500.threetrios.model.card.CustomCard;
+import cs3500.threetrios.model.card.Direction;
+import cs3500.threetrios.model.card.ThreeTriosCard;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.cell.ThreeTriosCell;
@@ -14,7 +18,17 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+/**
+ * Test of basic functionality of ThreeTriosModelInterface implementations.
+ */
 public class ThreeTriosModelInterfaceTest {
   private Grid ttbNoUnreachableGrid;
   private Grid ttbOneByOneGrid;
@@ -52,16 +66,26 @@ public class ThreeTriosModelInterfaceTest {
 
     // Initialize a deck with 10 cards
     deck = Arrays.asList(
-        new ThreeTriosCard("Red1", AttackValue.THREE, AttackValue.TWO, AttackValue.ONE, AttackValue.ONE, CardColor.RED),
-        new ThreeTriosCard("Blue1", AttackValue.TWO, AttackValue.THREE, AttackValue.ONE, AttackValue.ONE, CardColor.BLUE),
-        new ThreeTriosCard("Red2", AttackValue.FOUR, AttackValue.ONE, AttackValue.TWO, AttackValue.THREE, CardColor.RED),
-        new ThreeTriosCard("Blue2", AttackValue.ONE, AttackValue.FOUR, AttackValue.TWO, AttackValue.THREE, CardColor.BLUE),
-        new ThreeTriosCard("Red3", AttackValue.TWO, AttackValue.TWO, AttackValue.THREE, AttackValue.ONE, CardColor.RED),
-        new ThreeTriosCard("Blue3", AttackValue.THREE, AttackValue.TWO, AttackValue.ONE, AttackValue.FOUR, CardColor.BLUE),
-        new ThreeTriosCard("Red4", AttackValue.ONE, AttackValue.THREE, AttackValue.TWO, AttackValue.FOUR, CardColor.RED),
-        new ThreeTriosCard("Blue4", AttackValue.FOUR, AttackValue.ONE, AttackValue.THREE, AttackValue.TWO, CardColor.BLUE),
-        new ThreeTriosCard("Red5", AttackValue.THREE, AttackValue.FOUR, AttackValue.ONE, AttackValue.TWO, CardColor.RED),
-        new ThreeTriosCard("Blue5", AttackValue.TWO, AttackValue.ONE, AttackValue.FOUR, AttackValue.THREE, CardColor.BLUE)
+        new ThreeTriosCard("Red1", AttackValue.THREE, AttackValue.TWO,
+            AttackValue.ONE, AttackValue.ONE, CardColor.RED),
+        new ThreeTriosCard("Blue1", AttackValue.TWO, AttackValue.THREE,
+            AttackValue.ONE, AttackValue.ONE, CardColor.BLUE),
+        new ThreeTriosCard("Red2", AttackValue.FOUR, AttackValue.ONE,
+            AttackValue.TWO, AttackValue.THREE, CardColor.RED),
+        new ThreeTriosCard("Blue2", AttackValue.ONE, AttackValue.FOUR,
+            AttackValue.TWO, AttackValue.THREE, CardColor.BLUE),
+        new ThreeTriosCard("Red3", AttackValue.TWO, AttackValue.TWO,
+            AttackValue.THREE, AttackValue.ONE, CardColor.RED),
+        new ThreeTriosCard("Blue3", AttackValue.THREE, AttackValue.TWO,
+            AttackValue.ONE, AttackValue.FOUR, CardColor.BLUE),
+        new ThreeTriosCard("Red4", AttackValue.ONE, AttackValue.THREE,
+            AttackValue.TWO, AttackValue.FOUR, CardColor.RED),
+        new ThreeTriosCard("Blue4", AttackValue.FOUR, AttackValue.ONE,
+            AttackValue.THREE, AttackValue.TWO, CardColor.BLUE),
+        new ThreeTriosCard("Red5", AttackValue.THREE, AttackValue.FOUR,
+            AttackValue.ONE, AttackValue.TWO, CardColor.RED),
+        new ThreeTriosCard("Blue5", AttackValue.TWO, AttackValue.ONE,
+            AttackValue.FOUR, AttackValue.THREE, CardColor.BLUE)
     );
 
     model = new ClassicalThreeTriosModel();
@@ -316,9 +340,9 @@ public class ThreeTriosModelInterfaceTest {
       }
     }
 
-    assertTrue(model.getGameState() == GameState.RED_WIN ||
-        model.getGameState() == GameState.BLUE_WIN ||
-        model.getGameState() == GameState.EARLY_QUIT);
+    assertTrue(model.getGameState() == GameState.RED_WIN
+        || model.getGameState() == GameState.BLUE_WIN
+        || model.getGameState() == GameState.EARLY_QUIT);
   }
 
   // Tests for playTurn
@@ -426,9 +450,9 @@ public class ThreeTriosModelInterfaceTest {
         }
       }
     }
-    assertTrue(model.getGameState() == GameState.RED_WIN ||
-        model.getGameState() == GameState.BLUE_WIN ||
-        model.getGameState() == GameState.EARLY_QUIT);
+    assertTrue(model.getGameState() == GameState.RED_WIN
+        || model.getGameState() == GameState.BLUE_WIN
+        || model.getGameState() == GameState.EARLY_QUIT);
   }
 
   @Test(expected = IllegalStateException.class)

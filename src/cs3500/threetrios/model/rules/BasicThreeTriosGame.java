@@ -27,12 +27,14 @@ public class BasicThreeTriosGame extends GameRules {
   }
 
   @Override
-  public boolean attackerWinsBattle(CustomCard attacker, CustomCard defender, Direction attackDirection) {
+  public boolean attackerWinsBattle(CustomCard attacker,
+                                    CustomCard defender, Direction attackDirection) {
     if (attacker == null || defender == null || attackDirection == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
     int attackerStrength = attacker.getAttackValue(attackDirection).getStrength();
-    return attackerStrength > defender.getAttackValue(getOppositeDirection(attackDirection)).getStrength();
+    return attackerStrength > defender.getAttackValue(
+        getOppositeDirection(attackDirection)).getStrength();
   }
 
   @Override

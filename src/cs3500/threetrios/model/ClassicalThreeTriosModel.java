@@ -16,7 +16,6 @@ import java.util.Random;
  */
 public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
   private final Random rand;
-  private List<CustomCard> fullDeck;
 
   /**
    * Creates a model for a classic game of Three Trios.
@@ -80,7 +79,6 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
       }
     }
     grid = gameGrid;
-    fullDeck = new ArrayList<>(deck);
     this.deck = new ArrayList<>(deck);
     this.shuffle = shuffle;
     currentPlayer = PlayerColor.RED;
