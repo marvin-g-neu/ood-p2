@@ -14,6 +14,7 @@ import cs3500.threetrios.model.grid.Grid;
  */
 public class BasicThreeTriosGame extends GameRules {
   private final Grid grid;
+  private Grid copyGrid;
 
   /**
    * Constructs a BasicThreeTriosGame with the given model.
@@ -49,7 +50,11 @@ public class BasicThreeTriosGame extends GameRules {
       throw new IllegalStateException("Game state is not in progress");
     }
 
-    Grid workingGrid = simulate ? grid.copy() : grid;
+    if (simulate) {
+      copyGrid = grid.copy();
+    }
+
+    Grid workingGrid = simulate ? copyGrid : grid;
 
     Cell cell = workingGrid.getCell(row, col);
     if (cell.isHole() || cell.isEmpty()) {
@@ -122,9 +127,6 @@ public class BasicThreeTriosGame extends GameRules {
       throw new IllegalArgumentException("Invalid hand index");
     }
 
-    // copy grid
-    Grid gridCopy = grid.copy();
-
     // play card
     modelCopy.playTurn(row, col, handIndex);
 
@@ -141,7 +143,7 @@ public class BasicThreeTriosGame extends GameRules {
 
     // Count opponent's cards after simulation
     int finalOpponentCards = 0;
-    for (Cell cell : gridCopy.getCardCells()) {
+    for (Cell cell : copyGrid.getCardCells()) {
       if (!cell.isEmpty() && cell.getCellColor() != currentPlayer) {
         finalOpponentCards++;
       }
