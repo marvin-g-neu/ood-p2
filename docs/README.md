@@ -195,3 +195,15 @@ ood-p2/
 #### subdirectories III | test:
 NOTE: Has the same structure as the src directory but with test classes for each of the classes in the src directory that are relevant to testing for the purpose of a working implementation.
 ```
+# Changes for part 2:
+
+Added functionality to support:
+1. Grid copying for move simulation
+   - Added `copy()` method to Grid interface and implemented in ThreeTriosBoard
+
+2. Battle simulation
+   - Added `getPotentialFlips()` to model interface and implemented in ClassicalThreeTriosModel
+   - Allows checking how many cards would flip before making a move
+   - Uses grid copy to simulate battles without affecting game state
+
+These changes enable us to run findBestMove() made by computer players without modifying the actual game state.
