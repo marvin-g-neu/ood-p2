@@ -1,7 +1,6 @@
 package cs3500.threetrios.view;
 
 import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
-import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 
 import java.io.IOException;

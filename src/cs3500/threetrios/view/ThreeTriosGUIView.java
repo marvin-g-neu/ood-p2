@@ -17,9 +17,9 @@ import java.awt.event.ComponentEvent;
  * A view for the game ThreeTrios using a Java Swing GUI view.
  */
 public class ThreeTriosGUIView implements ThreeTriosView {
-  private ReadOnlyThreeTriosModelInterface model;
+  private final ReadOnlyThreeTriosModelInterface model;
 
-  private JFrame frame;
+  private final JFrame frame;
   private JPanel redPanel;
   private JPanel bluePanel;
   private JPanel gridPanel;

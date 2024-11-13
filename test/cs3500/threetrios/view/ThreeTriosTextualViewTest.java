@@ -154,7 +154,7 @@ public class ThreeTriosTextualViewTest {
     } catch (IOException e) {
       Assert.fail();
     }
-    assertEquals(expected, out);
+    assertEquals(expected, out.toString());
   }
 
   @Test
