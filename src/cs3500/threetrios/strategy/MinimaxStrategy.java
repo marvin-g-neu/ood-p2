@@ -12,8 +12,10 @@ import java.util.List;
 
 /**
  * Strategy 4:
- * Implements the minimax algorithm to choose the move that leaves the opponent with the least favorable options.
- * It simulates possible moves up to a certain depth and selects the move that minimizes the maximum gain of the opponent.
+ * Implements the minimax algorithm to choose the move that leaves 
+ * the opponent with the least favorable options. It simulates possible 
+ * moves up to a certain depth and selects the move that minimizes the
+ * maximum gain of the opponent.
  */
 public class MinimaxStrategy extends BasicStrategies {
 
@@ -58,6 +60,8 @@ public class MinimaxStrategy extends BasicStrategies {
     MakePlay bestMove = null;
     int bestValue = Integer.MIN_VALUE;
 
+    // For each possible move we can make we simulate the game state
+    // if we make that move and find the minimax value of that game state
     for (MakePlay move : availableMoves) {
       ThreeTriosModelInterface modelCopy = model.copyModel();
       applyMove(modelCopy, move, player);
@@ -69,11 +73,13 @@ public class MinimaxStrategy extends BasicStrategies {
       }
     }
 
+    // Return the move with the highest minimax value
     List<MakePlay> bestMoves = new ArrayList<>();
     if (bestMove != null) {
       bestMoves.add(bestMove);
     }
 
+    // Break ties using the superclass method
     return Collections.singletonList(breakTies(bestMoves));
   }
 
@@ -93,6 +99,7 @@ public class MinimaxStrategy extends BasicStrategies {
       return evaluate(model, player, opponent);
     }
 
+    // If we are maximizing we want to find the move that maximizes the score
     if (isMaximizing) {
       int maxEval = Integer.MIN_VALUE;
       List<MakePlay> availableMoves = getAllAvailableMoves(model, player);
@@ -105,6 +112,7 @@ public class MinimaxStrategy extends BasicStrategies {
       }
       return maxEval;
     } else {
+      // If we are minimizing we want to find the move that minimizes the score
       int minEval = Integer.MAX_VALUE;
       List<MakePlay> availableMoves = getAllAvailableMoves(model, opponent);
 
