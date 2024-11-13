@@ -170,4 +170,9 @@ public class ThreeTriosBoard implements Grid {
       throw new IllegalArgumentException("Invalid position: (" + row + "," + col + ")");
     }
   }
+
+  @Override
+  public Grid copy() {
+    return new ThreeTriosBoard(this.board);
+  }
 } 

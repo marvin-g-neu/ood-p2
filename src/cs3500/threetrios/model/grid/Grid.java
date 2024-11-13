@@ -70,4 +70,10 @@ public interface Grid {
    * @throws IllegalArgumentException if the row or column is out of range
    */
   Cell[] getAdjacentCells(int row, int col);
+
+  /**
+   * Creates a deep copy of the current grid state.
+   * @return a new Grid instance with the same state
+   */
+  Grid copy();
 }
