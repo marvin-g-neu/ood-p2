@@ -95,7 +95,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
     }
 
     grid.placeCard(getActualPlayerHand().remove(handIndex), row, col);
-    rules.executeBattlePhase(row, col, currentPlayer);
+    rules.executeBattlePhase(row, col, currentPlayer, false);
     endTurn();
   }
 

@@ -1,5 +1,6 @@
 package cs3500.threetrios.model.rules;
 
+import cs3500.threetrios.model.ClassicalThreeTriosModel;
 import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
@@ -13,6 +14,7 @@ import cs3500.threetrios.model.grid.Grid;
  */
 public class BasicThreeTriosGame extends GameRules {
   private final Grid grid;
+  private Grid copyGrid;
 
   /**
    * Constructs a BasicThreeTriosGame with the given model.
@@ -38,7 +40,7 @@ public class BasicThreeTriosGame extends GameRules {
   }
 
   @Override
-  public void executeBattlePhase(int row, int col, PlayerColor currentPlayer) {
+  public void executeBattlePhase(int row, int col, PlayerColor currentPlayer, boolean simulate) {
     if (currentPlayer == null) {
       throw new IllegalArgumentException("Current player cannot be null");
     }
@@ -50,11 +52,17 @@ public class BasicThreeTriosGame extends GameRules {
       throw new IllegalStateException("Game state is not in progress");
     }
 
-    Cell cell = grid.getCell(row, col);
+    if (simulate) {
+      copyGrid = grid.copy();
+    }
+
+    Grid workingGrid = simulate ? copyGrid : grid;
+
+    Cell cell = workingGrid.getCell(row, col);
     if (cell.isHole() || cell.isEmpty()) {
       throw new IllegalArgumentException("Cell does not have a card");
     }
-    Cell[] adjacentCells = grid.getAdjacentCells(row, col);
+    Cell[] adjacentCells = workingGrid.getAdjacentCells(row, col);
 
     for (int d = 0; d < Direction.values().length; d++) {
       Cell adjacentCell = adjacentCells[d];
@@ -98,7 +106,7 @@ public class BasicThreeTriosGame extends GameRules {
       default: // should never happen
         throw new IllegalArgumentException("Unknown Direction");
     }
-    executeBattlePhase(newRow, newCol, currentPlayer);
+    executeBattlePhase(newRow, newCol, currentPlayer, false);
   }
 
   @Override
@@ -107,5 +115,43 @@ public class BasicThreeTriosGame extends GameRules {
       throw new IllegalStateException("Game is not started");
     }
     return grid.getEmptyCellCount() == 0;
+  }
+
+  @Override
+  public int getPotentialFlips(int row, int col, int handIndex, PlayerColor currentPlayer) {
+    if (row < 0 || row >= grid.getRows() || col < 0 || col >= grid.getCols()) {
+      throw new IllegalArgumentException("Invalid coordinates");
+    }
+    // create model
+    ThreeTriosModelInterface modelCopy = new ClassicalThreeTriosModel();
+
+    if (handIndex < 0 || handIndex >= modelCopy.getCurrentPlayerHand().size()) {
+      throw new IllegalArgumentException("Invalid hand index");
+    }
+
+    // play card
+    modelCopy.playTurn(row, col, handIndex);
+
+    // execute play phase
+    executeBattlePhase(row, col, currentPlayer, true);
+
+    // Count opponent's cards before simulation
+    int originalOpponentCards = 0;
+    for (Cell cell : grid.getCardCells()) {
+      if (!cell.isEmpty() && cell.getCellColor() != currentPlayer) {
+        originalOpponentCards++;
+      }
+    }
+
+    // Count opponent's cards after simulation
+    int finalOpponentCards = 0;
+    for (Cell cell : copyGrid.getCardCells()) {
+      if (!cell.isEmpty() && cell.getCellColor() != currentPlayer) {
+        finalOpponentCards++;
+      }
+    }
+
+    // The difference represents how many cards were flipped
+    return originalOpponentCards - finalOpponentCards;
   }
 }
