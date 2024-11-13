@@ -45,7 +45,8 @@ public class ThreeTriosCard implements CustomCard {
                         AttackValue east,
                         AttackValue west,
                         CardColor currentColor) {
-    if (name == null || north == null || south == null || east == null || west == null || currentColor == null) {
+    if (name == null || north == null || south == null || east == null
+        || west == null || currentColor == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
     if (name.isEmpty()) {
@@ -77,8 +78,9 @@ public class ThreeTriosCard implements CustomCard {
         return east;
       case WEST:
         return west;
+      default: // should never happen
+        throw new IllegalArgumentException("Invalid direction");
     }
-    throw new IllegalArgumentException("Invalid direction");
   }
 
   @Override

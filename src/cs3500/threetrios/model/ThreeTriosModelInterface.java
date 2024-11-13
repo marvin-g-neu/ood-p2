@@ -94,6 +94,7 @@ public interface ThreeTriosModelInterface {
    * @throws IllegalStateException if the game has not been started
    */
   Grid getGrid();
+
   /**
    * Gets the score of the given player.
    *

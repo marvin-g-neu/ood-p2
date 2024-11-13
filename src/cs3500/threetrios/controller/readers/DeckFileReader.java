@@ -45,7 +45,8 @@ public class DeckFileReader implements ConfigurationFileReader<List<CustomCard>>
           try {
             values[i - 1] = getAttackValue(parts[i]);
           } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid attack value: " + parts[i] + " for card " + name);
+            throw new IllegalArgumentException(
+                "Invalid attack value: " + parts[i] + " for card " + name);
           }
         }
 

@@ -39,7 +39,7 @@ public abstract class GameRules implements RuleKeeper {
     if (model.getGameState() != GameState.IN_PROGRESS) {
       throw new IllegalArgumentException("Game is not in progress");
     }
-      return !cell.isHole() && cell.isEmpty();
+    return !cell.isHole() && cell.isEmpty();
   }
 
   @Override

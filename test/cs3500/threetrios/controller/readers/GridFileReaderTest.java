@@ -6,6 +6,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+
+/**
+ * Tests for GridFileReader method readFile() implementation.
+ */
 public class GridFileReaderTest {
   @Test
   public void readFileThrowsIAEWhenFileCannotBeRead() {

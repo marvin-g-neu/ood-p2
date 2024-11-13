@@ -24,11 +24,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Tests of the implemented methods in BasicThreeTriosGame.
+ */
 public class BasicThreeTriosGameTest {
   private ThreeTriosModelInterface model;
   private RuleKeeper rules;
-  private Grid grid;
-  private List<CustomCard> deck;
   private Cell testCell;
   private CustomCard testCard;
   private ThreeTriosTextualView view;
@@ -42,30 +43,30 @@ public class BasicThreeTriosGameTest {
         cells[r][c] = new ThreeTriosCell(false);
       }
     }
-    grid = new ThreeTriosBoard(cells);
+    Grid grid = new ThreeTriosBoard(cells);
 
     // Initialize deck with 10 cards (similar to TextualViewTest)
-    deck = Arrays.asList(
-            new ThreeTriosCard("Red1", AttackValue.THREE, AttackValue.TWO,
-                    AttackValue.ONE, AttackValue.ONE, CardColor.RED),
-            new ThreeTriosCard("Blue1", AttackValue.TWO, AttackValue.THREE,
-                    AttackValue.ONE, AttackValue.ONE, CardColor.BLUE),
-            new ThreeTriosCard("Red2", AttackValue.FOUR, AttackValue.ONE,
-                    AttackValue.TWO, AttackValue.THREE, CardColor.RED),
-            new ThreeTriosCard("Blue2", AttackValue.ONE, AttackValue.FOUR,
-                    AttackValue.TWO, AttackValue.THREE, CardColor.BLUE),
-            new ThreeTriosCard("Red3", AttackValue.TWO, AttackValue.TWO,
-                    AttackValue.THREE, AttackValue.ONE, CardColor.RED),
-            new ThreeTriosCard("Blue3", AttackValue.THREE, AttackValue.TWO,
-                    AttackValue.ONE, AttackValue.FOUR, CardColor.BLUE),
-            new ThreeTriosCard("Red4", AttackValue.ONE, AttackValue.THREE,
-                    AttackValue.TWO, AttackValue.FOUR, CardColor.RED),
-            new ThreeTriosCard("Blue4", AttackValue.FOUR, AttackValue.ONE,
-                    AttackValue.THREE, AttackValue.TWO, CardColor.BLUE),
-            new ThreeTriosCard("Red5", AttackValue.THREE, AttackValue.FOUR,
-                    AttackValue.ONE, AttackValue.TWO, CardColor.RED),
-            new ThreeTriosCard("Blue5", AttackValue.TWO, AttackValue.ONE,
-                    AttackValue.FOUR, AttackValue.THREE, CardColor.BLUE)
+    List<CustomCard> deck = Arrays.asList(
+        new ThreeTriosCard("Red1", AttackValue.THREE, AttackValue.TWO,
+            AttackValue.ONE, AttackValue.ONE, CardColor.RED),
+        new ThreeTriosCard("Blue1", AttackValue.TWO, AttackValue.THREE,
+            AttackValue.ONE, AttackValue.ONE, CardColor.BLUE),
+        new ThreeTriosCard("Red2", AttackValue.FOUR, AttackValue.ONE,
+            AttackValue.TWO, AttackValue.THREE, CardColor.RED),
+        new ThreeTriosCard("Blue2", AttackValue.ONE, AttackValue.FOUR,
+            AttackValue.TWO, AttackValue.THREE, CardColor.BLUE),
+        new ThreeTriosCard("Red3", AttackValue.TWO, AttackValue.TWO,
+            AttackValue.THREE, AttackValue.ONE, CardColor.RED),
+        new ThreeTriosCard("Blue3", AttackValue.THREE, AttackValue.TWO,
+            AttackValue.ONE, AttackValue.FOUR, CardColor.BLUE),
+        new ThreeTriosCard("Red4", AttackValue.ONE, AttackValue.THREE,
+            AttackValue.TWO, AttackValue.FOUR, CardColor.RED),
+        new ThreeTriosCard("Blue4", AttackValue.FOUR, AttackValue.ONE,
+            AttackValue.THREE, AttackValue.TWO, CardColor.BLUE),
+        new ThreeTriosCard("Red5", AttackValue.THREE, AttackValue.FOUR,
+            AttackValue.ONE, AttackValue.TWO, CardColor.RED),
+        new ThreeTriosCard("Blue5", AttackValue.TWO, AttackValue.ONE,
+            AttackValue.FOUR, AttackValue.THREE, CardColor.BLUE)
     );
 
     // Initialize model and rules

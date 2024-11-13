@@ -29,7 +29,8 @@ public class GridFileReader implements ConfigurationFileReader<Cell[][]> {
       int cols = scanner.nextInt();
 
       if (rows <= 0 || cols <= 0) {
-        throw new IllegalArgumentException("Invalid dimensions: rows and cols must have positive values");
+        throw new IllegalArgumentException(
+            "Invalid dimensions: rows and cols must have positive values");
       }
 
       // Skip to next line
@@ -76,8 +77,7 @@ public class GridFileReader implements ConfigurationFileReader<Cell[][]> {
       }
       // Created grid successfully
       return grid;
-    } catch (
-        IOException e) {
+    } catch (IOException e) {
       throw new IllegalArgumentException("Error reading grid file: " + e.getMessage());
     }
   }
