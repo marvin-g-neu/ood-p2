@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Model interface for a game of Three Trios.
  */
-public interface ThreeTriosModelInterface {
+public interface ThreeTriosModelInterface extends ReadOnlyThreeTriosModelInterface {
   /**
    * Starts a game with the given grid and (shuffled) deck.
    *
@@ -38,17 +38,6 @@ public interface ThreeTriosModelInterface {
   void startGame(Grid gameGrid, List<CustomCard> deck, boolean shuffle);
 
   /**
-   * Gets the state of the cell at a given position.
-   *
-   * @param row the row of the cell
-   * @param col the column of the cell
-   * @return the cell at the given position
-   * @throws IllegalArgumentException if the row or column is not in range
-   * @throws IllegalStateException    if the game has not been started
-   */
-  CellState getCellStateAt(int row, int col);
-
-  /**
    * Plays the given card to the cell at the given coordinates,
    * then initiates battles if possible. Ends turn.
    *
@@ -70,55 +59,4 @@ public interface ThreeTriosModelInterface {
    * @throws IllegalStateException if the game has not been started or is over
    */
   Grid endGame();
-
-  /**
-   * Gets the current player.
-   *
-   * @return the current player
-   * @throws IllegalStateException if the game has not been started or is over
-   */
-  PlayerColor getCurrentPlayer();
-
-  /**
-   * Gets the current player's hand.
-   *
-   * @return the current player's hand
-   * @throws IllegalStateException if the game has not been started or is over
-   */
-  List<CustomCard> getCurrentPlayerHand();
-
-  /**
-   * Gets the hand of the given player.
-   *
-   * @param player the checked player
-   * @return the hand of the given player
-   * @throws IllegalArgumentException if player is null
-   * @throws IllegalStateException    if the game has not been started
-   */
-  List<CustomCard> getPlayerHand(PlayerColor player);
-
-  /**
-   * Gets the grid currently in play.
-   *
-   * @return the grid in play
-   * @throws IllegalStateException if the game has not been started
-   */
-  Grid getGrid();
-
-  /**
-   * Gets the score of the given player.
-   *
-   * @param player the checked player
-   * @return the score of the given player
-   * @throws IllegalArgumentException if player is null
-   * @throws IllegalStateException    if the game has not been started
-   */
-  int getScore(PlayerColor player);
-
-  /**
-   * Gets the current state of the game.
-   *
-   * @return the game state
-   */
-  GameState getGameState();
 }

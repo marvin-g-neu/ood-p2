@@ -40,6 +40,11 @@ public class BasicThreeTriosGame extends GameRules {
   }
 
   @Override
+  public void executeBattlePhase(int row, int col, PlayerColor currentPlayer) {
+    executeBattlePhase(row, col, currentPlayer, false);
+  }
+
+  @Override
   public void executeBattlePhase(int row, int col, PlayerColor currentPlayer, boolean simulate) {
     if (currentPlayer == null) {
       throw new IllegalArgumentException("Current player cannot be null");

@@ -32,6 +32,18 @@ public interface RuleKeeper {
    */
   boolean attackerWinsBattle(CustomCard attacker, CustomCard defender, Direction attackDirection);
 
+  /**
+   * Executes the battle phase after a card is placed.
+   *
+   * @param row           the row where the card was placed
+   * @param col           the column where the card was placed
+   * @param currentPlayer the player who placed the card
+   * @throws IllegalArgumentException if currentPlayer is null
+   * @throws IllegalArgumentException if the row or column is not in range
+   * @throws IllegalArgumentException if the cell does not have a card
+   * @throws IllegalStateException    if model state is not IN_PROGRESS
+   */
+  void executeBattlePhase(int row, int col, PlayerColor currentPlayer);
 
   /**
    * Executes the battle phase after a card is placed.

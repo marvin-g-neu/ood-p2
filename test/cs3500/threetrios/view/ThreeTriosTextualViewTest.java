@@ -11,9 +11,11 @@ import cs3500.threetrios.model.cell.ThreeTriosCell;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 public class ThreeTriosTextualViewTest {
   private ClassicalThreeTriosModel model;
   private ThreeTriosTextualView view;
+  private Appendable out;
 
   @Before
   public void setUp() {
@@ -68,8 +71,9 @@ public class ThreeTriosTextualViewTest {
     // Start the game
     model.startGame(grid, deck, false);
 
+    out = new StringBuilder();
     // Initialize view
-    view = new ThreeTriosTextualView(model);
+    view = new ThreeTriosTextualView(model, out);
   }
 
   @Test
@@ -84,8 +88,12 @@ public class ThreeTriosTextualViewTest {
         + "Red3 2 2 3 1\n"
         + "Red4 1 3 2 4\n"
         + "Red5 3 4 1 2\n";
-
-    assertEquals(expected, view.render());
+    try {
+      view.render();
+    } catch (IOException e) {
+      Assert.fail();
+    }
+    assertEquals(expected, out.toString());
   }
 
   @Test
@@ -102,7 +110,7 @@ public class ThreeTriosTextualViewTest {
     // Blue plays Blue2 at (2,2)
     model.playTurn(2, 2, 0);
 
-    System.out.println(view.render());
+    System.out.println(view.toString());
 
     String expected = "Player: RED\n"
         + "RB_\n"
@@ -112,8 +120,12 @@ public class ThreeTriosTextualViewTest {
         + "Red2 4 1 2 3\n"
         + "Red3 2 2 3 1\n"
         + "Red5 3 4 1 2\n";
-
-    assertEquals(expected, view.render());
+    try {
+      view.render();
+    } catch (IOException e) {
+      Assert.fail();
+    }
+    assertEquals(expected, out.toString());
   }
 
   @Test
@@ -137,7 +149,12 @@ public class ThreeTriosTextualViewTest {
         + "Red4 1 3 2 4\n"
         + "Red5 3 4 1 2\n";
 
-    assertEquals(expected, view.render());
+    try {
+      view.render();
+    } catch (IOException e) {
+      Assert.fail();
+    }
+    assertEquals(expected, out.toString());
   }
 
   @Test
@@ -166,7 +183,12 @@ public class ThreeTriosTextualViewTest {
         > redSecond.getAttackValue(Direction.EAST).getStrength();
     String expected = getExpectedOutput(blueWinFirst, redWinSecond, blueWinThird);
 
-    assertEquals(expected, view.render());
+    try {
+      view.render();
+    } catch (IOException e) {
+      Assert.fail();
+    }
+    assertEquals(expected, out.toString());
   }
 
   private static String getExpectedOutput(boolean blueWinFirst,
