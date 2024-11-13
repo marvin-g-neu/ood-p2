@@ -67,4 +67,11 @@ public interface ThreeTriosModelInterface extends ReadOnlyThreeTriosModelInterfa
    * @throws IllegalStateException if the game has not been started or is over
    */
   List<CustomCard> getPlayerHand(PlayerColor player);
+
+  /**
+   * Creates a deep copy of the game model.
+   *
+   * @return a deep copy of the game model
+   */
+  ThreeTriosModelInterface copyModel();
 }

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Strategy: Play a card to one of the corners, as it exposes only 2 of its attack values,
+ * Strategy 2: Play a card to one of the corners, as it exposes only 2 of its attack values,
  * making it harder to flip. If corners cannot be played to, choose the uppermost-leftmost
  * open cell and the card at index 0 in the hand.
  */
@@ -27,7 +27,22 @@ public class CornerStrategy extends BasicStrategies {
 
     Map<MakePlay, Integer> cornerMoves = calculateCornerMoves(model, player);
 
+    // If no valid moves are found, choose the upper-most, left-most open position and the card at index 0
     if (cornerMoves.isEmpty()) {
+      int minRow = Integer.MAX_VALUE;
+      int minCol = Integer.MAX_VALUE;
+      for (int row = 0; row < model.getGrid().getRows(); row++) {
+        for (int col = 0; col < model.getGrid().getCols(); col++) {
+          Cell cell = model.getGrid().getCell(row, col);
+          if (cell.isEmpty() && row < minRow) {
+            minRow = row;
+            minCol = col;
+          }
+        }
+      }
+      if (minRow != Integer.MAX_VALUE) {
+        return Collections.singletonList(new MakePlay(0, minRow, minCol));
+      }
       return new ArrayList<>();
     }
 

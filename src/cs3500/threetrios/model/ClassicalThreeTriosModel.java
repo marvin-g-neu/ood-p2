@@ -106,4 +106,15 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
       blueHand.get(blueHand.size() - 1).setNewColor(CardColor.BLUE);
     }
   }
+
+  public ClassicalThreeTriosModel copyModel() {
+    ClassicalThreeTriosModel copy = new ClassicalThreeTriosModel(this.rand.nextLong());
+    copy.grid = this.grid.copy();
+    copy.deck = new ArrayList<>(this.deck);
+    copy.shuffle = this.shuffle;
+    copy.currentPlayer = this.currentPlayer;
+    copy.redHand = new ArrayList<>(this.redHand);
+    copy.blueHand = new ArrayList<>(this.blueHand);
+    return copy;
+  }
 }
