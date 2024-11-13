@@ -4,27 +4,33 @@ import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 
+import java.io.IOException;
+
 /**
  * A Three Trios view implementation using text to display game state.
  */
-public class ThreeTriosTextualView implements TextualView {
+public class ThreeTriosTextualView implements ThreeTriosView {
   private final ReadOnlyThreeTriosModelInterface model;
+  private final Appendable textView;
 
   /**
-   * Constructs a textual view for the Three Trios game.
+   * Constructs a textual view for the Three Trios game using the given Appendable and Readable.
    *
    * @param model the game model to visualize
-   * @throws IllegalArgumentException if model is null
+   * @param textView   the appendable object
+   * @throws IllegalArgumentException if any argument is null
    */
-  public ThreeTriosTextualView(ReadOnlyThreeTriosModelInterface model) {
+  public ThreeTriosTextualView(ReadOnlyThreeTriosModelInterface model, Appendable textView) {
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null");
     }
     this.model = model;
+    this.textView = textView;
+
   }
 
   @Override
-  public String render() {
+  public String toString() {
     StringBuilder result = new StringBuilder();
 
     // Add current player
@@ -60,5 +66,10 @@ public class ThreeTriosTextualView implements TextualView {
     }
 
     return result.toString();
+  }
+
+  @Override
+  public void render() throws IOException {
+    textView.append(toString());
   }
 }

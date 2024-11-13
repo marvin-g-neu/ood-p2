@@ -14,9 +14,11 @@ import cs3500.threetrios.model.cell.ThreeTriosCell;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
 import cs3500.threetrios.view.ThreeTriosTextualView;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -77,10 +79,10 @@ public class BasicThreeTriosGameTest {
     // Initialize test cell and card for individual tests
     testCell = new ThreeTriosCell(false);
     testCard = new ThreeTriosCard("Test", AttackValue.THREE, AttackValue.TWO,
-            AttackValue.ONE, AttackValue.ONE, CardColor.RED);
+        AttackValue.ONE, AttackValue.ONE, CardColor.RED);
 
     // Render the board to the console via the view for debugging
-    view = new ThreeTriosTextualView(model);
+    view = new ThreeTriosTextualView(model, System.out);
   }
 
   // Tests for isLegalMove
@@ -129,9 +131,9 @@ public class BasicThreeTriosGameTest {
   @Test
   public void testAttackerWinsBattle() {
     CustomCard attacker = new ThreeTriosCard("Attacker", AttackValue.FOUR,
-            AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.RED);
+        AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.RED);
     CustomCard defender = new ThreeTriosCard("Defender", AttackValue.THREE,
-            AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.BLUE);
+        AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.BLUE);
 
     assertTrue(rules.attackerWinsBattle(attacker, defender, Direction.NORTH));
   }
@@ -139,9 +141,9 @@ public class BasicThreeTriosGameTest {
   @Test
   public void testAttackerLosesBattle() {
     CustomCard attacker = new ThreeTriosCard("Attacker", AttackValue.THREE,
-            AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.BLUE);
+        AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.BLUE);
     CustomCard defender = new ThreeTriosCard("Defender", AttackValue.FOUR,
-            AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.RED);
+        AttackValue.ONE, AttackValue.ONE, AttackValue.ONE, CardColor.RED);
 
     assertFalse(rules.attackerWinsBattle(attacker, defender, Direction.SOUTH));
   }
@@ -174,24 +176,28 @@ public class BasicThreeTriosGameTest {
 
   @Test
   public void testExecuteBattlePhaseComboFlip() {
-    // Setup a scenario for combo flips
-    System.out.print(view.render());
-    model.playTurn(1, 1, 0);
-    System.out.print(view.render());
-    model.playTurn(2, 2, 4);
-    System.out.print(view.render());
-    model.playTurn(1, 0, 0);
-    System.out.print(view.render());
-    model.playTurn(2, 1, 0);
-    System.out.print(view.render());
+    try {
+      // Setup a scenario for combo flips
+      view.render();
+      model.playTurn(1, 1, 0);
+      view.render();
+      model.playTurn(2, 2, 4);
+      view.render();
+      model.playTurn(1, 0, 0);
+      view.render();
+      model.playTurn(2, 1, 0);
+      view.render();
 
-    // combo flip move
-    model.playTurn(1, 2, 1);
-    System.out.print(view.render());
+      // combo flip move
+      model.playTurn(1, 2, 1);
+      view.render();
 
-    // Verify the combo flip occurred
-    assertEquals(CardColor.RED.getColor(), model.getCellStateAt(2, 2).getName());
-    assertEquals(CardColor.RED.getColor(), model.getCellStateAt(2, 1).getName());
+      // Verify the combo flip occurred
+      assertEquals(CardColor.RED.getColor(), model.getCellStateAt(2, 2).getName());
+      assertEquals(CardColor.RED.getColor(), model.getCellStateAt(2, 1).getName());
+    } catch (IOException e) {
+      Assert.fail();
+    }
   }
 
   @Test(expected = IllegalArgumentException.class)
