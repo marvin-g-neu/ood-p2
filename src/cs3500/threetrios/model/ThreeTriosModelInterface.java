@@ -1,7 +1,6 @@
 package cs3500.threetrios.model;
 
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.grid.Grid;
 
 import java.util.List;
@@ -59,4 +58,13 @@ public interface ThreeTriosModelInterface extends ReadOnlyThreeTriosModelInterfa
    * @throws IllegalStateException if the game has not been started or is over
    */
   Grid endGame();
+
+  /**
+   * Gets the hand of a player.
+   *
+   * @param player the player to get the hand of
+   * @return the hand of the player
+   * @throws IllegalStateException if the game has not been started or is over
+   */
+  List<CustomCard> getPlayerHand(PlayerColor player);
 }
