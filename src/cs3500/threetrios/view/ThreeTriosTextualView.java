@@ -1,5 +1,6 @@
 package cs3500.threetrios.view;
 
+import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 
@@ -7,7 +8,7 @@ import cs3500.threetrios.model.card.CustomCard;
  * A Three Trios view implementation using text to display game state.
  */
 public class ThreeTriosTextualView implements TextualView {
-  private final ThreeTriosModelInterface model;
+  private final ReadOnlyThreeTriosModelInterface model;
 
   /**
    * Constructs a textual view for the Three Trios game.
@@ -15,7 +16,7 @@ public class ThreeTriosTextualView implements TextualView {
    * @param model the game model to visualize
    * @throws IllegalArgumentException if model is null
    */
-  public ThreeTriosTextualView(ThreeTriosModelInterface model) {
+  public ThreeTriosTextualView(ReadOnlyThreeTriosModelInterface model) {
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null");
     }
