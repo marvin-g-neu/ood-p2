@@ -68,10 +68,10 @@ public interface RuleKeeper {
    * Simulates playing a card at given coordinates and returns number of cards that would be flipped.
    * @param row row coordinate
    * @param col column coordinate
-   * @param handIndex index of card in hand to simulate playing
+   * @param cardInHandIdx index of card in hand to simulate playing
    * @param currentPlayer the player who would play the card
    * @return number of cards that would be flipped
    * @throws IllegalArgumentException if coordinates invalid or handIndex invalid
    */
-  int getPotentialFlips(int row, int col, int handIndex, PlayerColor currentPlayer);
+  int getPotentialFlips(int row, int col, int cardInHandIdx, PlayerColor currentPlayer);
 }

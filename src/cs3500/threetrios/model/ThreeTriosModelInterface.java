@@ -88,6 +88,16 @@ public interface ThreeTriosModelInterface {
   List<CustomCard> getCurrentPlayerHand();
 
   /**
+   * Gets the hand of the given player.
+   *
+   * @param player the checked player
+   * @return the hand of the given player
+   * @throws IllegalArgumentException if player is null
+   * @throws IllegalStateException    if the game has not been started
+   */
+  List<CustomCard> getPlayerHand(PlayerColor player);
+
+  /**
    * Gets the grid currently in play.
    *
    * @return the grid in play
