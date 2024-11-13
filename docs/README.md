@@ -207,3 +207,33 @@ Added functionality to support:
    - Uses grid copy to simulate battles without affecting game state
 
 These changes enable us to run findBestMove() made by computer players without modifying the actual game state.
+
+### New Features
+- Implemented strategic computer players with different gameplay approaches
+- Added MaxFlipsStrategy: Maximizes number of opponent cards flipped
+- Added CornerStrategy: Prioritizes corner positions to minimize vulnerability
+- Created BasicStrategies abstract class for common tie-breaking logic
+
+### Strategy Details
+1. MaxFlipsStrategy:
+  - Evaluates all possible moves
+  - Calculates potential card flips for each move
+  - Chooses move that flips most opponent cards
+  - Uses tie-breaking for multiple optimal moves
+
+2. CornerStrategy:
+  - Prioritizes corner positions (expose only 2 attack values)
+  - Evaluates card vulnerability in corners
+  - Chooses least vulnerable card-position combination
+  - Falls back to default moves if corners unavailable
+
+### Implementation Notes
+- Strategies use common tie-breaking logic:
+  - Uppermost position
+  - Leftmost position
+  - Lowest card index
+- Added comprehensive testing for strategy behavior
+- Improved code organization with Strategy interface
+
+### Additional Changes
+- Added methods to help in wriring the strategies such as getPlayerHand which takes in a player's color and returns the player's hand isntead of our old version and other similar changes.

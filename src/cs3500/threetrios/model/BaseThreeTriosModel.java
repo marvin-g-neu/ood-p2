@@ -184,4 +184,20 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
         throw new IllegalStateException("Unknown current player");
     }
   }
+
+  @Override
+  public List<CustomCard> getPlayerHand(PlayerColor player) {
+    if (player == null) {
+      throw new IllegalArgumentException("Player cannot be null");
+    }
+    checkGameInProgress();
+    switch (player) {
+      case RED:
+        return new ArrayList<>(redHand);
+      case BLUE:
+        return new ArrayList<>(blueHand);
+      default: // should never happen
+        throw new IllegalStateException("Unknown player color");
+    }
+  }
 }
