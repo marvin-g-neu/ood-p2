@@ -71,7 +71,7 @@ public class MinimizingFlipStrategy extends BasicStrategies {
   private int calculateMoveVulnerability(ThreeTriosModelInterface model, 
                                        MakePlay ourMove, 
                                        PlayerColor player) {
-    ThreeTriosModelInterface simulatedModel = model.copyModel();
+    ThreeTriosModelInterface simulatedModel = model.copy();
     simulatedModel.playTurn(ourMove.getCardInHand(), ourMove.getRow(), ourMove.getCol());
     
     PlayerColor opponent = (player == PlayerColor.RED) ? PlayerColor.BLUE : PlayerColor.RED;
@@ -112,7 +112,7 @@ public class MinimizingFlipStrategy extends BasicStrategies {
                                  int adjCol, 
                                  MakePlay ourMove) {
     // Create a copy of the model to simulate the opponent's move
-    ThreeTriosModelInterface simulatedModel = model.copyModel();
+    ThreeTriosModelInterface simulatedModel = model.copy();
     RuleKeeper rules = new BasicThreeTriosGame(simulatedModel);
     
     // Check if the opponent's move would be legal

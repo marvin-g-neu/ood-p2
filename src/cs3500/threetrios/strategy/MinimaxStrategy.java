@@ -52,10 +52,6 @@ public class MinimaxStrategy extends BasicStrategies {
     PlayerColor opponent = (player == PlayerColor.RED) ? PlayerColor.BLUE : PlayerColor.RED;
 
     List<MakePlay> availableMoves = getAllAvailableMoves(model, player);
-    if (availableMoves.isEmpty()) {
-      // If no valid moves, return an empty list
-      return new ArrayList<>();
-    }
 
     MakePlay bestMove = null;
     int bestValue = Integer.MIN_VALUE;
@@ -63,7 +59,7 @@ public class MinimaxStrategy extends BasicStrategies {
     // For each possible move we can make we simulate the game state
     // if we make that move and find the minimax value of that game state
     for (MakePlay move : availableMoves) {
-      ThreeTriosModelInterface modelCopy = model.copyModel();
+      ThreeTriosModelInterface modelCopy = model.copy();
       applyMove(modelCopy, move, player);
 
       int moveValue = minimax(modelCopy, depth - 1, false, player, opponent);
@@ -105,7 +101,7 @@ public class MinimaxStrategy extends BasicStrategies {
       List<MakePlay> availableMoves = getAllAvailableMoves(model, player);
 
       for (MakePlay move : availableMoves) {
-        ThreeTriosModelInterface modelCopy = model.copyModel();
+        ThreeTriosModelInterface modelCopy = model.copy();
         applyMove(modelCopy, move, player);
         int eval = minimax(modelCopy, depth - 1, false, player, opponent);
         maxEval = Math.max(maxEval, eval);
@@ -117,7 +113,7 @@ public class MinimaxStrategy extends BasicStrategies {
       List<MakePlay> availableMoves = getAllAvailableMoves(model, opponent);
 
       for (MakePlay move : availableMoves) {
-        ThreeTriosModelInterface modelCopy = model.copyModel();
+        ThreeTriosModelInterface modelCopy = model.copy();
         applyMove(modelCopy, move, opponent);
         int eval = minimax(modelCopy, depth - 1, true, player, opponent);
         minEval = Math.min(minEval, eval);
