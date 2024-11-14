@@ -77,10 +77,10 @@ public class CornerStrategyTest {
     assertEquals(1, bestMove.size());
     MakePlay move = bestMove.get(0);
     // Should be one of the corners (0,0), (0,2), (2,0), or (2,2)
-    boolean isCorner = (move.row == 0 && move.col == 0) ||
-                      (move.row == 0 && move.col == 2) ||
-                      (move.row == 2 && move.col == 0) ||
-                      (move.row == 2 && move.col == 2);
+    boolean isCorner = (move.getRow() == 0 && move.getCol() == 0) ||
+                      (move.getRow() == 0 && move.getCol() == 2) ||
+                      (move.getRow() == 2 && move.getCol() == 0) ||
+                      (move.getRow() == 2 && move.getCol() == 2);
     assertTrue(isCorner);
   }
 
@@ -96,8 +96,8 @@ public class CornerStrategyTest {
     assertEquals(1, bestMove.size());
     MakePlay move = bestMove.get(0);
     // Should choose the uppermost-leftmost available position
-    assertEquals(0, move.row);
-    assertEquals(1, move.col);
+    assertEquals(0, move.getRow());
+    assertEquals(1, move.getCol());
   }
 
   @Test
@@ -109,7 +109,7 @@ public class CornerStrategyTest {
     assertEquals(1, bestMove.size());
     MakePlay move = bestMove.get(0);
     // Should not choose the top-left corner as it's more vulnerable
-    assertFalse(move.row == 0 && move.col == 0);
+    assertFalse(move.getRow() == 0 && move.getCol() == 0);
   }
 
   @Test
@@ -135,9 +135,9 @@ public class CornerStrategyTest {
     // Verify that the chosen move is a corner position
     MakePlay move = moves.get(0);
     boolean isCorner = (move.row == 0 && move.col == 0) ||
-                      (move.row == 0 && move.col == 2) ||
-                      (move.row == 2 && move.col == 0) ||
-                      (move.row == 2 && move.col == 2);
+                      (move.getRow() == 0 && move.getCol() == 2) ||
+                      (move.getRow() == 2 && move.getCol() == 0) ||
+                      (move.getRow() == 2 && move.getCol() == 2);
     
     assertTrue("Strategy should choose a corner position", isCorner);
     
