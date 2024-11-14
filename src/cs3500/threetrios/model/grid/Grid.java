@@ -73,6 +73,7 @@ public interface Grid {
 
   /**
    * Creates a deep copy of the current grid state.
+   *
    * @return a new Grid instance with the same state
    */
   Grid copy();

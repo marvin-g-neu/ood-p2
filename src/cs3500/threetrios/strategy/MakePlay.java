@@ -42,8 +42,8 @@ public class MakePlay {
     // Cast and compare the fields
     MakePlay other = (MakePlay) obj;
     return this.cardInHand == other.cardInHand &&
-           this.row == other.row &&
-           this.col == other.col;
+        this.row == other.row &&
+        this.col == other.col;
   }
 
   @Override

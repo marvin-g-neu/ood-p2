@@ -1,11 +1,13 @@
 package cs3500.threetrios.strategy;
 
+import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
-import cs3500.threetrios.model.rules.RuleKeeper;
-import cs3500.threetrios.model.rules.BasicThreeTriosGame;
 import cs3500.threetrios.model.card.ThreeTriosCard;
 import cs3500.threetrios.model.cell.Cell;
+import cs3500.threetrios.model.rules.BasicThreeTriosGame;
+import cs3500.threetrios.model.rules.RuleKeeper;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,10 +26,17 @@ public class MaxFlipsStrategy extends BasicStrategies {
     if (model == null || player == null) {
       throw new IllegalArgumentException("Model and/or player cannot be null");
     }
+    if (model.getGameState() != GameState.IN_PROGRESS) {
+      throw new IllegalStateException("Game is not in progress");
+    }
+    if (model.getPlayerHand(player).size() == 0) {
+      throw new IllegalStateException("No available moves");
+    }
 
     Map<MakePlay, Integer> flipCounts = calculateFlipCounts(model, player);
 
-    // If no valid moves are found, choose the upper-most, left-most open position and the card at index 0
+    // If no valid moves are found, choose the uppermost,
+    // leftmost open position and the card at index 0
     if (flipCounts.isEmpty()) {
       int minRow = Integer.MAX_VALUE;
       int minCol = Integer.MAX_VALUE;
@@ -47,14 +56,14 @@ public class MaxFlipsStrategy extends BasicStrategies {
     }
 
     List<MakePlay> bestMoves = findBestMoves(flipCounts);
-    
+
     // Use breakTies from superclass and return as single-element list
     return Collections.singletonList(breakTies(bestMoves));
   }
 
   // Calculates the number of flips for each possible move
-  private Map<MakePlay, Integer> calculateFlipCounts(ThreeTriosModelInterface model, 
-                                                   PlayerColor player) {
+  private Map<MakePlay, Integer> calculateFlipCounts(ThreeTriosModelInterface model,
+                                                     PlayerColor player) {
     Map<MakePlay, Integer> flipCounts = new HashMap<>();
     RuleKeeper rules = new BasicThreeTriosGame(model);
 
@@ -78,7 +87,7 @@ public class MaxFlipsStrategy extends BasicStrategies {
   private List<MakePlay> findBestMoves(Map<MakePlay, Integer> flipCounts) {
     int maxFlips = Collections.max(flipCounts.values());
     List<MakePlay> bestMoves = new ArrayList<>();
-    
+
     for (Map.Entry<MakePlay, Integer> entry : flipCounts.entrySet()) {
       if (entry.getValue() == maxFlips) {
         bestMoves.add(entry.getKey());

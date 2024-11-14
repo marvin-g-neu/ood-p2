@@ -105,6 +105,11 @@ public class ThreeTriosCard implements CustomCard {
   }
 
   @Override
+  public CustomCard copy() {
+    return new ThreeTriosCard(name, north, south, east, west, currentColor);
+  }
+
+  @Override
   public String toString() {
     return String.format("%s %s %s %s %s", name, north, south, east, west);
   }

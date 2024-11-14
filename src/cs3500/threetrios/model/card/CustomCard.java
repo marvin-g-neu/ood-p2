@@ -43,4 +43,11 @@ public interface CustomCard {
    * @throws IllegalArgumentException if the card is already this color
    */
   void setNewColor(CardColor newColor);
+
+  /**
+   * Creates and returns a copy of this card.
+   *
+   * @return a copy of this card
+   */
+  CustomCard copy();
 }

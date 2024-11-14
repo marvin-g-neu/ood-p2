@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Collections;
 
 /**
- * Abstract class that implements the Strategy interface for basic 
+ * Abstract class that implements the Strategy interface for basic
  * strategies which use the breakTies method to break ties among a list of plays
- * as with the uppermost-leftmost coordinate for the position and then choose 
- * the best card for that position with an index closest to 0 in the hand. 
- * Note if there is no valid move we choose the upper-most, left-most open 
+ * as with the uppermost-leftmost coordinate for the position and then choose
+ * the best card for that position with an index closest to 0 in the hand.
+ * Note if there is no valid move we choose the upper-most, left-most open
  * position and the card at index 0.
  */
 public abstract class BasicStrategies implements Strategy {
@@ -22,6 +22,12 @@ public abstract class BasicStrategies implements Strategy {
    */
   @Override
   public MakePlay breakTies(List<MakePlay> plays) {
+    for (MakePlay play : plays) {
+      if (play == null) {
+        throw new IllegalArgumentException("Play cannot be null");
+      }
+    }
+
     // If there is only one play, return it
     if (plays.size() == 1) {
       return plays.get(0);
@@ -72,7 +78,7 @@ public abstract class BasicStrategies implements Strategy {
     for (MakePlay play : leftmostPlays) {
       cardIdxMap.put(play, play.getCardInHand());
     }
-    
+
     // Find the plays with the minimum card index in hand
     int minCardIdx = Collections.min(cardIdxMap.values());
     for (MakePlay play : cardIdxMap.keySet()) {
@@ -83,5 +89,5 @@ public abstract class BasicStrategies implements Strategy {
 
     // If no valid play is found, return the first leftmost play
     return leftmostPlays.get(0);
-  }    
+  }
 }

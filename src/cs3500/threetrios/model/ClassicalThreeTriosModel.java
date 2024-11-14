@@ -5,6 +5,7 @@ import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.rules.BasicThreeTriosGame;
+import cs3500.threetrios.model.rules.RuleKeeper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,12 +18,20 @@ import java.util.Random;
 public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
   private final Random rand;
 
+  private ClassicalThreeTriosModel(RuleKeeper rules, Grid grid, List<CustomCard> deck,
+                                   PlayerColor currentPlayer, GameState gameState,
+                                   List<CustomCard> redHand, List<CustomCard> blueHand,
+                                   boolean shuffle, Random rand) {
+    super(rules, grid, deck, currentPlayer, gameState, redHand, blueHand, shuffle);
+    this.rand = rand;
+  }
+
   /**
    * Creates a model for a classic game of Three Trios.
    */
   public ClassicalThreeTriosModel() {
     // gameState is only set to NOT_STARTED in the constructor, so it can't go back to NOT_STARTED
-    setGameState(GameState.NOT_STARTED);
+    super();
     this.rand = new Random();
   }
 
@@ -34,7 +43,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
    */
   public ClassicalThreeTriosModel(long seed) {
     // gameState is only set to NOT_STARTED in the constructor, so it can't go back to NOT_STARTED
-    setGameState(GameState.NOT_STARTED);
+    super();
     this.rand = new Random(seed);
   }
 
@@ -79,7 +88,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
       }
     }
     grid = gameGrid;
-    this.deck = new ArrayList<>(deck);
+    this.deck = deck;
     this.shuffle = shuffle;
     currentPlayer = PlayerColor.RED;
     setGameState(GameState.IN_PROGRESS);
@@ -105,5 +114,11 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
       blueHand.add(this.deck.remove(0));
       blueHand.get(blueHand.size() - 1).setNewColor(CardColor.BLUE);
     }
+  }
+
+  @Override
+  public ThreeTriosModelInterface copy() {
+    return new ClassicalThreeTriosModel(rules, grid.copy(), cardListCopy(deck), currentPlayer,
+        gameState, cardListCopy(redHand), cardListCopy(blueHand), shuffle, rand);
   }
 }

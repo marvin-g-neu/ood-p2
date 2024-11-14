@@ -1,9 +1,9 @@
 package cs3500.threetrios.model.rules;
 
-import cs3500.threetrios.model.card.Direction;
-import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.card.CustomCard;
+import cs3500.threetrios.model.card.Direction;
+import cs3500.threetrios.model.cell.Cell;
 
 /**
  * Interface for managing game rules in Three Trios.
@@ -77,9 +77,11 @@ public interface RuleKeeper {
   boolean isGameCompleted();
 
   /**
-   * Simulates playing a card at given coordinates and returns number of cards that would be flipped.
-   * @param row row coordinate
-   * @param col column coordinate
+   * Simulates playing a card at given coordinates and returns number of cards
+   * that would be flipped.
+   *
+   * @param row           row coordinate
+   * @param col           column coordinate
    * @param cardInHandIdx index of card in hand to simulate playing
    * @param currentPlayer the player who would play the card
    * @return number of cards that would be flipped
