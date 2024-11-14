@@ -68,10 +68,10 @@ public interface ThreeTriosModelInterface extends ReadOnlyThreeTriosModelInterfa
    */
   List<CustomCard> getPlayerHand(PlayerColor player);
 
-  /**
-   * Creates a deep copy of the game model.
+  /** 
+   * Creates a copy of the model in the current game state.
    *
-   * @return a deep copy of the game model
+   * @return a copy of the model
    */
-  ThreeTriosModelInterface copyModel();
+  ThreeTriosModelInterface copy();
 }
