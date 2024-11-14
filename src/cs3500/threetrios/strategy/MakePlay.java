@@ -36,14 +36,17 @@ public class MakePlay {
   @Override
   public boolean equals(Object obj) {
     // Check if the objects are the same
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     // Check if the object is an instance of MakePlay
-    if (!(obj instanceof MakePlay)) return false;
+    if (!(obj instanceof MakePlay other)) {
+      return false;
+    }
     // Cast and compare the fields
-    MakePlay other = (MakePlay) obj;
-    return this.cardInHand == other.cardInHand &&
-        this.row == other.row &&
-        this.col == other.col;
+    return this.cardInHand == other.cardInHand
+        && this.row == other.row
+        && this.col == other.col;
   }
 
   @Override

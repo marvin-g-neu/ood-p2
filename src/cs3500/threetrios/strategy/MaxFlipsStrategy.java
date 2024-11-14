@@ -20,9 +20,8 @@ import java.util.Map;
  * Uses breakTies from BasicStrategies for tie-breaking.
  */
 public class MaxFlipsStrategy extends BasicStrategies {
-
   @Override
-  public List<MakePlay> getBestMove(ThreeTriosModelInterface model, PlayerColor player) {
+  public MakePlay getBestMove(ThreeTriosModelInterface model, PlayerColor player) {
     if (model == null || player == null) {
       throw new IllegalArgumentException("Model and/or player cannot be null");
     }
@@ -50,15 +49,15 @@ public class MaxFlipsStrategy extends BasicStrategies {
         }
       }
       if (minRow != Integer.MAX_VALUE) {
-        return Collections.singletonList(new MakePlay(0, minRow, minCol));
+        return new MakePlay(0, minRow, minCol);
       }
-      return new ArrayList<>();
+      throw new IllegalArgumentException("No available moves");
     }
 
     List<MakePlay> bestMoves = findBestMoves(flipCounts);
 
     // Use breakTies from superclass and return as single-element list
-    return Collections.singletonList(breakTies(bestMoves));
+    return breakTies(bestMoves);
   }
 
   // Calculates the number of flips for each possible move

@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class CornerStrategy extends BasicStrategies {
   @Override
-  public List<MakePlay> getBestMove(ThreeTriosModelInterface model, PlayerColor player) {
+  public MakePlay getBestMove(ThreeTriosModelInterface model, PlayerColor player) {
     if (model == null || player == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
@@ -32,13 +32,13 @@ public class CornerStrategy extends BasicStrategies {
     Map<MakePlay, Integer> cornerMoves = calculateCornerMoves(model, player);
 
     if (cornerMoves.isEmpty()) {
-      return new ArrayList<>();
+      return new MaxFlipsStrategy().getBestMove(model, player);
     }
 
     List<MakePlay> bestMoves = findBestCornerMoves(cornerMoves);
 
     // Use breakTies from superclass and return as single-element list
-    return Collections.singletonList(breakTies(bestMoves));
+    return breakTies(bestMoves);
   }
 
   // Calculates the number of flips for each possible move to a corner
