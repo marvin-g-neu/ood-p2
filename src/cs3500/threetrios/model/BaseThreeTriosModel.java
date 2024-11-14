@@ -199,7 +199,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
     }
   }
 
-  private List<CustomCard> getActualPlayerHand() {
+  /* private List<CustomCard> getActualPlayerHand() {
     checkGameInProgress();
     switch (currentPlayer) {
       case RED:
@@ -209,7 +209,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
       default: // should never happen
         throw new IllegalStateException("Unknown current player");
     }
-  }
+  } */
 
   @Override
   public List<CustomCard> getPlayerHand(PlayerColor player) {
