@@ -45,4 +45,13 @@ public class MakePlay {
         this.row == other.row &&
         this.col == other.col;
   }
+
+  @Override
+  public int hashCode() {
+    // Hash the fields and sum them
+    int result = Integer.hashCode(cardInHand);
+    result += Integer.hashCode(row);
+    result += Integer.hashCode(col);
+    return result;
+  }
 }
