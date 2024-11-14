@@ -10,6 +10,14 @@ import java.util.List;
 
 /**
  * Implementation of the Grid interface for the Three Trios game.
+ * 
+ * 
+ * UPDATE: The board uses a 2D array with (0,0) at the top-left corner.
+ * The first coordinate (row) increases downward along the y-axis.
+ * The second coordinate (column) increases rightward along the x-axis.
+ * Each cell in the grid represents either a hole or a playable position.
+ * This cartesian coordinate system allows for simple array-based storage and access
+ * while providing an intuitive way to represent the game board layout.
  */
 public class ThreeTriosBoard implements Grid {
   private final Cell[][] board;

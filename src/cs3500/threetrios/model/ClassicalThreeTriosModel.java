@@ -63,6 +63,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
     if (gameGrid == null || deck == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
+
     for (int r = 0; r < gameGrid.getRows(); r++) {
       for (int c = 0; c < gameGrid.getCols(); c++) {
         if (gameGrid.getCell(r, c) == null) {
@@ -70,6 +71,7 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
         }
       }
     }
+
     for (CustomCard card : deck) {
       if (card == null) {
         throw new IllegalArgumentException("Deck cards cannot be null");
@@ -78,6 +80,8 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
         card.setNewColor(CardColor.UNASSIGNED);
       }
     }
+    
+    // initialize the grid, deck, shuffle, and current player
     grid = gameGrid;
     this.deck = new ArrayList<>(deck);
     this.shuffle = shuffle;
@@ -85,6 +89,12 @@ public class ClassicalThreeTriosModel extends BaseThreeTriosModel {
     setGameState(GameState.IN_PROGRESS);
     rules = new BasicThreeTriosGame(this);
 
+    // initialize the hands
+    initializeHands();
+  }
+
+  // private helper method to initialize the hands in startGame
+  private void initializeHands() {
     int cardCellCount = grid.getCardCells().size();
     if (cardCellCount % 2 == 0) {
       throw new IllegalArgumentException("Cards cannot be even");

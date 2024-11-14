@@ -252,3 +252,7 @@ These changes enable us to run findBestMove() made by computer players without m
 - Added 4 screenshots in the docs folder to show the output of our program in the terminal.
 - Created mocks and tests for the strategies and wrote the output to the transcript file. 
 - Added a .JAR file to the docs folder to show that our program works.
+
+### Fixed errors from manual feedback:
+- Added helpers to cut down methods over 50 lines.
+- Added comments to give context to the Grid.
