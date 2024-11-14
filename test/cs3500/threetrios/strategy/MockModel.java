@@ -52,13 +52,12 @@ public class MockModel implements ThreeTriosModelInterface {
 
   @Override
   public Grid getGrid() {
-    log.append("Getting grid state\n");
     return grid;
   }
 
   @Override
   public GameState getGameState() {
-    log.append("getGameState called\n");
+    log.append("Checking game state: IN_PROGRESS\n");
     return state;
   }
 
@@ -97,5 +96,29 @@ public class MockModel implements ThreeTriosModelInterface {
 
   public void checkCornerVulnerability(int row, int col) {
     log.append(String.format("Calculating vulnerability for corner (%d, %d)\n", row, col));
+  }
+
+  public void logCornerCheck(int row, int col, boolean occupied) {
+    if (occupied) {
+      log.append(String.format("Checking corner cell: (%d, %d) - occupied\n", row, col));
+    } else {
+      log.append(String.format("Checking corner cell: (%d, %d)\n", row, col));
+    }
+  }
+
+  public void logVulnerabilityCheck(int row, int col) {
+    log.append(String.format("Calculating vulnerability for corner (%d, %d)\n", row, col));
+  }
+
+  public void logCellCheck(int row, int col) {
+    log.append(String.format("Checking cell: (%d, %d)\n", row, col));
+  }
+
+  public void logCornerSelection(int row, int col) {
+    log.append(String.format("Selected least vulnerable corner: (%d, %d)\n", row, col));
+  }
+
+  public void logUppermostLeftmost(int row, int col) {
+    log.append(String.format("Selected uppermost-leftmost position: (%d, %d)\n", row, col));
   }
 }

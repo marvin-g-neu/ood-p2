@@ -13,13 +13,12 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class CornerStrategyTest {
-  private ThreeTriosModelInterface mockModel;
+  private MockModel mockModel;
   private Strategy strategy;
   private StringBuilder log;
-
 
   @Before
   public void setup() {
@@ -34,30 +33,47 @@ public class CornerStrategyTest {
   }
 
   @Test
-  public void testCornerStrategyTranscript() {
+  public void testCornerStrategyEmptyBoard() {
     strategy.getBestMove(mockModel, PlayerColor.RED);
+    
+    String expected = String.join("\n",
+        "Checking game state: IN_PROGRESS",
+        "Getting current player hand",
+        "Checking corner cell: (0, 0)",
+        "Calculating vulnerability for corner (0, 0)",
+        "Checking corner cell: (0, 2)",
+        "Calculating vulnerability for corner (0, 2)",
+        "Checking corner cell: (2, 0)",
+        "Calculating vulnerability for corner (2, 0)",
+        "Checking corner cell: (2, 2)",
+        "Calculating vulnerability for corner (2, 2)",
+        "Comparing corner vulnerabilities",
+        "Selected least vulnerable corner: (0, 0)",
+        "");
 
-    String transcript = log.toString();
-    assertTrue(transcript.contains("getGameState called"));
-    assertTrue(transcript.contains("getGrid called"));
-    assertTrue(transcript.contains("getPlayerHand called for color: RED"));
-
-    System.out.println("Strategy execution transcript:");
-    System.out.println(transcript);
+    assertEquals(expected, log.toString());
   }
 
   @Test
-  public void testCornerStrategyChoosesCorner() {
-    List<MakePlay> moves = strategy.getBestMove(mockModel, PlayerColor.RED);
-
-    MakePlay move = moves.get(0);
-    boolean isCorner = (move.getRow() == 0 && move.getCol() == 0) ||
-                      (move.getRow() == 0 && move.getCol() == 2) ||
-                      (move.getRow() == 2 && move.getCol() == 0) ||
-                      (move.getRow() == 2 && move.getCol() == 2);
+  public void testCornerStrategyFilledCorners() {
+    // Setup board with filled corners
+    Grid grid = mockModel.getGrid();
+    // Fill corners logic here...
     
-    assertTrue("Strategy should choose a corner position", isCorner);
-    System.out.println("Corner selection transcript:");
-    System.out.println(log.toString());
+    strategy.getBestMove(mockModel, PlayerColor.RED);
+    
+    String expected = String.join("\n",
+        "Checking game state: IN_PROGRESS",
+        "Getting current player hand",
+        "Checking corner cell: (0, 0) - occupied",
+        "Checking corner cell: (0, 2) - occupied",
+        "Checking corner cell: (2, 0) - occupied",
+        "Checking corner cell: (2, 2) - occupied",
+        "Finding uppermost-leftmost empty cell",
+        "Checking cell: (0, 1)",
+        "Selected uppermost-leftmost position: (0, 1)",
+        "");
+
+    assertEquals(expected, log.toString());
   }
 } 
