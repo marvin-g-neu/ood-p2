@@ -38,6 +38,7 @@ public class CornerStrategyTest {
     mockModel = new MockModel(log, deck, grid);
     model = new ClassicalThreeTriosModel();
     strategy = new CornerStrategy();
+    model.startGame(grid, deck);
   }
 
   @Test
@@ -86,7 +87,6 @@ public class CornerStrategyTest {
 
   @Test
   public void getBestMoveFallsBackToUpperLeftWhenNoCornersAvailable() {
-    // Fill all corners
     model.playTurn(0, 0, 0);  // top-left
     model.playTurn(0, 0, 2);  // top-right
     model.playTurn(0, 2, 0);  // bottom-left
@@ -95,35 +95,30 @@ public class CornerStrategyTest {
     List<MakePlay> bestMove = strategy.getBestMove(model, PlayerColor.RED);
     assertEquals(1, bestMove.size());
     MakePlay move = bestMove.get(0);
-    // Should choose the uppermost-leftmost available position
+
     assertEquals(0, move.getRow());
     assertEquals(1, move.getCol());
   }
 
   @Test
   public void getBestMoveChoosesLeastVulnerableCorner() {
-    // Play a card that makes one corner more vulnerable than others
-    model.playTurn(0, 1, 0);  // Play adjacent to top-left corner
+    model.playTurn(0, 1, 0);
 
     List<MakePlay> bestMove = strategy.getBestMove(model, PlayerColor.BLUE);
     assertEquals(1, bestMove.size());
     MakePlay move = bestMove.get(0);
-    // Should not choose the top-left corner as it's more vulnerable
     assertFalse(move.getRow() == 0 && move.getCol() == 0);
   }
 
   @Test
   public void testCornerStrategyTranscript() {
-    // Test the strategy's behavior
     strategy.getBestMove(mockModel, PlayerColor.RED);
-    
-    // Verify the expected sequence of method calls
+
     String transcript = log.toString();
     assertTrue(transcript.contains("getGameState called"));
     assertTrue(transcript.contains("getGrid called"));
     assertTrue(transcript.contains("getPlayerHand called for color: RED"));
-    
-    // Print the transcript for debugging
+
     System.out.println("Strategy execution transcript:");
     System.out.println(transcript);
   }
@@ -131,10 +126,9 @@ public class CornerStrategyTest {
   @Test
   public void testCornerStrategyChoosesCorner() {
     List<MakePlay> moves = strategy.getBestMove(mockModel, PlayerColor.RED);
-    
-    // Verify that the chosen move is a corner position
+
     MakePlay move = moves.get(0);
-    boolean isCorner = (move.row == 0 && move.col == 0) ||
+    boolean isCorner = (move.getRow() == 0 && move.getCol() == 0) ||
                       (move.getRow() == 0 && move.getCol() == 2) ||
                       (move.getRow() == 2 && move.getCol() == 0) ||
                       (move.getRow() == 2 && move.getCol() == 2);
