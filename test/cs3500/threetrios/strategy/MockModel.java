@@ -46,13 +46,13 @@ public class MockModel implements ThreeTriosModelInterface {
 
   @Override
   public List<CustomCard> getPlayerHand(PlayerColor color) {
-    log.append("getPlayerHand called for color: ").append(color).append("\n");
+    log.append("Getting current player hand\n");
     return hand;
   }
 
   @Override
   public Grid getGrid() {
-    log.append("getGrid called\n");
+    log.append("Getting grid state\n");
     return grid;
   }
 
@@ -89,5 +89,13 @@ public class MockModel implements ThreeTriosModelInterface {
   public CellState getCellStateAt(int row, int col) {
     log.append("getCellStateAt called for row: ").append(row).append(", col: ").append(col).append("\n");
     return CellState.EMPTY;
+  }
+
+  public void checkCell(int row, int col) {
+    log.append(String.format("Checking cell: (%d, %d)\n", row, col));
+  }
+
+  public void checkCornerVulnerability(int row, int col) {
+    log.append(String.format("Calculating vulnerability for corner (%d, %d)\n", row, col));
   }
 }
