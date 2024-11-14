@@ -236,4 +236,23 @@ These changes enable us to run findBestMove() made by computer players without m
 - Improved code organization with Strategy interface
 
 ### Additional Changes
-- Added methods to help in wriring the strategies such as getPlayerHand which takes in a player's color and returns the player's hand isntead of our old version and other similar changes.
+- Added methods to help in wriring the strategies such as getPlayerHand which takes in a player's color 
+  and returns the player's hand isntead of our old version and other similar changes.
+- Added a copyModel method to the model interface and implemented it in ClassicalThreeTriosModel 
+  to allow for easier copying of the model state.
+- We created a new config file for the mocks we needed to use for testing these strategies.
+
+### EXTRA CREDIT:
+- We implemented the minimizing the number of flips and minimax strategies for extra credit; 
+  they located in the src.strategies package and tests.
+
+### Other additions:
+- Added the GUI View that we will be used in future homeworks. 
+- Added 4 screenshots in the docs folder to show the output of our program in the terminal.
+- Created mocks and tests for the strategies and wrote the output to the transcript file. 
+- Added a .JAR file to the docs folder to show that our program works.
+
+### Fixed errors from manual feedback:
+- Added helpers to cut down methods over 50 lines in the 
+  GridFileReader and ClassicalThreeTriosModel.
+- Added comments to give context to the Grid.
