@@ -242,7 +242,6 @@ These changes enable us to run findBestMove() made by computer players without m
   to allow for easier copying of the model state.
 - We created a new config file for the mocks we needed to use for testing these strategies.
 
-
 ### EXTRA CREDIT:
 - We implemented the minimizing the number of flips and minimax strategies for extra credit; 
   they located in the src.strategies package and tests.
@@ -254,5 +253,6 @@ These changes enable us to run findBestMove() made by computer players without m
 - Added a .JAR file to the docs folder to show that our program works.
 
 ### Fixed errors from manual feedback:
-- Added helpers to cut down methods over 50 lines.
+- Added helpers to cut down methods over 50 lines in the 
+  GridFileReader and ClassicalThreeTriosModel.
 - Added comments to give context to the Grid.
