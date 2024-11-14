@@ -18,7 +18,7 @@ public interface Strategy {
    * @throws IllegalStateException if game not in progress
    * @throws IllegalArgumentException if player has no move
    */
-  List<MakePlay> getBestMove(ThreeTriosModelInterface model, PlayerColor player);
+  MakePlay getBestMove(ThreeTriosModelInterface model, PlayerColor player);
 
   /**
    * Breaks ties between moves.

@@ -40,15 +40,15 @@ public class BasicThreeTriosGame extends GameRules {
 
   @Override
   public void executeBattlePhase(int row, int col, PlayerColor currentPlayer) {
-    executeBattlePhase(row, col, currentPlayer, false);
+    executeBattlePhase(row, col, currentPlayer, grid);
   }
 
   @Override
-  public void executeBattlePhase(int row, int col, PlayerColor currentPlayer, boolean simulate) {
+  public void executeBattlePhase(int row, int col, PlayerColor currentPlayer, Grid givenGrid) {
     if (currentPlayer == null) {
       throw new IllegalArgumentException("Current player cannot be null");
     }
-    if (row < 0 || row >= grid.getRows() || col < 0 || col >= grid.getCols()) {
+    if (row < 0 || row >= givenGrid.getRows() || col < 0 || col >= givenGrid.getCols()) {
       System.out.print(row + " " + col);
       throw new IllegalArgumentException("Coordinates must be in range");
     }
@@ -56,12 +56,11 @@ public class BasicThreeTriosGame extends GameRules {
       throw new IllegalStateException("Game state is not in progress");
     }
 
-    grid = simulate ? modelCopy.getGrid() : model.getGrid();
-    Cell cell = grid.getCell(row, col);
+    Cell cell = givenGrid.getCell(row, col);
     if (cell.isHole() || cell.isEmpty()) {
       throw new IllegalArgumentException("Cell does not have a card");
     }
-    Cell[] adjacentCells = grid.getAdjacentCells(row, col);
+    Cell[] adjacentCells = givenGrid.getAdjacentCells(row, col);
 
     for (int d = 0; d < Direction.values().length; d++) {
       Cell adjacentCell = adjacentCells[d];
@@ -105,7 +104,7 @@ public class BasicThreeTriosGame extends GameRules {
       default: // should never happen
         throw new IllegalArgumentException("Unknown Direction");
     }
-    executeBattlePhase(newRow, newCol, currentPlayer, false);
+    executeBattlePhase(newRow, newCol, currentPlayer, grid);
   }
 
   @Override

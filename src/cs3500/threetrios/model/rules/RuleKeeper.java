@@ -4,6 +4,7 @@ import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.cell.Cell;
+import cs3500.threetrios.model.grid.Grid;
 
 /**
  * Interface for managing game rules in Three Trios.
@@ -51,13 +52,13 @@ public interface RuleKeeper {
    * @param row           the row where the card was placed
    * @param col           the column where the card was placed
    * @param currentPlayer the player who placed the card
-   * @param simulate      whether to simulate the battle phase
+   * @param givenGrid          the grid on which to execute the battle
    * @throws IllegalArgumentException if currentPlayer is null
    * @throws IllegalArgumentException if the row or column is not in range
    * @throws IllegalArgumentException if the cell does not have a card
    * @throws IllegalStateException    if model state is not IN_PROGRESS
    */
-  void executeBattlePhase(int row, int col, PlayerColor currentPlayer, boolean simulate);
+  void executeBattlePhase(int row, int col, PlayerColor currentPlayer, Grid givenGrid);
 
   /**
    * Gets the opposite direction of a given direction.

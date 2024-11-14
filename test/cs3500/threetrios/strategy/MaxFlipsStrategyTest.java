@@ -57,25 +57,24 @@ public class MaxFlipsStrategyTest {
   public void getBestMoveThrowsWhenNoMove() {
     Cell empty = new ThreeTriosCell(false);
     ThreeTriosModelInterface m = new ClassicalThreeTriosModel();
-    Grid g = new ThreeTriosBoard(new Cell[][]{{empty, empty}});
+    Grid g = new ThreeTriosBoard(new Cell[][]{{empty, empty.copy(), empty.copy()}});
     m.startGame(g, deck, false);
 
-    g.placeCard(m.getCurrentPlayerHand().get(0), 0, 0);
+    assertEquals(2, m.getPlayerHand(PlayerColor.RED).size());
+    g.placeCard(m.getCurrentPlayerHand().remove(0), 0, 0);
+    g.placeCard(m.getPlayerHand(PlayerColor.RED).remove(0), 0, 1);
     assertEquals(0, m.getPlayerHand(PlayerColor.RED).size());
     assertThrows(IllegalStateException.class, () -> strategy.getBestMove(m, PlayerColor.RED));
   }
 
   @Test
   public void getBestMoveFindsMaxFlips() {
-    System.out.println(model.getGameState());
     model.playTurn(0, 0, 0);
-    System.out.println(model.getGameState());
-    List<MakePlay> bestPlays = new ArrayList<>();
-    bestPlays.add(new MakePlay(0, 0, 1));
-    bestPlays.add(new MakePlay(5, 0, 1));
-    bestPlays.add(new MakePlay(7, 0, 1));
-    bestPlays.add(new MakePlay(9, 0, 1));
-    assertEquals(bestPlays, strategy.getBestMove(model, PlayerColor.BLUE));
+    MakePlay pred = new MakePlay(0, 1, 0);
+    MakePlay best = strategy.getBestMove(model, PlayerColor.BLUE);
+    System.out.println(pred.getCardInHand() + ", " + pred.getRow() + ", " + pred.getCol());
+    System.out.println(best.getCardInHand() + ", " + best.getRow() + ", " + best.getCol());
+    assertEquals(pred, best);
   }
 
   @Test
