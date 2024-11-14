@@ -25,11 +25,33 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
    * be IN_PROGRESS and only can change to one of the final states. An exception is thrown if any
    * calls try to break this rule when calling setGameState() or endGame().
    */
-  private GameState gameState;
+  protected GameState gameState;
 
   protected List<CustomCard> redHand;
   protected List<CustomCard> blueHand;
   protected boolean shuffle;
+
+  /**
+   * Creates a model for a classic game of Three Trios.
+   */
+  public BaseThreeTriosModel() {
+    // gameState is only set to NOT_STARTED in the constructor, so it can't go back to NOT_STARTED
+    gameState = GameState.NOT_STARTED;
+  }
+
+  protected BaseThreeTriosModel(RuleKeeper rules, Grid grid, List<CustomCard> deck,
+                                PlayerColor currentPlayer, GameState gameState,
+                                List<CustomCard> redHand, List<CustomCard> blueHand,
+                                boolean shuffle) {
+    this.rules = rules;
+    this.grid = grid;
+    this.deck = deck;
+    this.currentPlayer = currentPlayer;
+    this.gameState = gameState;
+    this.redHand = redHand;
+    this.blueHand = blueHand;
+    this.shuffle = shuffle;
+  }
 
   @Override
   public void startGame(Grid gameGrid, List<CustomCard> deck) {
@@ -74,19 +96,19 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
   @Override
   public Grid getGrid() {
     checkGameInProgress();
-    return grid;
+    return grid.copy();
   }
 
   @Override
   public void playTurn(int row, int col, int handIndex) {
     checkGameInProgress();
     checkInRange(row, col);
-    if (handIndex < 0 || handIndex >= getCurrentPlayerHand().size()) {
+    if (handIndex < 0 || handIndex >= getCurrentPlayerHand(true).size()) {
       throw new IllegalArgumentException("Hand index out of bounds");
     }
 
     Cell cell = grid.getCell(row, col);
-    CustomCard card = getCurrentPlayerHand().get(handIndex);
+    CustomCard card = getCurrentPlayerHand(true).get(handIndex);
     if (cell.isHole()) {
       throw new IllegalStateException("Cell is a hole");
     }
@@ -94,7 +116,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
       throw new IllegalStateException("Cell already has a card");
     }
 
-    grid.placeCard(getActualPlayerHand().remove(handIndex), row, col);
+    grid.placeCard(getCurrentPlayerHand(true).remove(handIndex), row, col);
     rules.executeBattlePhase(row, col, currentPlayer, false);
     endTurn();
   }
@@ -162,6 +184,10 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
 
   @Override
   public List<CustomCard> getCurrentPlayerHand() {
+    return getCurrentPlayerHand(false);
+  }
+
+  private List<CustomCard> getCurrentPlayerHand(boolean local) {
     checkGameInProgress();
     switch (currentPlayer) {
       case RED:
@@ -199,5 +225,13 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
       default: // should never happen
         throw new IllegalStateException("Unknown player color");
     }
+  }
+
+  protected List<CustomCard> cardListCopy(List<CustomCard> list) {
+    List<CustomCard> copy = new ArrayList<>();
+    for (CustomCard c : list) {
+      copy.add(c.copy());
+    }
+    return copy;
   }
 }

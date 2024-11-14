@@ -71,4 +71,10 @@ public interface Cell {
    * @throws IllegalStateException    if the cell is a hole or is empty
    */
   void flipCard(CardColor opponentColor);
+
+  /**
+   * Make a copy of this cell.
+   * @return a copy of this cell
+   */
+  Cell copy();
 }

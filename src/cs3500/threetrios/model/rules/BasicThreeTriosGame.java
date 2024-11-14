@@ -13,8 +13,8 @@ import cs3500.threetrios.model.grid.Grid;
  * Implementation of the basic Three Trios game rules.
  */
 public class BasicThreeTriosGame extends GameRules {
-  private final Grid grid;
-  private Grid copyGrid;
+  private Grid grid;
+  private ThreeTriosModelInterface modelCopy;
 
   /**
    * Constructs a BasicThreeTriosGame with the given model.
@@ -57,17 +57,12 @@ public class BasicThreeTriosGame extends GameRules {
       throw new IllegalStateException("Game state is not in progress");
     }
 
-    if (simulate) {
-      copyGrid = grid.copy();
-    }
-
-    Grid workingGrid = simulate ? copyGrid : grid;
-
-    Cell cell = workingGrid.getCell(row, col);
+    grid = simulate ? modelCopy.getGrid() : model.getGrid();
+    Cell cell = grid.getCell(row, col);
     if (cell.isHole() || cell.isEmpty()) {
       throw new IllegalArgumentException("Cell does not have a card");
     }
-    Cell[] adjacentCells = workingGrid.getAdjacentCells(row, col);
+    Cell[] adjacentCells = grid.getAdjacentCells(row, col);
 
     for (int d = 0; d < Direction.values().length; d++) {
       Cell adjacentCell = adjacentCells[d];
@@ -119,6 +114,7 @@ public class BasicThreeTriosGame extends GameRules {
     if (model.getGameState() == GameState.NOT_STARTED) {
       throw new IllegalStateException("Game is not started");
     }
+    grid = model.getGrid();
     return grid.getEmptyCellCount() == 0;
   }
 
@@ -128,7 +124,7 @@ public class BasicThreeTriosGame extends GameRules {
       throw new IllegalArgumentException("Invalid coordinates");
     }
     // create model
-    ThreeTriosModelInterface modelCopy = new ClassicalThreeTriosModel();
+    modelCopy = model.copy();
 
     if (handIndex < 0 || handIndex >= modelCopy.getCurrentPlayerHand().size()) {
       throw new IllegalArgumentException("Invalid hand index");
@@ -137,11 +133,9 @@ public class BasicThreeTriosGame extends GameRules {
     // play card
     modelCopy.playTurn(row, col, handIndex);
 
-    // execute play phase
-    executeBattlePhase(row, col, currentPlayer, true);
-
     // Count opponent's cards before simulation
     int originalOpponentCards = 0;
+    grid = model.getGrid();
     for (Cell cell : grid.getCardCells()) {
       if (!cell.isEmpty() && cell.getCellColor() != currentPlayer) {
         originalOpponentCards++;
@@ -150,7 +144,7 @@ public class BasicThreeTriosGame extends GameRules {
 
     // Count opponent's cards after simulation
     int finalOpponentCards = 0;
-    for (Cell cell : copyGrid.getCardCells()) {
+    for (Cell cell : modelCopy.getGrid().getCardCells()) {
       if (!cell.isEmpty() && cell.getCellColor() != currentPlayer) {
         finalOpponentCards++;
       }

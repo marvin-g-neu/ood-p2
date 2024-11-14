@@ -25,6 +25,11 @@ public class ThreeTriosCell implements Cell {
     this.card = null;
   }
 
+  private ThreeTriosCell(CellState state, CustomCard card) {
+    this.cellState = state;
+    this.card = card;
+  }
+
   @Override
   public boolean isHole() {
     return cellState == CellState.HOLE;
@@ -110,5 +115,11 @@ public class ThreeTriosCell implements Cell {
     } else {
       this.cellState = CellState.BLUE;
     }
+  }
+
+  @Override
+  public Cell copy() {
+    CustomCard copyCard = (card == null) ? null : card.copy();
+    return new ThreeTriosCell(cellState, copyCard);
   }
 }

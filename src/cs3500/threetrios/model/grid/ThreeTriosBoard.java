@@ -31,7 +31,6 @@ public class ThreeTriosBoard implements Grid {
    * @throws IllegalArgumentException if board or cells are null
    * @throws IllegalArgumentException if the board dimensions are jagged
    * @throws IllegalArgumentException if there is an even number of card cells
-   * @throws IllegalArgumentException if there are cells which start with a color
    */
   public ThreeTriosBoard(Cell[][] board) {
     if (board == null) {
@@ -54,8 +53,6 @@ public class ThreeTriosBoard implements Grid {
       for (int j = 0; j < cols; j++) {
         if (board[i][j] == null) {
           throw new IllegalArgumentException("Board cannot contain null cells");
-        } else if (!board[i][j].isHole() && !board[i][j].isEmpty()) {
-          throw new IllegalArgumentException("Board cannot start with claimed cells");
         }
         this.board[i][j] = board[i][j];
         if (!board[i][j].isHole()) {
@@ -181,6 +178,12 @@ public class ThreeTriosBoard implements Grid {
 
   @Override
   public Grid copy() {
-    return new ThreeTriosBoard(this.board);
+    Cell[][] copy = new Cell[rows][cols];
+    for (int r = 0; r < rows; r++) {
+      for (int c = 0; c < cols; c++) {
+        copy[r][c] = board[r][c].copy();
+      }
+    }
+    return new ThreeTriosBoard(copy);
   }
 } 

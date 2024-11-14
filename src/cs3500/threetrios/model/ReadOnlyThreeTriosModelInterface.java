@@ -31,7 +31,7 @@ public interface ReadOnlyThreeTriosModelInterface {
   PlayerColor getCurrentPlayer();
 
   /**
-   * Gets the current player's hand.
+   * Gets a copy of the current player's hand.
    *
    * @return the current player's hand
    * @throws IllegalStateException if the game has not been started or is over
@@ -39,7 +39,7 @@ public interface ReadOnlyThreeTriosModelInterface {
   List<CustomCard> getCurrentPlayerHand();
 
   /**
-   * Gets the grid currently in play.
+   * Gets a copy of the grid currently in play.
    *
    * @return the grid in play
    * @throws IllegalStateException if the game has not been started
