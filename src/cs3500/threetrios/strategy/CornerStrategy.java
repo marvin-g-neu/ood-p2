@@ -33,21 +33,7 @@ public class CornerStrategy extends BasicStrategies {
 
     // If no valid moves are found, choose the upper-most, left-most open position and the card at index 0
     if (cornerMoves.isEmpty()) {
-      int minRow = Integer.MAX_VALUE;
-      int minCol = Integer.MAX_VALUE;
-      for (int row = 0; row < model.getGrid().getRows(); row++) {
-        for (int col = 0; col < model.getGrid().getCols(); col++) {
-          Cell cell = model.getGrid().getCell(row, col);
-          if (cell.isEmpty() && row < minRow) {
-            minRow = row;
-            minCol = col;
-          }
-        }
-      }
-      if (minRow != Integer.MAX_VALUE) {
-        return new MakePlay(0, minRow, minCol);
-      }
-      throw new IllegalArgumentException("No corners found");
+      return new MaxFlipsStrategy().getBestMove(model, player);
     }
 
     List<MakePlay> bestMoves = findBestCornerMoves(cornerMoves);
