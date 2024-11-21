@@ -1,6 +1,5 @@
 package cs3500.threetrios.model.rules;
 
-import cs3500.threetrios.model.ClassicalThreeTriosModel;
 import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
