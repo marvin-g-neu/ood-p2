@@ -192,6 +192,7 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
     if (local) {
       return getActualPlayerHand(currentPlayer);
     }
+    return getPlayerHand(currentPlayer);
   }
 
   private List<CustomCard> getActualPlayerHand(PlayerColor player) {
