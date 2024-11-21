@@ -39,6 +39,16 @@ public interface ReadOnlyThreeTriosModelInterface {
   List<CustomCard> getCurrentPlayerHand();
 
   /**
+   * Gets a copy of the hand of a given player.
+   *
+   * @param player the player to get the hand of
+   * @return the hand of the player
+   * @throws IllegalStateException    if the game has not been started or is over
+   * @throws IllegalArgumentException if player is null
+   */
+  List<CustomCard> getPlayerHand(PlayerColor player);
+
+  /**
    * Gets a copy of the grid currently in play.
    *
    * @return the grid in play

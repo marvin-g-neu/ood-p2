@@ -189,19 +189,15 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
 
   private List<CustomCard> getCurrentPlayerHand(boolean local) {
     checkGameInProgress();
-    switch (currentPlayer) {
-      case RED:
-        return new ArrayList<>(redHand);
-      case BLUE:
-        return new ArrayList<>(blueHand);
-      default: // should never happen
-        throw new IllegalStateException("Unknown current player");
+    if (local) {
+      return getActualPlayerHand(currentPlayer);
     }
+    return getPlayerHand(currentPlayer);
   }
 
-  private List<CustomCard> getActualPlayerHand() {
+  private List<CustomCard> getActualPlayerHand(PlayerColor player) {
     checkGameInProgress();
-    switch (currentPlayer) {
+    switch (player) {
       case RED:
         return redHand;
       case BLUE:
