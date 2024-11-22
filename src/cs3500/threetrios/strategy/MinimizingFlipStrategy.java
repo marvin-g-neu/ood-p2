@@ -24,7 +24,7 @@ import java.util.Map;
 public class MinimizingFlipStrategy extends BasicStrategies {
 
   @Override
-  public List<MakePlay> getBestMove(ThreeTriosModelInterface model, PlayerColor player) {
+  public MakePlay getBestMove(ThreeTriosModelInterface model, PlayerColor player) {
     if (model == null || player == null) {
       throw new IllegalArgumentException("Model and/or player cannot be null");
     }
@@ -61,7 +61,7 @@ public class MinimizingFlipStrategy extends BasicStrategies {
       }
     }
 
-    return Collections.singletonList(breakTies(bestMoves));
+    return breakTies(bestMoves);
   }
 
   /**
