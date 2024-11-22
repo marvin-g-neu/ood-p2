@@ -7,8 +7,6 @@ import cs3500.threetrios.model.rules.BasicThreeTriosGame;
 import cs3500.threetrios.model.card.CardColor;
 import cs3500.threetrios.model.card.CustomCard;
 
-import java.util.Collections;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

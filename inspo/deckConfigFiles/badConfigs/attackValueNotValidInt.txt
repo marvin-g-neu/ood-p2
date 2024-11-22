@@ -1,0 +1,6 @@
+CorruptKing 0 3 9 A
+AngryDragon -1 8 9 9
+WindBird 10 2 5 3
+HeroKnight 42 2 4 4
+WorldDragon 9000 3 5 7
+SkyWhale 16 5 9 9

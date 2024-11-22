@@ -1,0 +1,6 @@
+CorruptKing 7 3 9 A
+AngryDragon 2 8 9
+WindBird 7 2
+HeroKnight A
+WorldDragon
+SkyWhale 4 5 9 9 too many strings

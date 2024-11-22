@@ -1,0 +1,16 @@
+CorruptKing 7 3 9 A
+AngryDragon 2 8 9 9
+WindBird 7 2 5 3
+HeroKnight A 2 4 4
+WorldDragon 8 3 5 7
+SkyWhale 4 5 9 9
+BigWig 5 2 7 8
+TinyTim 4 4 2 6
+JumpingJacks 5 2 7 A
+PenguinOverlord 5 9 A 2
+SmellySocks 7 8 2 3
+TwinkleTwinkle 2 8 6 3
+SmallSteps 1 8 6 6
+GenghisKhan A 5 6 2
+SpicySausage 4 6 2 3
+GamblingAddiction 7 4 9 A

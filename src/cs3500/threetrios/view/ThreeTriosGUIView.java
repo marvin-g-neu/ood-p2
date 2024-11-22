@@ -6,7 +6,7 @@ import cs3500.threetrios.model.*;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.grid.Grid;
-import cs3500.threetrios.model.grid.ThreeTriosBoard;
+
 
 import javax.swing.*;
 import java.awt.*;
