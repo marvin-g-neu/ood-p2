@@ -1,12 +1,10 @@
 package cs3500.threetrios.view;
 
-import cs3500.threetrios.controller.readers.DeckFileReader;
-import cs3500.threetrios.controller.readers.GridFileReader;
 import cs3500.threetrios.model.*;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.grid.Grid;
-import cs3500.threetrios.model.grid.ThreeTriosBoard;
+import cs3500.threetrios.model.PlayerColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +24,8 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
 
   private JButton selection;
 
+  private final PlayerColor player;
+
   /**
    * Creates a GUI view for a given model of Three Trios.
    *
@@ -33,7 +33,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
    * @throws IllegalArgumentException if model is null
    * @throws IllegalArgumentException if model game has not been started
    */
-  public ThreeTriosGUIView(ReadOnlyThreeTriosModelInterface model) {
+  public ThreeTriosGUIView(ReadOnlyThreeTriosModelInterface model, PlayerColor player) {
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null");
     }
@@ -41,11 +41,11 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
       throw new IllegalArgumentException("Game state is not started");
     }
     this.model = model;
+    this.player = player;
     this.frame = new JFrame();
     frame.setLayout(new GridBagLayout());
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Three Trios");
-    frame.setVisible(true);
 
     this.redPanel = createHandPanel(PlayerColor.RED);
     this.bluePanel = createHandPanel(PlayerColor.BLUE);
@@ -177,14 +177,14 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
       throw new IllegalArgumentException("Hand index out of bounds");
     }
     JButton clicked;
-    Color c;
+    // Color c;
     try {
       if (player == PlayerColor.RED) {
         clicked = (JButton) redPanel.getComponent(handIndex);
-        c = Color.RED;
+        // c = Color.RED;
       } else {
         clicked = (JButton) bluePanel.getComponent(handIndex);
-        c = Color.BLUE;
+        // c = Color.BLUE;
       }
     } catch (ClassCastException e) {
       throw new IllegalStateException("Hand panel should only contain JButtons.");
@@ -212,5 +212,13 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
       throw new IllegalArgumentException("Column index out of bounds");
     }
     System.out.println("(" + row + ", " + col + ")");
+  }
+
+  public void makeVisible() {
+    frame.setVisible(true);
+  }
+
+  public void displayMessage(String str) {
+    JOptionPane.showMessageDialog(null, str);
   }
 }

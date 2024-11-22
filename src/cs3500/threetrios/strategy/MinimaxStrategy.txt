@@ -5,7 +5,6 @@ import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.rules.RuleKeeper;
 import cs3500.threetrios.model.rules.BasicThreeTriosGame;
 import cs3500.threetrios.model.card.CustomCard;
-import java.util.Collections;
 
 import java.util.ArrayList;
 import java.util.List;
