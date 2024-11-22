@@ -21,16 +21,16 @@ public class MakePlay {
     this.col = col;
   }
 
-  public int getCardInHand() {
-    return cardInHand;
-  }
-
   public int getRow() {
     return row;
   }
 
   public int getCol() {
     return col;
+  }
+
+  public int getCardInHand() {
+    return cardInHand;
   }
 
   @Override

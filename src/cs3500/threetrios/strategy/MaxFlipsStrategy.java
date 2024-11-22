@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Strategy 1: Find the move that flips the most cards.
+ * Strategy: Find the move that flips the most cards.
  * Returns an empty list if the player cannot play to any cell.
  * Uses breakTies from BasicStrategies for tie-breaking.
  */

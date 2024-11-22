@@ -16,7 +16,7 @@ import java.awt.event.ComponentEvent;
 /**
  * A view for the game ThreeTrios using a Java Swing GUI view.
  */
-public class ThreeTriosGUIView implements ThreeTriosView {
+public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   private final ReadOnlyThreeTriosModelInterface model;
 
   private final JFrame frame;
@@ -25,15 +25,6 @@ public class ThreeTriosGUIView implements ThreeTriosView {
   private JPanel gridPanel;
 
   private JButton selection;
-
-  public static void main(String[] args) {
-    ThreeTriosModelInterface model = new ClassicalThreeTriosModel();
-    model.startGame(
-        new ThreeTriosBoard(
-            new GridFileReader().readFile("docs/boards/boardWithNoUnreachableCardCells.config")),
-        new DeckFileReader().readFile("docs/cards/AllNecessaryCards.config"));
-    new ThreeTriosGUIView(model);
-  }
 
   /**
    * Creates a GUI view for a given model of Three Trios.
@@ -67,17 +58,16 @@ public class ThreeTriosGUIView implements ThreeTriosView {
     gbc.weighty = 1.0;
 
     gbc.gridx = 0;
-    gbc.weightx = 0.1;
+    gbc.weightx = 0.15;
     frame.add(redPanel, gbc);
 
     gbc.gridx = 1;
-    gbc.weightx = 0.8;
+    gbc.weightx = 0.7;
     frame.add(gridPanel, gbc);
 
     gbc.gridx = 2;
-    gbc.weightx = 0.1;
+    gbc.weightx = 0.15;
     frame.add(bluePanel, gbc);
-
 
     frame.setPreferredSize(new Dimension(800, 600));
     frame.pack();
@@ -133,7 +123,9 @@ public class ThreeTriosGUIView implements ThreeTriosView {
         cardButton.setBackground(Color.BLUE);
       }
       int finalI = i;
-      cardButton.addActionListener(e -> handleCardClick(player, finalI, cardButton));
+      cardButton.addActionListener(e -> handleCardClick(player, finalI));
+      cardButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+      cardButton.setBorderPainted(false);
       handPanel.add(cardButton);
     }
 
@@ -176,21 +168,49 @@ public class ThreeTriosGUIView implements ThreeTriosView {
     return grid;
   }
 
-  private void handleCardClick(PlayerColor player, int handIndex, JButton clicked) {
+  @Override
+  public void handleCardClick(PlayerColor player, int handIndex) {
+    if (player == null) {
+      throw new IllegalArgumentException("Arguments cannot be null");
+    }
+    if (handIndex < 0 || handIndex >= model.getPlayerHand(player).size()) {
+      throw new IllegalArgumentException("Hand index out of bounds");
+    }
+    JButton clicked;
+    Color c;
+    try {
+      if (player == PlayerColor.RED) {
+        clicked = (JButton) redPanel.getComponent(handIndex);
+        c = Color.RED;
+      } else {
+        clicked = (JButton) bluePanel.getComponent(handIndex);
+        c = Color.BLUE;
+      }
+    } catch (ClassCastException e) {
+      throw new IllegalStateException("Hand panel should only contain JButtons.");
+    }
+
     if (clicked == selection) {
-      clicked.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+      clicked.setBorderPainted(false);
       selection = null;
       System.out.println("Hand index " + handIndex + " of player: " + player);
       return;
     } else if (selection != null) {
-      selection.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+      selection.setBorderPainted(false);
     }
     selection = clicked;
-    selection.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+    selection.setBorderPainted(true);
     System.out.println("Hand index " + handIndex + " of player: " + player);
   }
 
-  private void handleCellClick(int row, int col) {
+  @Override
+  public void handleCellClick(int row, int col) {
+    if (row < 0 || row >= model.getGrid().getRows()) {
+      throw new IllegalArgumentException("Row index out of bounds");
+    }
+    if (col < 0 || col >= model.getGrid().getCols()) {
+      throw new IllegalArgumentException("Column index out of bounds");
+    }
     System.out.println("(" + row + ", " + col + ")");
   }
 }
