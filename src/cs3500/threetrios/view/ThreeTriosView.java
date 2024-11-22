@@ -8,7 +8,7 @@ public interface ThreeTriosView {
   /**
    * Render the view for a game of Three Trios.
    *
-   * @throws IOException if cannot take input or send output
+   * @throws IOException if it cannot take input or send output
    */
   void render() throws IOException;
 }
