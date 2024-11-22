@@ -21,7 +21,7 @@ public class ThreeTriosController implements Actions, GameListeners {
   public ThreeTriosController(ClassicalThreeTriosModel model, Player player,
                               ThreeTriosGUIView view) {
     if (model == null || player == null || view == null) {
-      throw new IllegalArgumentException("Arguments cannot be null");
+      throw new IllegalArgumentException("model, play or view cannot be null.");
     }
     this.model = model;
     this.player = player;
@@ -58,7 +58,7 @@ public class ThreeTriosController implements Actions, GameListeners {
     if (player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
       this.cardIdx = -1;
       refreshScreen();
-      String turnMsg = "Team %s: The board awaits your move.";
+      String turnMsg = "Player %s: The board awaits your move.";
       view.displayMessage(String.format(turnMsg, this.player.getColor()));
     } else if (!player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
       player.getMakePlay(model);
