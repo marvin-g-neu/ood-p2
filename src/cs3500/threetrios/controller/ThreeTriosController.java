@@ -21,7 +21,7 @@ public class ThreeTriosController implements Actions, GameListeners {
   public ThreeTriosController(ClassicalThreeTriosModel model, Player player,
                               ThreeTriosGUIView view) {
     if (model == null || player == null || view == null) {
-      throw new IllegalArgumentException("Arguments cannot be null");
+      throw new IllegalArgumentException("model, play or view cannot be null.");
     }
     this.model = model;
     this.player = player;
@@ -58,7 +58,7 @@ public class ThreeTriosController implements Actions, GameListeners {
     if (player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
       this.cardIdx = -1;
       refreshScreen();
-      String turnMsg = "Team %s: The board awaits your move.";
+      String turnMsg = "Player %s: The board awaits your move.";
       view.displayMessage(String.format(turnMsg, this.player.getColor()));
     } else if (!player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
       player.getMakePlay(model);
@@ -92,19 +92,18 @@ public class ThreeTriosController implements Actions, GameListeners {
 
     PlayerColor color = PlayerColor.valueOf(playerColor);
     if (!color.equals(this.player.getColor())) {
-      String wrongCardMsg = "Team %s: You cannot access the opposing team's cards.";
+      String wrongCardMsg = "Player %s: You cannot access the opposing team's cards.";
       view.displayMessage(String.format(wrongCardMsg, this.player.getColor()));
       return false;
     }
 
     if (!color.equals(model.getCurrentPlayer())) {
-      String waitTurnMsg = "Team %s: Please wait for your turn.";
+      String waitTurnMsg = "Player %s: Please wait for your turn.";
       view.displayMessage(String.format(waitTurnMsg, this.player.getColor()));
       return false;
     }
 
     this.cardIdx = cardIdx;
-    view.handleCardClick(color, cardIdx);
     return true;
   }
 
@@ -117,7 +116,7 @@ public class ThreeTriosController implements Actions, GameListeners {
     }
 
     if (cardIdx == -1) {
-      String selectCardMsg = "Team %s: Choose a card from your hand before selecting a cell.";
+      String selectCardMsg = "Player %s: Choose a card from your hand before selecting a cell.";
       view.displayMessage(String.format(selectCardMsg, this.player.getColor()));
       return;
     }
@@ -125,7 +124,7 @@ public class ThreeTriosController implements Actions, GameListeners {
     Cell cell = model.getGrid().getCell(row, col);
     CustomCard card = model.getPlayerHand(this.player.getColor()).get(cardIdx);
     if (!rules.isLegalMove(cell, card)) {
-      String invalidMoveMsg = "Team %s: That move is not allowed. Choose an empty cell.";
+      String invalidMoveMsg = "Player %s: That move is not allowed. Choose an empty cell.";
       view.displayMessage(String.format(invalidMoveMsg, this.player.getColor()));
       return;
     }
