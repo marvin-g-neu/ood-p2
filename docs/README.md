@@ -134,11 +134,19 @@ The **model** is the core of the game logic, managing the state of the game, inc
 ### View
 
 - **Textual View (`view`)**
-  - **`TextualView`**
-    - An interface for rendering the game state as text.
+  - **`ThreeTriosView`**
+    - An interface for rendering the game state, with the method of doing so left to child classes and interfaces.
   - **`ThreeTriosTextualView`**
-    - Implements the `TextualView` interface, providing a console-based representation of the game state.
-
+    - Implements the `ThreeTriosView` interface, providing a console-based representation of the game state.
+- **GUI View (`view`)**
+  - **`ThreeTriosGUIViewInterface`**
+    - The main interface for rendering the game state as a GUI, handles the whole Frame.
+  - **`BoardPanelInterface`**
+    - An interface to represent the state of the game grid, used by the main GUI interface.
+  - **`HandPanelInterface`**
+    - An interface to represent each of the players' hands of cards, used by the main GUI interface.
+  - **`ThreeTriosGUIView`**
+    - Implements the `ThreeTriosGUIViewInterface` interface, providing a Swing-based representation of the game state.
 ## Source Organization
 
 The project is organized into three main directories: `docs`, `src`, and `test`:
@@ -166,8 +174,12 @@ ood-p2/
 |------ DeckFileReader.java
 |------ GridFileReader.java
 |||||- view/
-|------ TextualView.java
+|------ BoardPanelInterface.java
+|------ HandPanelInterface.java
+|------ ThreeTriosGUIView.java
+|------ ThreeTriosGUIViewInterface.java
 |------ ThreeTriosTextualView.java
+|------ ThreeTriosView.java
 |||||- model/
 |------ BaseThreeTriosModel.java
 |------ ClassicalThreeTriosModel.java
@@ -213,19 +225,20 @@ These changes enable us to run findBestMove() made by computer players without m
 - Added MaxFlipsStrategy: Maximizes number of opponent cards flipped
 - Added CornerStrategy: Prioritizes corner positions to minimize vulnerability
 - Created BasicStrategies abstract class for common tie-breaking logic
+- Added GUI View interfaces and implementation: GUI displays board, hands, and allows cards to be selected and deselected
 
 ### Strategy Details
 1. MaxFlipsStrategy:
-  - Evaluates all possible moves
-  - Calculates potential card flips for each move
-  - Chooses move that flips most opponent cards
-  - Uses tie-breaking for multiple optimal moves
+   - Evaluates all possible moves
+   - Calculates potential card flips for each move
+   - Chooses move that flips most opponent cards
+   - Uses tie-breaking for multiple optimal moves
 
 2. CornerStrategy:
-  - Prioritizes corner positions (expose only 2 attack values)
-  - Evaluates card vulnerability in corners
-  - Chooses least vulnerable card-position combination
-  - Falls back to default moves if corners unavailable
+   - Prioritizes corner positions (expose only 2 attack values)
+   - Evaluates card vulnerability in corners
+   - Chooses least vulnerable card-position combination
+   - Falls back to default moves if corners unavailable
 
 ### Implementation Notes
 - Strategies use common tie-breaking logic:
@@ -236,4 +249,4 @@ These changes enable us to run findBestMove() made by computer players without m
 - Improved code organization with Strategy interface
 
 ### Additional Changes
-- Added methods to help in wriring the strategies such as getPlayerHand which takes in a player's color and returns the player's hand isntead of our old version and other similar changes.
+- Added methods to help in wiring the strategies such as getPlayerHand which takes in a player's color and returns the player's hand isntead of our old version and other similar changes.
