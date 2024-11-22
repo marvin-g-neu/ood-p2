@@ -44,7 +44,7 @@ public class MinimaxStrategy extends BasicStrategies {
   }
 
   @Override
-  public List<MakePlay> getBestMove(ThreeTriosModelInterface model, PlayerColor player) {
+  public MakePlay getBestMove(ThreeTriosModelInterface model, PlayerColor player) {
     if (model == null || player == null) {
       throw new IllegalArgumentException("Model and/or player cannot be null");
     }
@@ -76,7 +76,7 @@ public class MinimaxStrategy extends BasicStrategies {
     }
 
     // Break ties using the superclass method
-    return Collections.singletonList(breakTies(bestMoves));
+    return breakTies(bestMoves);
   }
 
   /**
