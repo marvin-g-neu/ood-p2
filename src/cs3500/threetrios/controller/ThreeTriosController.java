@@ -92,19 +92,18 @@ public class ThreeTriosController implements Actions, GameListeners {
 
     PlayerColor color = PlayerColor.valueOf(playerColor);
     if (!color.equals(this.player.getColor())) {
-      String wrongCardMsg = "Team %s: You cannot access the opposing team's cards.";
+      String wrongCardMsg = "Player %s: You cannot access the opposing team's cards.";
       view.displayMessage(String.format(wrongCardMsg, this.player.getColor()));
       return false;
     }
 
     if (!color.equals(model.getCurrentPlayer())) {
-      String waitTurnMsg = "Team %s: Please wait for your turn.";
+      String waitTurnMsg = "Player %s: Please wait for your turn.";
       view.displayMessage(String.format(waitTurnMsg, this.player.getColor()));
       return false;
     }
 
     this.cardIdx = cardIdx;
-    view.handleCardClick(color, cardIdx);
     return true;
   }
 
@@ -117,7 +116,7 @@ public class ThreeTriosController implements Actions, GameListeners {
     }
 
     if (cardIdx == -1) {
-      String selectCardMsg = "Team %s: Choose a card from your hand before selecting a cell.";
+      String selectCardMsg = "Player %s: Choose a card from your hand before selecting a cell.";
       view.displayMessage(String.format(selectCardMsg, this.player.getColor()));
       return;
     }
@@ -125,7 +124,7 @@ public class ThreeTriosController implements Actions, GameListeners {
     Cell cell = model.getGrid().getCell(row, col);
     CustomCard card = model.getPlayerHand(this.player.getColor()).get(cardIdx);
     if (!rules.isLegalMove(cell, card)) {
-      String invalidMoveMsg = "Team %s: That move is not allowed. Choose an empty cell.";
+      String invalidMoveMsg = "Player %s: That move is not allowed. Choose an empty cell.";
       view.displayMessage(String.format(invalidMoveMsg, this.player.getColor()));
       return;
     }
