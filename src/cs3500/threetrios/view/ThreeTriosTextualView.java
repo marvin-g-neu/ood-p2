@@ -39,20 +39,12 @@ public class ThreeTriosTextualView implements ThreeTriosView {
     for (int row = 0; row < model.getGrid().getRows(); row++) {
       for (int col = 0; col < model.getGrid().getCols(); col++) {
         switch (model.getCellStateAt(row, col)) {
-          case EMPTY:
-            result.append("_");
-            break;
-          case HOLE:
-            result.append(" ");
-            break;
-          case RED:
-            result.append("R");
-            break;
-          case BLUE:
-            result.append("B");
-            break;
-          default: // Should do something
-            break;
+          case EMPTY -> result.append("_");
+          case HOLE -> result.append(" ");
+          case RED -> result.append("R");
+          case BLUE -> result.append("B");
+          default -> {
+          } // Should do something
         }
       }
       result.append("\n");
