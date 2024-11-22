@@ -17,6 +17,7 @@ import cs3500.threetrios.model.cell.Cell;
 
 
 import java.util.List;
+import java.io.File;
 /**
  * Main class for the Three Trios game.
  * Accepts command line arguments to determine player types:
@@ -55,8 +56,11 @@ public final class ThreeTrios {
     bluePlayer.callbackFeatures(blueController);
     
     // Start game with configuration files
-    Cell[][] grid = new GridFileReader().readFile("docs/boards/boardWithNoUnreachableCardCells.config");
-    List<CustomCard> deck = new DeckFileReader().readFile("docs/decks/standardDeck.config");
+    String gridPath = "ood-p2" + File.separator + "docs" + File.separator + "boards" + File.separator + "boardWithNoUnreachableCardCells.config";
+    String deckPath = "ood-p2" + File.separator + "docs" + File.separator + "decks" + File.separator + "standardDeck.config";
+
+    Cell[][] grid = new GridFileReader().readFile(gridPath);
+    List<CustomCard> deck = new DeckFileReader().readFile(deckPath);
     
     model.startGame(new ThreeTriosBoard(grid), deck);
     view.makeVisible();
