@@ -42,7 +42,6 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     frame.setLayout(new GridBagLayout());
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Three Trios");
-    frame.setVisible(true);
 
     this.redPanel = createHandPanel(PlayerColor.RED);
     this.bluePanel = createHandPanel(PlayerColor.BLUE);
@@ -209,5 +208,13 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
       throw new IllegalArgumentException("Column index out of bounds");
     }
     System.out.println("(" + row + ", " + col + ")");
+  }
+
+  public void makeVisible() {
+    frame.setVisible(true);
+  }
+
+  public void displayMessage(String str) {
+    JOptionPane.showMessageDialog(null, str);
   }
 }

@@ -8,7 +8,8 @@ import cs3500.threetrios.model.ClassicalThreeTriosModel;
 import cs3500.threetrios.model.rules.BasicThreeTriosGame;
 import cs3500.threetrios.controller.players.Player;
 import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.cell.ThreeTriosCell;
+
+import java.util.Map;
 
 public class ThreeTriosController implements Actions, GameListeners {
   private final ClassicalThreeTriosModel model;
@@ -33,44 +34,45 @@ public class ThreeTriosController implements Actions, GameListeners {
   @Override
   public boolean selectCard(String playerColor, int cardIdx) {
     if (rules.isGameCompleted()) {
-      view.showMessage("The game is over.");
+      view.displayMessage("The game is over.");
       return false;
     }
     
     PlayerColor color = PlayerColor.valueOf(playerColor);
     if (!color.equals(this.player.getColor())) {
-      view.showMessage("Player " + this.player.getColor() 
+      view.displayMessage("Player " + this.player.getColor()
           + ": You cannot select a card from your opponent's hand.");
       return false;
     }
     
     if (!color.equals(model.getCurrentPlayer())) {
-      view.showMessage("Player " + this.player.getColor() 
+      view.displayMessage("Player " + this.player.getColor()
           + ": It is not your turn.");
       return false;
     }
     
     this.cardIdx = cardIdx;
+    view.handleCardClick(color, cardIdx);
     return true;
   }
 
   @Override
   public void selectCell(int row, int col) {
     if (rules.isGameCompleted()) {
-      view.showMessage("The game is over.");
+      view.displayMessage("The game is over.");
       return;
     }
     
     if (cardIdx == -1) {
-      view.showMessage("Player " + this.player.getColor() 
+      view.displayMessage("Player " + this.player.getColor()
           + ": Please select a card from the hand first.");
       return;
     }
     
-    ThreeTriosCell cell = model.getGrid().getCell(row, col);
+    Cell cell = model.getGrid().getCell(row, col);
     CustomCard card = model.getPlayerHand(this.player.getColor()).get(cardIdx);
     if (!rules.isLegalMove(cell, card)) {
-      view.showMessage("Player " + this.player.getColor() 
+      view.displayMessage("Player " + this.player.getColor()
           + ": Please play to an open cell.");
       return;
     }
@@ -80,7 +82,7 @@ public class ThreeTriosController implements Actions, GameListeners {
       cardIdx = -1;
       runPlayerTurn();
     } catch (IllegalArgumentException e) {
-      view.showMessage("Invalid move: " + e.getMessage());
+      view.displayMessage("Invalid move: " + e.getMessage());
     }
   }
 
@@ -97,9 +99,9 @@ public class ThreeTriosController implements Actions, GameListeners {
   @Override
   public void runPlayerTurn() {
     if (player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
-      view.resetSelection(this.player.getColor());
+      this.cardIdx = -1;
       refreshScreen();
-      view.showMessage("Player " + this.player.getColor() 
+      view.displayMessage("Player " + this.player.getColor()
           + ": It is your turn.");
     } else if (!player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
       player.getMakePlay(model);
@@ -114,12 +116,18 @@ public class ThreeTriosController implements Actions, GameListeners {
   public void runGameOver() {
     refreshScreen();
     if (rules.isGameCompleted()) {
-      PlayerColor winner = model.getWinner();
-      PlayerColor loser = winner.equals(PlayerColor.RED) ? PlayerColor.BLUE : PlayerColor.RED;
-      view.showMessage(String.format("Game over! Player %s wins %d to %d.", 
-          winner, model.getPlayerScore(winner), model.getPlayerScore(loser)));
+      Map<PlayerColor, Integer> scores = Map.of(
+              PlayerColor.BLUE, model.getScore(PlayerColor.BLUE),
+              PlayerColor.RED, model.getScore(PlayerColor.RED));
+
+      PlayerColor winner = scores.get(PlayerColor.BLUE) > scores.get(PlayerColor.RED)
+              ? PlayerColor.BLUE : PlayerColor.RED;
+      PlayerColor loser = winner == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+
+      view.displayMessage(String.format("Game over! Player %s wins %d to %d.",
+              winner, model.getScore(winner), model.getScore(loser)));
     } else {
-      view.showMessage("Game over! The game has ended in a tie.");
+      view.displayMessage("Game over! The game has ended in a tie.");
     }
   }
 }

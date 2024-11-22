@@ -37,8 +37,8 @@ public class ComputerPlayer implements Player {
     // get the best move according to the strategy choosen
     MakePlay bestMove = this.strategy.getBestMove(model, this.playerColor);
     // select the card and cell for the move to be made
-    features.selectCard(playerColor.toString(), bestMove.getCardInHand());
-    features.selectCell(bestMove.getRow(), bestMove.getCol());
+    boolean canPlay = features.selectCard(playerColor.toString(), bestMove.getCardInHand());
+    if (canPlay) features.selectCell(bestMove.getRow(), bestMove.getCol());
   }
 
   @Override
