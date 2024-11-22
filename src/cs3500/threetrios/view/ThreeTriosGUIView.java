@@ -5,6 +5,7 @@ import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.controller.Actions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +25,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
 
   private JButton selection;
 
-  private final PlayerColor player;
+  private Actions action;
 
   /**
    * Creates a GUI view for a given model of Three Trios.
@@ -33,7 +34,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
    * @throws IllegalArgumentException if model is null
    * @throws IllegalArgumentException if model game has not been started
    */
-  public ThreeTriosGUIView(ReadOnlyThreeTriosModelInterface model, PlayerColor player) {
+  public ThreeTriosGUIView(ReadOnlyThreeTriosModelInterface model) {
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null");
     }
@@ -41,7 +42,6 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
       throw new IllegalArgumentException("Game state is not started");
     }
     this.model = model;
-    this.player = player;
     this.frame = new JFrame();
     frame.setLayout(new GridBagLayout());
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -220,5 +220,9 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
 
   public void displayMessage(String str) {
     JOptionPane.showMessageDialog(null, str);
+  }
+
+  public void setController(Actions action) {
+    this.action = action;
   }
 }

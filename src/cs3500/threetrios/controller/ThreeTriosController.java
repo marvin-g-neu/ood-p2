@@ -16,6 +16,7 @@ public class ThreeTriosController implements Actions, GameListeners {
   private final ThreeTriosGUIView view;
   private final BasicThreeTriosGame rules;
   private int cardIdx;
+  private Player currentPlayer;
 
   public ThreeTriosController(ClassicalThreeTriosModel model, Player player,
                              ThreeTriosGUIView view) {
@@ -28,6 +29,7 @@ public class ThreeTriosController implements Actions, GameListeners {
     this.rules = new BasicThreeTriosGame(model);
     this.cardIdx = -1;
     player.callbackFeatures(this);
+    this.currentPlayer = player;
   }
 
   @Override
@@ -53,18 +55,11 @@ public class ThreeTriosController implements Actions, GameListeners {
 
   @Override
   public void runPlayerTurn() {
-    if (player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
-      this.cardIdx = -1;
-      refreshScreen();
-      String turnMsg = "Team %s: The board awaits your move.";
-      view.displayMessage(String.format(turnMsg, this.player.getColor()));
-    } else if (!player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
-      player.getMakePlay(model);
+    if (!currentPlayer.isHuman()) {
+      currentPlayer.getMakePlay(model);
     }
-    
-    if (rules.isGameCompleted()) {
-      runGameOver();
-    }
+    view.render();
+    switchPlayer();
   }
 
   @Override
@@ -134,5 +129,14 @@ public class ThreeTriosController implements Actions, GameListeners {
       String errorMsg = "Invalid action: %s";
       view.displayMessage(String.format(errorMsg, e.getMessage()));
     }
+  }
+
+  private void switchPlayer() {
+    if (model.getCurrentPlayer() == PlayerColor.RED) {
+      currentPlayer = player;
+    } else {
+      currentPlayer = player;
+    }
+    runPlayerTurn();
   }
 }

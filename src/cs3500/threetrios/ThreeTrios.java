@@ -13,10 +13,10 @@ import cs3500.threetrios.strategy.CornerStrategy;
 import cs3500.threetrios.view.ThreeTriosGUIView;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.cell.Cell;
 
 
 import java.util.List;
-import java.io.File;
 /**
  * Main class for the Three Trios game.
  * Accepts command line arguments to determine player types:
@@ -31,29 +31,35 @@ public final class ThreeTrios {
    * @param args Command line arguments specifying player types
    */
   public static void main(String[] args) {
+    if (args.length != 2) {
+        System.out.println("Usage: java ThreeTrios <player1type> <player2type>");
+        System.exit(1);
+    }
+
+    // Configure players
+    Player redPlayer = configurePlayer(args[0], PlayerColor.RED);
+    Player bluePlayer = configurePlayer(args[1], PlayerColor.BLUE);
+
+    // Create model
     ClassicalThreeTriosModel model = new ClassicalThreeTriosModel();
     
-    // setup board and deck
-    ThreeTriosBoard board = new ThreeTriosBoard(
-        new GridFileReader().readFile("docs" + File.separator + "boards"
-            + File.separator + "boardWithNoUnreachableCardCells.config"));
-    List<CustomCard> deck = new DeckFileReader().readFile("docs" + File.separator + "cards"
-        + File.separator + "AllNecessaryCards.config");
-
-    // configure players
-    Player player1 = configurePlayer(args[0], PlayerColor.RED);
-    Player player2 = configurePlayer(args[1], PlayerColor.BLUE);
-
-    // create views
-    ThreeTriosGUIView view1 = new ThreeTriosGUIView(model, PlayerColor.RED);
-    ThreeTriosGUIView view2 = new ThreeTriosGUIView(model, PlayerColor.BLUE);
-
-    // create controllers
-    ThreeTriosController controller1 = new ThreeTriosController(model, player1, view1);
-    ThreeTriosController controller2 = new ThreeTriosController(model, player2, view2);
-
-    // start game
-    model.startGame(board, deck);
+    // Create view
+    ThreeTriosGUIView view = new ThreeTriosGUIView(model);
+    
+    // Create controllers for both players
+    ThreeTriosController redController = new ThreeTriosController(model, redPlayer, view);
+    ThreeTriosController blueController = new ThreeTriosController(model, bluePlayer, view);
+    
+    // Register controllers with players
+    redPlayer.callbackFeatures(redController);
+    bluePlayer.callbackFeatures(blueController);
+    
+    // Start game with configuration files
+    Cell[][] grid = new GridFileReader().readFile("docs/boards/boardWithNoUnreachableCardCells.config");
+    List<CustomCard> deck = new DeckFileReader().readFile("docs/decks/standardDeck.config");
+    
+    model.startGame(new ThreeTriosBoard(grid), deck);
+    view.makeVisible();
   }
 
   /**
