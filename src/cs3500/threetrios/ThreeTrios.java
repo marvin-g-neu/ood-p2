@@ -7,7 +7,6 @@ import cs3500.threetrios.controller.ThreeTriosController;
 import cs3500.threetrios.controller.readers.DeckFileReader;
 import cs3500.threetrios.controller.readers.GridFileReader;
 import cs3500.threetrios.model.ClassicalThreeTriosModel;
-import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
 import cs3500.threetrios.strategy.MaxFlipsStrategy;
 import cs3500.threetrios.strategy.CornerStrategy;
@@ -17,7 +16,7 @@ import cs3500.threetrios.model.PlayerColor;
 
 
 import java.util.List;
-
+import java.io.File;
 /**
  * Main class for the Three Trios game.
  * Accepts command line arguments to determine player types:
@@ -36,8 +35,10 @@ public final class ThreeTrios {
     
     // setup board and deck
     ThreeTriosBoard board = new ThreeTriosBoard(
-        new GridFileReader().readFile("docs/boards/boardWithNoUnreachableCardCells.config"));
-    List<CustomCard> deck = new DeckFileReader().readFile("docs/cards/AllNecessaryCards.config");
+        new GridFileReader().readFile("docs" + File.separator + "boards"
+            + File.separator + "boardWithNoUnreachableCardCells.config"));
+    List<CustomCard> deck = new DeckFileReader().readFile("docs" + File.separator + "cards"
+        + File.separator + "AllNecessaryCards.config");
 
     // configure players
     Player player1 = configurePlayer(args[0], PlayerColor.RED);
