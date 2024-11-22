@@ -1,4 +1,3 @@
-
 package cs3500.threetrios.controller;
 
 import cs3500.threetrios.model.PlayerColor;
@@ -32,57 +31,39 @@ public class ThreeTriosController implements Actions, GameListeners {
   }
 
   @Override
-  public boolean selectCard(String playerColor, int cardIdx) {
+  public void runGameOver() {
+    refreshScreen();
     if (rules.isGameCompleted()) {
-      view.displayMessage("The game is over.");
-      return false;
+      Map<PlayerColor, Integer> scores = Map.of(
+              PlayerColor.BLUE, model.getScore(PlayerColor.BLUE),
+              PlayerColor.RED, model.getScore(PlayerColor.RED));
+
+      PlayerColor winner = scores.get(PlayerColor.BLUE) > scores.get(PlayerColor.RED)
+              ? PlayerColor.BLUE : PlayerColor.RED;
+      PlayerColor loser = winner == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+
+      String endGameMsg = "Match finished! %s team is victorious with a score of %d against %d.";
+      view.displayMessage(String.format(endGameMsg, winner, model.getScore(winner), 
+          model.getScore(loser)));
+    } else {
+      String tieMsg = "Match concluded! Neither team emerged victorious - it's a draw.";
+      view.displayMessage(tieMsg);
     }
-    
-    PlayerColor color = PlayerColor.valueOf(playerColor);
-    if (!color.equals(this.player.getColor())) {
-      view.displayMessage("Player " + this.player.getColor()
-          + ": You cannot select a card from your opponent's hand.");
-      return false;
-    }
-    
-    if (!color.equals(model.getCurrentPlayer())) {
-      view.displayMessage("Player " + this.player.getColor()
-          + ": It is not your turn.");
-      return false;
-    }
-    
-    this.cardIdx = cardIdx;
-    view.handleCardClick(color, cardIdx);
-    return true;
   }
 
   @Override
-  public void selectCell(int row, int col) {
+  public void runPlayerTurn() {
+    if (player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
+      this.cardIdx = -1;
+      refreshScreen();
+      String turnMsg = "Team %s: The board awaits your move.";
+      view.displayMessage(String.format(turnMsg, this.player.getColor()));
+    } else if (!player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
+      player.getMakePlay(model);
+    }
+    
     if (rules.isGameCompleted()) {
-      view.displayMessage("The game is over.");
-      return;
-    }
-    
-    if (cardIdx == -1) {
-      view.displayMessage("Player " + this.player.getColor()
-          + ": Please select a card from the hand first.");
-      return;
-    }
-    
-    Cell cell = model.getGrid().getCell(row, col);
-    CustomCard card = model.getPlayerHand(this.player.getColor()).get(cardIdx);
-    if (!rules.isLegalMove(cell, card)) {
-      view.displayMessage("Player " + this.player.getColor()
-          + ": Please play to an open cell.");
-      return;
-    }
-    
-    try {
-      model.playTurn(row, col, cardIdx);
-      cardIdx = -1;
-      runPlayerTurn();
-    } catch (IllegalArgumentException e) {
-      view.displayMessage("Invalid move: " + e.getMessage());
+      runGameOver();
     }
   }
 
@@ -96,38 +77,62 @@ public class ThreeTriosController implements Actions, GameListeners {
     view.makeVisible();
   }
 
+
   @Override
-  public void runPlayerTurn() {
-    if (player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
-      this.cardIdx = -1;
-      refreshScreen();
-      view.displayMessage("Player " + this.player.getColor()
-          + ": It is your turn.");
-    } else if (!player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
-      player.getMakePlay(model);
+  public boolean selectCard(String playerColor, int cardIdx) {
+    if (rules.isGameCompleted()) {
+      String gameOverMsg = "This match has concluded.";
+      view.displayMessage(gameOverMsg);
+      return false;
     }
     
-    if (rules.isGameCompleted()) {
-      runGameOver();
+    PlayerColor color = PlayerColor.valueOf(playerColor);
+    if (!color.equals(this.player.getColor())) {
+      String wrongCardMsg = "Team %s: You cannot access the opposing team's cards.";
+      view.displayMessage(String.format(wrongCardMsg, this.player.getColor()));
+      return false;
     }
+    
+    if (!color.equals(model.getCurrentPlayer())) {
+      String waitTurnMsg = "Team %s: Please wait for your turn.";
+      view.displayMessage(String.format(waitTurnMsg, this.player.getColor()));
+      return false;
+    }
+    
+    this.cardIdx = cardIdx;
+    view.handleCardClick(color, cardIdx);
+    return true;
   }
 
   @Override
-  public void runGameOver() {
-    refreshScreen();
+  public void selectCell(int row, int col) {
     if (rules.isGameCompleted()) {
-      Map<PlayerColor, Integer> scores = Map.of(
-              PlayerColor.BLUE, model.getScore(PlayerColor.BLUE),
-              PlayerColor.RED, model.getScore(PlayerColor.RED));
-
-      PlayerColor winner = scores.get(PlayerColor.BLUE) > scores.get(PlayerColor.RED)
-              ? PlayerColor.BLUE : PlayerColor.RED;
-      PlayerColor loser = winner == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
-
-      view.displayMessage(String.format("Game over! Player %s wins %d to %d.",
-              winner, model.getScore(winner), model.getScore(loser)));
-    } else {
-      view.displayMessage("Game over! The game has ended in a tie.");
+      String gameOverMsg = "This match has concluded.";
+      view.displayMessage(gameOverMsg);
+      return;
+    }
+    
+    if (cardIdx == -1) {
+      String selectCardMsg = "Team %s: Choose a card from your hand before selecting a cell.";
+      view.displayMessage(String.format(selectCardMsg, this.player.getColor()));
+      return;
+    }
+    
+    Cell cell = model.getGrid().getCell(row, col);
+    CustomCard card = model.getPlayerHand(this.player.getColor()).get(cardIdx);
+    if (!rules.isLegalMove(cell, card)) {
+      String invalidMoveMsg = "Team %s: That move is not allowed. Choose an empty cell.";
+      view.displayMessage(String.format(invalidMoveMsg, this.player.getColor()));
+      return;
+    }
+    
+    try {
+      model.playTurn(row, col, cardIdx);
+      cardIdx = -1;
+      runPlayerTurn();
+    } catch (IllegalArgumentException e) {
+      String errorMsg = "Invalid action: %s";
+      view.displayMessage(String.format(errorMsg, e.getMessage()));
     }
   }
 }
