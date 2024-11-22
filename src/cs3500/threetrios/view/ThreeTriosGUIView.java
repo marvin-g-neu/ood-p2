@@ -1,12 +1,9 @@
 package cs3500.threetrios.view;
 
-import cs3500.threetrios.controller.readers.DeckFileReader;
-import cs3500.threetrios.controller.readers.GridFileReader;
 import cs3500.threetrios.model.*;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
 import cs3500.threetrios.model.grid.Grid;
-import cs3500.threetrios.model.grid.ThreeTriosBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -177,14 +174,14 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
       throw new IllegalArgumentException("Hand index out of bounds");
     }
     JButton clicked;
-    Color c;
+    // Color c;
     try {
       if (player == PlayerColor.RED) {
         clicked = (JButton) redPanel.getComponent(handIndex);
-        c = Color.RED;
+        // c = Color.RED;
       } else {
         clicked = (JButton) bluePanel.getComponent(handIndex);
-        c = Color.BLUE;
+        // c = Color.BLUE;
       }
     } catch (ClassCastException e) {
       throw new IllegalStateException("Hand panel should only contain JButtons.");
