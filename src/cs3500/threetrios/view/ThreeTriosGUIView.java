@@ -18,8 +18,8 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   private final ReadOnlyThreeTriosModelInterface model;
 
   private final JFrame frame;
-  private JPanel redPanel;
-  private JPanel bluePanel;
+  private HandPanelInterface redHand;
+  private HandPanelInterface blueHand;
   private JPanel gridPanel;
 
   private JButton selection;
@@ -47,8 +47,6 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Three Trios");
 
-    this.redPanel = createHandPanel(PlayerColor.RED);
-    this.bluePanel = createHandPanel(PlayerColor.BLUE);
     this.gridPanel = createGridPanel();
     this.selection = null;
 
@@ -59,7 +57,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
 
     gbc.gridx = 0;
     gbc.weightx = 0.15;
-    frame.add(redPanel, gbc);
+    frame.add(redHand.getPanel(), gbc);
 
     gbc.gridx = 1;
     gbc.weightx = 0.7;
@@ -67,7 +65,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
 
     gbc.gridx = 2;
     gbc.weightx = 0.15;
-    frame.add(bluePanel, gbc);
+    frame.add(blueHand.getPanel(), gbc);
 
     frame.setPreferredSize(new Dimension(800, 600));
     frame.pack();
@@ -75,73 +73,16 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
 
   @Override
   public void render() {
-    redPanel = createHandPanel(PlayerColor.RED);
-    bluePanel = createHandPanel(PlayerColor.BLUE);
+    redHand = createHandPanel(PlayerColor.RED);
+    blueHand = createHandPanel(PlayerColor.BLUE);
     gridPanel = createGridPanel();
 
     frame.revalidate();
     frame.repaint();
   }
 
-  private JPanel createHandPanel(PlayerColor player) {
-    JPanel handPanel = new JPanel();
-    int handSize = model.getCurrentPlayerHand().size();
-    handPanel.setLayout(new GridLayout(handSize, 1));
-
-    for (int i = 0; i < handSize; i++) {
-      CustomCard card = model.getCurrentPlayerHand().get(i);
-      JPanel cardPanel = new JPanel(new BorderLayout());
-      cardPanel.setOpaque(false);
-
-      JLabel northLabel = new JLabel(card.getAttackValue(Direction.NORTH).toString(),
-          SwingConstants.CENTER);
-      JLabel southLabel = new JLabel(card.getAttackValue(Direction.SOUTH).toString(),
-          SwingConstants.CENTER);
-      JLabel eastLabel = new JLabel(card.getAttackValue(Direction.EAST).toString());
-      JLabel westLabel = new JLabel(card.getAttackValue(Direction.WEST).toString());
-
-      cardPanel.add(northLabel, BorderLayout.NORTH);
-      cardPanel.add(southLabel, BorderLayout.SOUTH);
-      cardPanel.add(eastLabel, BorderLayout.EAST);
-      cardPanel.add(westLabel, BorderLayout.WEST);
-      setFonts(cardPanel, northLabel, southLabel, eastLabel, westLabel);
-      cardPanel.addComponentListener(new ComponentAdapter() {
-        // resize card text every time the window is resized
-        @Override
-        public void componentResized(ComponentEvent e) {
-          setFonts(cardPanel, northLabel, southLabel, eastLabel, westLabel);
-        }
-      });
-
-      JButton cardButton = new JButton();
-      cardButton.setLayout(new BorderLayout());
-      cardButton.add(cardPanel, BorderLayout.CENTER);
-
-      if (player == PlayerColor.RED) {
-        cardButton.setBackground(Color.RED);
-      } else if (player == PlayerColor.BLUE) {
-        cardButton.setBackground(Color.BLUE);
-      }
-      int finalI = i;
-      cardButton.addActionListener(e -> handleCardClick(player, finalI));
-      cardButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-      cardButton.setBorderPainted(false);
-      handPanel.add(cardButton);
-    }
-
-    return handPanel;
-  }
-
-  private void setFonts(JPanel cardPanel, JLabel northLabel, JLabel southLabel, JLabel eastLabel, JLabel westLabel) {
-    int width = cardPanel.getWidth();
-    int height = cardPanel.getHeight();
-    int fontSize = Math.min(width, height) / 3;
-    Font font = new Font("Arial", Font.PLAIN, fontSize);
-
-    northLabel.setFont(font);
-    southLabel.setFont(font);
-    eastLabel.setFont(font);
-    westLabel.setFont(font);
+  private HandPanelInterface createHandPanel(PlayerColor handOfPlayer) {
+    return new HandPanel(handOfPlayer, handOfPlayer == player, model);
   }
 
   private JPanel createGridPanel() {
@@ -166,41 +107,6 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     }
 
     return grid;
-  }
-
-  @Override
-  public void handleCardClick(PlayerColor player, int handIndex) {
-    if (player == null) {
-      throw new IllegalArgumentException("Arguments cannot be null");
-    }
-    if (handIndex < 0 || handIndex >= model.getPlayerHand(player).size()) {
-      throw new IllegalArgumentException("Hand index out of bounds");
-    }
-    JButton clicked;
-    // Color c;
-    try {
-      if (player == PlayerColor.RED) {
-        clicked = (JButton) redPanel.getComponent(handIndex);
-        // c = Color.RED;
-      } else {
-        clicked = (JButton) bluePanel.getComponent(handIndex);
-        // c = Color.BLUE;
-      }
-    } catch (ClassCastException e) {
-      throw new IllegalStateException("Hand panel should only contain JButtons.");
-    }
-
-    if (clicked == selection) {
-      clicked.setBorderPainted(false);
-      selection = null;
-      System.out.println("Hand index " + handIndex + " of player: " + player);
-      return;
-    } else if (selection != null) {
-      selection.setBorderPainted(false);
-    }
-    selection = clicked;
-    selection.setBorderPainted(true);
-    System.out.println("Hand index " + handIndex + " of player: " + player);
   }
 
   @Override

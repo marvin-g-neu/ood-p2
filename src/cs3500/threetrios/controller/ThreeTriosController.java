@@ -100,7 +100,6 @@ public class ThreeTriosController implements Actions, GameListeners {
     }
 
     this.cardIdx = cardIdx;
-    view.handleCardClick(color, cardIdx);
     return true;
   }
 
