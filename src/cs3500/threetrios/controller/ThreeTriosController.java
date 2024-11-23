@@ -5,8 +5,9 @@ import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.rules.RuleKeeper;
 import cs3500.threetrios.model.rules.BasicThreeTriosGame;
+import cs3500.threetrios.model.rules.RuleKeeper;
+import cs3500.threetrios.view.ThreeTriosGUIViewInterface;
 
 import java.io.IOException;
 import java.util.Map;
@@ -25,16 +26,10 @@ public class ThreeTriosController implements Actions, GameListeners {
   /**
    * Constructs the controller.
    *
-   * @param model game model
+   * @param model  game model
    * @param player game player
-   * @param view game view
+   * @param view   game view
    */
-  public ThreeTriosController(ThreeTriosModelInterface model, Player player,
-                                ThreeTriosGUIViewInterface view) {
-  private final BasicThreeTriosGame rules;
-  private int cardIdx;
-  private Player currentPlayer;
-
   public ThreeTriosController(ThreeTriosModelInterface model, Player player,
                               ThreeTriosGUIViewInterface view) {
     if (model == null || player == null || view == null) {
