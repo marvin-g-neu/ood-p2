@@ -5,41 +5,34 @@ import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.controller.Actions;
 
 /**
-* Represents a player in the Three Trios game. Players can be either human or computer-controlled,
-* and are responsible for making moves on their turn. Each player has an assigned color (RED or BLUE)
-* and can interact with the game through feature callbacks.
-*/
+ * Represents a game player.
+ */
 public interface Player {
   /**
-   * Registers the feature callbacks from the controller that will handle player actions.
-   * These callbacks allow the player to communicate their moves back to the game.
+   * Registers controller actions.
    *
-   * @param features The controller's feature interface containing action handlers
+   * @param features controller's action handlers
    */
   void callbackFeatures(Actions features);
 
   /**
-   * Determines and executes the player's next move using the current game state.
-   * For human players, this triggers input handling. For computer players, this
-   * calculates and executes the best move according to their strategy.
+   * Executes the player's move.
    *
-   * @param model A read-only view of the game state to base the move on
+   * @param model current game state
    */
-   void getMakePlay(ThreeTriosModelInterface model);
+  void getMakePlay(ThreeTriosModelInterface model);
 
   /**
-   * Identifies whether this player is human-controlled or computer-controlled.
-   * This distinction affects how moves are determined and executed.
+   * Checks if player is human.
    *
-   * @return true if this is a human player, false if this is a computer player
+   * @return true if human, false otherwise
    */
   boolean isHuman();
 
   /**
-   * Retrieves this player's assigned color in the game.
-   * The color (RED or BLUE) identifies the player and their pieces on the board.
+   * Gets the player's color.
    *
-   * @return The PlayerColor enum value representing this player's color
+   * @return player's color
    */
   PlayerColor getColor();  
 }

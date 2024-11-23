@@ -1,30 +1,27 @@
 package cs3500.threetrios.controller;
 
 /**
- * The model features interface represents the functionality 
- * controlled by the model and view in the MVC architecture for Three Trios.
+ * Represents model and view functionalities.
  */
 public interface GameListeners {
   
   /**
-   * Makes the view refresh in the controller.
+   * Refreshes the view screen.
    */
   void refreshScreen();
 
   /**
-   * Makes a new visible in the controller.
+   * Makes a new screen visible.
    */
   void makeScreenVisible();
 
   /**
-   * Makes the controller run the actions for the 
-   * now current player's turn.
+   * Runs the current player's turn.
    */
   void runPlayerTurn();
 
   /**
-   * Makes the controller run the actions for 
-   * when the game is over.
+   * Executes actions when the game ends.
    */
   void runGameOver();
 }
