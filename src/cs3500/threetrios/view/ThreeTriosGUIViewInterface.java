@@ -1,28 +1,21 @@
 package cs3500.threetrios.view;
 
-import cs3500.threetrios.model.PlayerColor;
-
 /**
  * A view interface specific to a GUI view of Three Trios. For anything that
  * shouldn't be modifying the view, the base ThreeTriosView should be used.
  */
 public interface ThreeTriosGUIViewInterface extends ThreeTriosView {
   /**
-   * Handle the effect of a card in a player's hand being clicked.
+   * Set the frame to be visible or not visible.
    *
-   * @param player    the player whose hand has the clicked card
-   * @param handIndex the index of the card in the player's hand
-   * @throws IllegalArgumentException if player is null
-   * @throws IllegalArgumentException if handIndex is out of range for the player's hand
+   * @param visible whether the frame should be visible or not
    */
-  void handleCardClick(PlayerColor player, int handIndex);
+  void setVisible(boolean visible);
 
   /**
-   * Handle the effect of the selection of a cell at the given coordinates.
+   * Display a message on the GUI view.
    *
-   * @param row the row of the cell
-   * @param col the column of the cell
-   * @throws IllegalArgumentException if row or col is out of range for the board
+   * @param message the message to display
    */
-  void handleCellClick(int row, int col);
+  void displayMessage(String message);
 }

@@ -1,5 +1,6 @@
 package cs3500.threetrios.view;
 
+import javax.swing.*;
 /**
  * An interface for managing the Panel representing the current board state.
  */
@@ -12,4 +13,11 @@ public interface BoardPanelInterface {
    * @throws IllegalArgumentException if row or col is out of range for the board
    */
   void handleCellClick(int row, int col);
+
+  /**
+   * Get the JPanel for this board.
+   *
+   * @return the JPanel representing the board
+   */
+  JPanel getPanel();
 }

@@ -1,6 +1,7 @@
 package cs3500.threetrios.view;
 
 import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.card.Direction;
 
@@ -21,15 +22,16 @@ import java.util.List;
 public class HandPanel implements HandPanelInterface {
   private JPanel hand;
   private JButton selection;
-  private PlayerColor handOfPlayer;
+  private PlayerColor player;
   private boolean viewOfPlayer;
-  private List<CustomCard> handCards;
+  private ReadOnlyThreeTriosModelInterface model;
 
-  public HandPanel(PlayerColor handOfPlayer, boolean viewOfPlayer, List<CustomCard> handCards) {
-    this.handOfPlayer = handOfPlayer;
+  public HandPanel(PlayerColor player, boolean viewOfPlayer,
+                   ReadOnlyThreeTriosModelInterface model) {
+    this.player = player;
     this.viewOfPlayer = viewOfPlayer;
-    this.handCards = handCards;
-
+    this.model = model;
+    List<CustomCard> handCards = model.getPlayerHand(player);
 
     JPanel handPanel = new JPanel();
     int handSize = handCards.size();
@@ -64,9 +66,9 @@ public class HandPanel implements HandPanelInterface {
       cardButton.setLayout(new BorderLayout());
       cardButton.add(cardPanel, BorderLayout.CENTER);
 
-      if (handOfPlayer == PlayerColor.RED) {
+      if (player == PlayerColor.RED) {
         cardButton.setBackground(Color.RED);
-      } else if (handOfPlayer == PlayerColor.BLUE) {
+      } else if (player == PlayerColor.BLUE) {
         cardButton.setBackground(Color.BLUE);
       }
       int finalI = i;
@@ -94,5 +96,43 @@ public class HandPanel implements HandPanelInterface {
     if (!viewOfPlayer) {
       return;
     }
+
+    if (handIndex < 0 || handIndex >= model.getPlayerHand(player).size()) {
+      throw new IllegalArgumentException("Hand index out of bounds");
+    }
+    JButton clicked;
+    // Color c;
+    try {
+      clicked = (JButton) hand.getComponent(handIndex);
+    } catch (ClassCastException e) {
+      throw new IllegalStateException("Hand panel should only contain JButtons.");
+    }
+
+    if (clicked == selection) {
+      clicked.setBorderPainted(false);
+      selection = null;
+      System.out.println("Hand index " + handIndex + " of player: " + player);
+      return;
+    } else if (selection != null) {
+      selection.setBorderPainted(false);
+    }
+    selection = clicked;
+    selection.setBorderPainted(true);
+    System.out.println("Hand index " + handIndex + " of player: " + player);
+  }
+
+  @Override
+  public JPanel getPanel() {
+    return hand;
+  }
+
+  @Override
+  public JButton getSelected() {
+    return selection;
+  }
+
+  @Override
+  public void deselect() {
+    selection = null;
   }
 }
