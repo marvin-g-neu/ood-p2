@@ -64,7 +64,7 @@ public class MockModel implements ThreeTriosModelInterface {
   @Override
   public Grid endGame() {
     log.append("endGame called\n");
-    state = GameState.FINISHED;
+    state = GameState.EARLY_QUIT;
     return grid;
   }
 
@@ -88,39 +88,8 @@ public class MockModel implements ThreeTriosModelInterface {
 
   @Override
   public CellState getCellStateAt(int row, int col) {
-    log.append("getCellStateAt called for row: ").append(row).append(", col: ").append(col).append("\n");
+    log.append("getCellStateAt called for row: ").append(row).append(", col: ").
+            append(col).append("\n");
     return CellState.EMPTY;
-  }
-
-  public void checkCell(int row, int col) {
-    log.append(String.format("Checking cell: (%d, %d)\n", row, col));
-  }
-
-  public void checkCornerVulnerability(int row, int col) {
-    log.append(String.format("Calculating vulnerability for corner (%d, %d)\n", row, col));
-  }
-
-  public void logCornerCheck(int row, int col, boolean occupied) {
-    if (occupied) {
-      log.append(String.format("Checking corner cell: (%d, %d) - occupied\n", row, col));
-    } else {
-      log.append(String.format("Checking corner cell: (%d, %d)\n", row, col));
-    }
-  }
-
-  public void logVulnerabilityCheck(int row, int col) {
-    log.append(String.format("Calculating vulnerability for corner (%d, %d)\n", row, col));
-  }
-
-  public void logCellCheck(int row, int col) {
-    log.append(String.format("Checking cell: (%d, %d)\n", row, col));
-  }
-
-  public void logCornerSelection(int row, int col) {
-    log.append(String.format("Selected least vulnerable corner: (%d, %d)\n", row, col));
-  }
-
-  public void logUppermostLeftmost(int row, int col) {
-    log.append(String.format("Selected uppermost-leftmost position: (%d, %d)\n", row, col));
   }
 }
