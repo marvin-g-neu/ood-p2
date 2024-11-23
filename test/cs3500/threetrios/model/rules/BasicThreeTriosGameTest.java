@@ -13,6 +13,7 @@ import cs3500.threetrios.model.cell.CellState;
 import cs3500.threetrios.model.cell.ThreeTriosCell;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
+import cs3500.threetrios.view.ThreeTriosView;
 import cs3500.threetrios.view.ThreeTriosTextualView;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,7 +35,7 @@ public class BasicThreeTriosGameTest {
   private RuleKeeper rules;
   private Cell testCell;
   private CustomCard testCard;
-  private ThreeTriosTextualView view;
+  private ThreeTriosView view;
 
   @Before
   public void setUp() {

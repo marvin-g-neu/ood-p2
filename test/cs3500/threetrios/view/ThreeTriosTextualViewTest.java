@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ThreeTriosTextualViewTest {
   private ClassicalThreeTriosModel model;
-  private ThreeTriosTextualView view;
+  private ThreeTriosView view;
   private Appendable out;
 
   @Before
