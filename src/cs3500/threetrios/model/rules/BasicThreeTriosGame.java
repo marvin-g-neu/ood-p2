@@ -89,12 +89,20 @@ public class BasicThreeTriosGame extends GameRules {
     int newRow = row;
     int newCol = col;
     switch (attackDirection) {
-      case NORTH -> newRow -= 1;
-      case SOUTH -> newRow += 1;
-      case EAST -> newCol += 1;
-      case WEST -> newCol -= 1;
-      default -> // should never happen
-              throw new IllegalArgumentException("Unknown Direction");
+      case NORTH:
+        newRow -= 1;
+        break;
+      case SOUTH:
+        newRow += 1;
+        break;
+      case EAST:
+        newCol += 1;
+        break;
+      case WEST:
+        newCol -= 1;
+        break;
+      default: // should never happen
+        throw new IllegalArgumentException("Unknown Direction");
     }
     executeBattlePhase(newRow, newCol, currentPlayer, grid);
   }
