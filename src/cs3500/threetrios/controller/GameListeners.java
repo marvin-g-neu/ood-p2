@@ -13,7 +13,7 @@ public interface GameListeners {
   /**
    * Makes a new screen visible.
    */
-  void makeScreenVisible();
+  void setScreenVisible(boolean visible);
 
   /**
    * Runs the current player's turn.

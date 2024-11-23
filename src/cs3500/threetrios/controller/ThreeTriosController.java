@@ -93,8 +93,8 @@ public class ThreeTriosController implements Actions, GameListeners {
   }
 
   @Override
-  public void makeScreenVisible() {
-    view.setVisible(true);
+  public void setScreenVisible(boolean visible) {
+    view.setVisible(visible);
   }
 
 

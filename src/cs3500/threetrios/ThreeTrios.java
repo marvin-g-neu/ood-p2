@@ -37,7 +37,7 @@ public final class ThreeTrios {
     // Configure players
     Scanner s = new Scanner(System.in);
     String[] playerOrComp = s.nextLine().split(" ");
-    String gridPath = "docs/boards/boardWithSeperateGroups.config";
+    String gridPath = "docs/boards/boardWithSeparateGroups.config";
     Player redPlayer = configurePlayer(playerOrComp[0], PlayerColor.RED);
     Player bluePlayer = configurePlayer(playerOrComp[1], PlayerColor.BLUE);
 
