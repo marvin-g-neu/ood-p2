@@ -57,11 +57,11 @@ public class ThreeTriosController implements Actions, GameListeners {
       PlayerColor loser = winner == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
 
       String endGameMsg = "The game is over! %s team wins with %d over %d.";
-      view.displayMessage(String.format(endGameMsg, winner, model.getScore(winner),
-          model.getScore(loser)));
+      // view.displayMessage(String.format(endGameMsg, winner, model.getScore(winner),
+          // model.getScore(loser)));
     } else {
       String tieMsg = "The game is over! It's a draw.";
-      view.displayMessage(tieMsg);
+      // view.displayMessage(tieMsg);
     }
   }
 
@@ -71,7 +71,7 @@ public class ThreeTriosController implements Actions, GameListeners {
       this.cardIdx = -1;
       refreshScreen();
       String turnMsg = "Player %s: Make your move.";
-      view.displayMessage(String.format(turnMsg, this.player.getColor()));
+      // view.displayMessage(String.format(turnMsg, this.player.getColor()));
     } else if (!player.isHuman() && player.getColor().equals(model.getCurrentPlayer())) {
       player.getMakePlay(model);
     }
@@ -79,22 +79,34 @@ public class ThreeTriosController implements Actions, GameListeners {
     if (rules.isGameCompleted()) {
       runGameOver();
     }
+<<<<<<< HEAD
     refreshScreen();
+=======
+    // view.render();
+>>>>>>> 6498be6 (done)
     switchPlayer();
   }
 
   @Override
   public void refreshScreen() {
+<<<<<<< HEAD
     try {
       view.render();
     } catch (IOException e) { // IOException should not be a problem for GUI views
       throw new IllegalStateException("Unexpected error occurred while refreshing screen.");
     }
+=======
+    // view.render();
+>>>>>>> 6498be6 (done)
   }
 
   @Override
   public void makeScreenVisible() {
+<<<<<<< HEAD
     view.setVisible(true);
+=======
+    // view.makeVisible();
+>>>>>>> 6498be6 (done)
   }
 
 
@@ -102,20 +114,20 @@ public class ThreeTriosController implements Actions, GameListeners {
   public boolean selectCard(String playerColor, int cardIdx) {
     if (rules.isGameCompleted()) {
       String gameOverMsg = "This match has concluded.";
-      view.displayMessage(gameOverMsg);
+      // view.displayMessage(gameOverMsg);
       return false;
     }
 
     PlayerColor color = PlayerColor.valueOf(playerColor);
     if (!color.equals(this.player.getColor())) {
       String wrongCardMsg = "Player %s: Cannot access opponent's cards.";
-      view.displayMessage(String.format(wrongCardMsg, this.player.getColor()));
+      // view.displayMessage(String.format(wrongCardMsg, this.player.getColor()));
       return false;
     }
 
     if (!color.equals(model.getCurrentPlayer())) {
       String waitTurnMsg = "Player %s: Please wait for your turn.";
-      view.displayMessage(String.format(waitTurnMsg, this.player.getColor()));
+      // view.displayMessage(String.format(waitTurnMsg, this.player.getColor()));
       return false;
     }
 
@@ -127,13 +139,13 @@ public class ThreeTriosController implements Actions, GameListeners {
   public void selectCell(int row, int col) {
     if (rules.isGameCompleted()) {
       String gameOverMsg = "This match has concluded.";
-      view.displayMessage(gameOverMsg);
+      // view.displayMessage(gameOverMsg);
       return;
     }
 
     if (cardIdx == -1) {
       String selectCardMsg = "Player %s: Select a card first.";
-      view.displayMessage(String.format(selectCardMsg, this.player.getColor()));
+      // view.displayMessage(String.format(selectCardMsg, this.player.getColor()));
       return;
     }
 
@@ -141,7 +153,7 @@ public class ThreeTriosController implements Actions, GameListeners {
     CustomCard card = model.getPlayerHand(this.player.getColor()).get(cardIdx);
     if (!rules.isLegalMove(cell, card)) {
       String invalidMoveMsg = "Player %s: Move not allowed.";
-      view.displayMessage(String.format(invalidMoveMsg, this.player.getColor()));
+      // view.displayMessage(String.format(invalidMoveMsg, this.player.getColor()));
       return;
     }
 
@@ -151,7 +163,7 @@ public class ThreeTriosController implements Actions, GameListeners {
       runPlayerTurn();
     } catch (IllegalArgumentException e) {
       String errorMsg = "Invalid action: %s";
-      view.displayMessage(String.format(errorMsg, e.getMessage()));
+      // view.displayMessage(String.format(errorMsg, e.getMessage()));
     }
   }
 

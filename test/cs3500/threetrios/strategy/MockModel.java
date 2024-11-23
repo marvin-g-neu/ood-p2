@@ -175,8 +175,12 @@ public class MockModel implements ThreeTriosModelInterface {
    *
    * @param row the row of the cell
    * @param col the column of the cell
+   * @return
    */
-  public void logUppermostLeftmost(int row, int col) {
+  public CellState logUppermostLeftmost(int row, int col) {
     log.append(String.format("Selected uppermost-leftmost position: (%d, %d)\n", row, col));
+    log.append("getCellStateAt called for row: ").append(row).append(", col: ").
+            append(col).append("\n");
+    return CellState.EMPTY;
   }
 }

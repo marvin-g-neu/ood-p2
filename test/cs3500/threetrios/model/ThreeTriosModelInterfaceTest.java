@@ -36,7 +36,7 @@ public class ThreeTriosModelInterfaceTest {
 
   private ThreeTriosModelInterface basicModel;
 
-  private ClassicalThreeTriosModel model;
+  private ThreeTriosModelInterface model;
   private Grid grid;
   private List<CustomCard> deck;
 
