@@ -15,8 +15,8 @@ public class ThreeTriosTextualView implements ThreeTriosView {
   /**
    * Constructs a textual view for the Three Trios game using the given Appendable and Readable.
    *
-   * @param model the game model to visualize
-   * @param textView   the appendable object
+   * @param model    the game model to visualize
+   * @param textView the appendable object
    * @throws IllegalArgumentException if any argument is null
    */
   public ThreeTriosTextualView(ReadOnlyThreeTriosModelInterface model, Appendable textView) {
@@ -49,6 +49,10 @@ public class ThreeTriosTextualView implements ThreeTriosView {
             result.append("R");
             break;
           case BLUE:
+            result.append("B");
+            break;
+          default: // should never happen
+            throw new IllegalArgumentException("Invalid cell state");
         }
       }
       result.append("\n");

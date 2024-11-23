@@ -10,6 +10,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * Implementation of a representation of the game board using a JPanel.
+ */
 public class BoardPanel implements BoardPanelInterface {
   private JPanel grid;
   private JButton selection;
@@ -20,6 +23,12 @@ public class BoardPanel implements BoardPanelInterface {
 
   private JButton[][] gridRep;
 
+  /**
+   * Create a BoardPanel with a given model and hand of the player whose view this is part of.
+   *
+   * @param model the model being used for the game
+   * @param hand  the panel representation of the hand of the player whose panel this is
+   */
   public BoardPanel(ReadOnlyThreeTriosModelInterface model, HandPanelInterface hand) {
     this.model = model;
     this.hand = hand;

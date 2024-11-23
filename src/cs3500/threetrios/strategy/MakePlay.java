@@ -40,13 +40,13 @@ public class MakePlay {
       return true;
     }
     // Check if the object is an instance of MakePlay
-    if (!(obj instanceof MakePlay other)) {
+    if (!(obj instanceof MakePlay)) {
       return false;
     }
     // Cast and compare the fields
-    return this.cardInHand == other.cardInHand
-        && this.row == other.row
-        && this.col == other.col;
+    return this.cardInHand == ((MakePlay) obj).cardInHand
+        && this.row == ((MakePlay) obj).row
+        && this.col == ((MakePlay) obj).col;
   }
 
   @Override

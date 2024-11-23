@@ -13,23 +13,27 @@ import cs3500.threetrios.model.grid.ThreeTriosBoard;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
+/**
+ * Test for the CornerStrategy strategy class.
+ */
 public class CornerStrategyTest {
   private CornerStrategy strategy;
   private ThreeTriosModelInterface model;
   private ThreeTriosModelInterface mockModel;
-  private Grid grid;
   private List<CustomCard> deck;
   private StringBuilder log;
 
   @Before
   public void setup() {
     log = new StringBuilder();
-    grid = new ThreeTriosBoard(
+    Grid grid = new ThreeTriosBoard(
         new GridFileReader().readFile("docs/boards/3x3boardWithNoHolesForMockTesting.config"));
     deck = new DeckFileReader().readFile("docs/cards/AllNecessaryCards.config");
     mockModel = new MockModel(log, deck, grid);

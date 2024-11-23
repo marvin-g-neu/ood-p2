@@ -1,6 +1,7 @@
 package cs3500.threetrios.view;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * An interface for managing the Panels representing the player hands.

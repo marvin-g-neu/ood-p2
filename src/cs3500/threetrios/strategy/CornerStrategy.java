@@ -31,7 +31,8 @@ public class CornerStrategy extends BasicStrategies {
 
     Map<MakePlay, Integer> cornerMoves = calculateCornerMoves(model, player);
 
-    // If no valid moves are found, choose the upper-most, left-most open position and the card at index 0
+    // If no valid moves are found, choose the uppermost,
+    // left-most open position and the card at index 0
     if (cornerMoves.isEmpty()) {
       return new MaxFlipsStrategy().getBestMove(model, player);
     }

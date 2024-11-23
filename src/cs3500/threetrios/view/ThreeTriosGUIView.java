@@ -1,6 +1,5 @@
 package cs3500.threetrios.view;
 
-import cs3500.threetrios.controller.Actions;
 import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
@@ -22,7 +21,6 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   private HandPanelInterface blueHand;
   private BoardPanelInterface boardPanel;
 
-  private Actions action;
   private final PlayerColor player;
 
   /**
@@ -104,9 +102,5 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   @Override
   public void displayMessage(String str) {
     JOptionPane.showMessageDialog(null, str);
-  }
-
-  public void setController(Actions action) {
-    this.action = action;
   }
 }

@@ -14,13 +14,12 @@ import cs3500.threetrios.strategy.CornerStrategy;
 import cs3500.threetrios.view.ThreeTriosGUIView;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.PlayerColor;
-import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.view.ThreeTriosGUIViewInterface;
 
 
 import java.util.List;
-import java.io.File;
 import java.util.Scanner;
+
 /**
  * Main class for the Three Trios game.
  * Accepts command line arguments to determine player types:

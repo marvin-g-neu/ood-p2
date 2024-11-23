@@ -4,6 +4,7 @@ import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 
 import java.util.List;
+
 /**
  * Strategy interface for selecting moves in ThreeTrios.
  */
@@ -15,7 +16,7 @@ public interface Strategy {
    * @param player the player for whom the move is being selected
    * @return the selected move
    * @throws IllegalArgumentException if parameters are null
-   * @throws IllegalStateException if game not in progress
+   * @throws IllegalStateException    if game not in progress
    * @throws IllegalArgumentException if player has no move
    */
   MakePlay getBestMove(ThreeTriosModelInterface model, PlayerColor player);

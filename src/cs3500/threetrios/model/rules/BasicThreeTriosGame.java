@@ -13,7 +13,6 @@ import cs3500.threetrios.model.grid.Grid;
  */
 public class BasicThreeTriosGame extends GameRules {
   private Grid grid;
-  private ThreeTriosModelInterface modelCopy;
 
   /**
    * Constructs a BasicThreeTriosGame with the given model.
@@ -122,7 +121,7 @@ public class BasicThreeTriosGame extends GameRules {
       throw new IllegalArgumentException("Invalid coordinates");
     }
     // create model
-    modelCopy = model.copy();
+    ThreeTriosModelInterface modelCopy = model.copy();
 
     if (handIndex < 0 || handIndex >= modelCopy.getCurrentPlayerHand().size()) {
       throw new IllegalArgumentException("Invalid hand index");
