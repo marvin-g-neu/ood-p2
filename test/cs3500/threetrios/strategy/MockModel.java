@@ -33,7 +33,7 @@ public class MockModel implements ThreeTriosModelInterface {
 
   @Override
   public void playTurn(int row, int col, int handIndex) {
-    log.append(String.format("playTurn called with row: %d, col: %d, handIndex: %d\n", 
+    log.append(String.format("playTurn called with row: %d, col: %d, handIndex: %d\n",
         row, col, handIndex));
   }
 
@@ -64,7 +64,7 @@ public class MockModel implements ThreeTriosModelInterface {
   @Override
   public Grid endGame() {
     log.append("endGame called\n");
-    state = GameState.FINISHED;
+    state = GameState.EARLY_QUIT;
     return grid;
   }
 
