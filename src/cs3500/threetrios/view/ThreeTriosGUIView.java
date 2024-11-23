@@ -1,16 +1,21 @@
 package cs3500.threetrios.view;
 
-import cs3500.threetrios.model.*;
-import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.card.Direction;
-import cs3500.threetrios.model.grid.Grid;
-import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.controller.Actions;
+import cs3500.threetrios.model.GameState;
+import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
+import cs3500.threetrios.model.grid.Grid;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * A view for the game ThreeTrios using a Java Swing GUI view.
@@ -23,32 +28,31 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   private HandPanelInterface blueHand;
   private JPanel gridPanel;
 
-  private JButton selection;
-
   private Actions action;
+  private PlayerColor player;
 
   /**
-   * Creates a GUI view for a given model of Three Trios.
+   * Creates a GUI view for a given model of Three Trios for the given player.
    *
    * @param model the model to be accessed by the view
    * @throws IllegalArgumentException if model is null
    * @throws IllegalArgumentException if model game has not been started
    */
-  public ThreeTriosGUIView(ReadOnlyThreeTriosModelInterface model) {
-    if (model == null) {
-      throw new IllegalArgumentException("Model cannot be null");
+  public ThreeTriosGUIView(ReadOnlyThreeTriosModelInterface model, PlayerColor player) {
+    if (model == null || player == null) {
+      throw new IllegalArgumentException("Arguments cannot be null");
     }
     if (model.getGameState() == GameState.NOT_STARTED) {
       throw new IllegalArgumentException("Game state is not started");
     }
     this.model = model;
+    this.player = player;
     this.frame = new JFrame();
     frame.setLayout(new GridBagLayout());
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Three Trios");
 
     this.gridPanel = createGridPanel();
-    this.selection = null;
 
     // GridBag setup
     GridBagConstraints gbc = new GridBagConstraints();
@@ -120,10 +124,12 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     System.out.println("(" + row + ", " + col + ")");
   }
 
-  public void makeVisible() {
-    frame.setVisible(true);
+  @Override
+  public void setVisible(boolean visible) {
+    frame.setVisible(visible);
   }
 
+  @Override
   public void displayMessage(String str) {
     JOptionPane.showMessageDialog(null, str);
   }

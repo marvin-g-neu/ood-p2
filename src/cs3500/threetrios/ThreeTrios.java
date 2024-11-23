@@ -14,6 +14,7 @@ import cs3500.threetrios.view.ThreeTriosGUIView;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.cell.Cell;
+import cs3500.threetrios.view.ThreeTriosGUIViewInterface;
 
 
 import java.util.List;
@@ -44,12 +45,13 @@ public final class ThreeTrios {
     // Create model
     ClassicalThreeTriosModel model = new ClassicalThreeTriosModel();
     
-    // Create view
-    ThreeTriosGUIView view = new ThreeTriosGUIView(model);
+    // Create views
+    ThreeTriosGUIViewInterface redView = new ThreeTriosGUIView(model, PlayerColor.RED);
+    ThreeTriosGUIViewInterface blueView = new ThreeTriosGUIView(model, PlayerColor.BLUE);
     
     // Create controllers for both players
-    ThreeTriosController redController = new ThreeTriosController(model, redPlayer, view);
-    ThreeTriosController blueController = new ThreeTriosController(model, bluePlayer, view);
+    ThreeTriosController redController = new ThreeTriosController(model, redPlayer, redView);
+    ThreeTriosController blueController = new ThreeTriosController(model, bluePlayer, blueView);
     
     // Register controllers with players
     redPlayer.callbackFeatures(redController);
@@ -63,7 +65,8 @@ public final class ThreeTrios {
     List<CustomCard> deck = new DeckFileReader().readFile(deckPath);
     
     model.startGame(new ThreeTriosBoard(grid), deck);
-    view.makeVisible();
+    redView.setVisible(true);
+    blueView.setVisible(false);
   }
 
   /**
