@@ -28,14 +28,13 @@ public class MockModel implements ThreeTriosModelInterface {
 
   @Override
   public void startGame(Grid grid, List<CustomCard> deck) {
-    log.append("startGame called without shuffle: ").append("\n");
+    log.append("startGame called without shuffle\n");
   }
 
-
   @Override
-  public void playTurn(int cardIndex, int row, int col) {
-    log.append(String.format("playTurn called with card: %d, row: %d, col: %d\n", 
-        cardIndex, row, col));
+  public void playTurn(int row, int col, int handIndex) {
+    log.append(String.format("playTurn called with row: %d, col: %d, handIndex: %d\n", 
+        row, col, handIndex));
   }
 
   @Override
@@ -46,24 +45,26 @@ public class MockModel implements ThreeTriosModelInterface {
 
   @Override
   public List<CustomCard> getPlayerHand(PlayerColor color) {
-    log.append("Getting current player hand\n");
+    log.append("getPlayerHand called for color: ").append(color).append("\n");
     return hand;
   }
 
   @Override
   public Grid getGrid() {
+    log.append("getGrid called\n");
     return grid;
   }
 
   @Override
   public GameState getGameState() {
-    log.append("Checking game state: IN_PROGRESS\n");
+    log.append("getGameState called: ").append(state).append("\n");
     return state;
   }
 
   @Override
   public Grid endGame() {
     log.append("endGame called\n");
+    state = GameState.FINISHED;
     return grid;
   }
 
@@ -81,6 +82,7 @@ public class MockModel implements ThreeTriosModelInterface {
 
   @Override
   public ThreeTriosModelInterface copy() {
+    log.append("copy called\n");
     return new MockModel(new StringBuilder(log.toString()), new ArrayList<>(hand), grid);
   }
 

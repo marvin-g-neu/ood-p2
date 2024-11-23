@@ -7,6 +7,7 @@ import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.rules.RuleKeeper;
 import cs3500.threetrios.view.ThreeTriosGUIViewInterface;
+import cs3500.threetrios.model.rules.BasicThreeTriosGame;
 
 import java.util.Map;
 

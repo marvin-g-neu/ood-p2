@@ -14,7 +14,7 @@ public interface Player {
    * Registers the feature callbacks from the controller that will handle player actions.
    * These callbacks allow the player to communicate their moves back to the game.
    *
- * @param features The controller's feature interface containing action handlers
+   * @param features The controller's feature interface containing action handlers
    */
   void callbackFeatures(Actions features);
 

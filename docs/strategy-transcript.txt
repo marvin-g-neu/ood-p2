@@ -1,5 +1,6 @@
-Checking game state: IN_PROGRESS
-Getting current player hand
+getGameState called: IN_PROGRESS
+getGrid called
+getPlayerHand called for color: RED
 Checking corner cell: (0, 0)
 Calculating vulnerability for corner (0, 0)
 Checking corner cell: (0, 2)
@@ -8,12 +9,11 @@ Checking corner cell: (2, 0)
 Calculating vulnerability for corner (2, 0)
 Checking corner cell: (2, 2)
 Calculating vulnerability for corner (2, 2)
-Comparing corner vulnerabilities
 Selected least vulnerable corner: (0, 0)
 
 When corners filled:
-Checking game state: IN_PROGRESS
-Getting current player hand
+getGameState called: IN_PROGRESS
+getPlayerHand called for color: RED
 Checking corner cell: (0, 0) - occupied
 Checking corner cell: (0, 2) - occupied
 Checking corner cell: (2, 0) - occupied
@@ -21,3 +21,8 @@ Checking corner cell: (2, 2) - occupied
 Finding uppermost-leftmost empty cell
 Checking cell: (0, 1)
 Selected uppermost-leftmost position: (0, 1)
+
+copy called
+getGameState called: IN_PROGRESS
+getGrid called
+getPlayerHand called
