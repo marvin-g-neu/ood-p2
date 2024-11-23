@@ -3,18 +3,19 @@ package cs3500.threetrios.controller.players;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.controller.Actions;
+
 /**
- * Human player for a game of Three Trios.
- * The view will emit player actions for human players, not this class.
+ * Represents a human player.
+ * The controller manages human moves.
  */
 public class HumanPlayer implements Player {
 
   private final PlayerColor playerColor;
 
   /**
-   * Constructor for a new human player.
+   * Constructs a human player.
    *
-   * @param color the player's color in the game (Red / Blue)
+   * @param color player's color
    */
   public HumanPlayer(PlayerColor color) {
     this.playerColor = color;
@@ -22,12 +23,12 @@ public class HumanPlayer implements Player {
 
   @Override
   public void callbackFeatures(Actions features) {
-    // controller handles human moves
+    // Controller handles human moves
   }
 
   @Override
   public void getMakePlay(ThreeTriosModelInterface model) {
-    // controller handles human moves
+    // Controller handles human moves
   }
 
   @Override

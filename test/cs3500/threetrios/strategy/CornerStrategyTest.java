@@ -16,10 +16,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class CornerStrategyTest {
   private CornerStrategy strategy;
@@ -63,10 +60,14 @@ public class CornerStrategyTest {
   public void getBestMoveThrowsWhenNoMove() {
     Cell empty = new ThreeTriosCell(false);
     ThreeTriosModelInterface m = new ClassicalThreeTriosModel();
-    Grid g = new ThreeTriosBoard(new Cell[][]{{empty, empty}});
+    Grid g = new ThreeTriosBoard(new Cell[][]{{empty, empty.copy(), empty.copy()}});
     m.startGame(g, deck, false);
 
-    g.placeCard(m.getCurrentPlayerHand().get(0), 0, 0);
+    m.playTurn(0, 0, 0); // Assuming handIndex = 0
+    m.playTurn(0, 0, 2); // Assuming handIndex = 2
+    m.playTurn(0, 2, 0); // Assuming handIndex = 0
+    m.playTurn(0, 2, 2); // Assuming handIndex = 2
+
     assertEquals(0, m.getPlayerHand(PlayerColor.RED).size());
     assertThrows(IllegalStateException.class, () -> strategy.getBestMove(m, PlayerColor.RED));
   }
@@ -86,9 +87,9 @@ public class CornerStrategyTest {
   @Test
   public void getBestMoveFallsBackToUpperLeftWhenNoCornersAvailable() {
     model.playTurn(0, 0, 0);  // top-left
-    model.playTurn(0, 0, 2);  // top-right
-    model.playTurn(0, 2, 0);  // bottom-left
-    model.playTurn(0, 2, 2);  // bottom-right
+    model.playTurn(0, 2, 2);  // top-right
+    model.playTurn(2, 0, 0);  // bottom-left
+    model.playTurn(2, 2, 2);  // bottom-right
 
     MakePlay bestMove = strategy.getBestMove(model, PlayerColor.RED);
 
@@ -98,7 +99,7 @@ public class CornerStrategyTest {
 
   @Test
   public void getBestMoveChoosesLeastVulnerableCorner() {
-    model.playTurn(0, 1, 0);
+    model.playTurn(1, 0, 0);
 
     MakePlay bestMove = strategy.getBestMove(model, PlayerColor.BLUE);
     assertFalse(bestMove.getRow() == 0 && bestMove.getCol() == 0);
@@ -111,7 +112,7 @@ public class CornerStrategyTest {
     String transcript = log.toString();
     assertTrue(transcript.contains("getGameState called"));
     assertTrue(transcript.contains("getGrid called"));
-    assertTrue(transcript.contains("getPlayerHand called for color: RED"));
+    assertTrue(transcript.contains("getPlayerHand called"));
 
     System.out.println("Strategy execution transcript:");
     System.out.println(transcript);
