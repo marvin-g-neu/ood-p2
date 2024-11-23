@@ -1,25 +1,25 @@
 package cs3500.threetrios.controller;
 
 import cs3500.threetrios.controller.players.Player;
-import cs3500.threetrios.model.ClassicalThreeTriosModel;
+import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.cell.Cell;
-import cs3500.threetrios.model.rules.BasicThreeTriosGame;
-import cs3500.threetrios.view.ThreeTriosGUIView;
+import cs3500.threetrios.model.rules.RuleKeeper;
+import cs3500.threetrios.view.ThreeTriosGUIViewInterface;
 
 import java.util.Map;
 
 public class ThreeTriosController implements Actions, GameListeners {
-  private final ClassicalThreeTriosModel model;
+  private final ThreeTriosModelInterface model;
   private final Player player;
-  private final ThreeTriosGUIView view;
-  private final BasicThreeTriosGame rules;
+  private final ThreeTriosGUIViewInterface view;
+  private final RuleKeeper rules;
   private int cardIdx;
   private Player currentPlayer;
 
-  public ThreeTriosController(ClassicalThreeTriosModel model, Player player,
-                              ThreeTriosGUIView view) {
+  public ThreeTriosController(ThreeTriosModelInterface model, Player player,
+                                ThreeTriosGUIViewInterface view) {
     if (model == null || player == null || view == null) {
       throw new IllegalArgumentException("model, play or view cannot be null.");
     }
