@@ -46,7 +46,9 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Three Trios");
 
-    this.boardPanel = createGridPanel();
+    redHand = createHandPanel(PlayerColor.RED);
+    blueHand = createHandPanel(PlayerColor.BLUE);
+    boardPanel = createGridPanel();
 
     // GridBag setup
     GridBagConstraints gbc = new GridBagConstraints();
@@ -55,6 +57,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
 
     gbc.gridx = 0;
     gbc.weightx = 0.15;
+    System.out.println(redHand.getPanel());
     frame.add(redHand.getPanel(), gbc);
 
     gbc.gridx = 1;

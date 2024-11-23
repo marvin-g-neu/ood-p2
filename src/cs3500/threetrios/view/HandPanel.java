@@ -33,9 +33,9 @@ public class HandPanel implements HandPanelInterface {
     this.model = model;
     List<CustomCard> handCards = model.getPlayerHand(player);
 
-    JPanel handPanel = new JPanel();
+    hand = new JPanel();
     int handSize = handCards.size();
-    handPanel.setLayout(new GridLayout(handSize, 1));
+    hand.setLayout(new GridLayout(handSize, 1));
 
     for (int i = 0; i < handSize; i++) {
       CustomCard card = handCards.get(i);
@@ -75,7 +75,7 @@ public class HandPanel implements HandPanelInterface {
       cardButton.addActionListener(e -> handleCardClick(finalI));
       cardButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
       cardButton.setBorderPainted(false);
-      handPanel.add(cardButton);
+      hand.add(cardButton);
     }
   }
 
