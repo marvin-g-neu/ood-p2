@@ -4,18 +4,12 @@ import cs3500.threetrios.controller.Actions;
 import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
-import cs3500.threetrios.model.grid.Grid;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  * A view for the game ThreeTrios using a Java Swing GUI view.
@@ -26,10 +20,10 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   private final JFrame frame;
   private HandPanelInterface redHand;
   private HandPanelInterface blueHand;
-  private JPanel gridPanel;
+  private BoardPanelInterface boardPanel;
 
   private Actions action;
-  private PlayerColor player;
+  private final PlayerColor player;
 
   /**
    * Creates a GUI view for a given model of Three Trios for the given player.
@@ -52,7 +46,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Three Trios");
 
-    this.gridPanel = createGridPanel();
+    this.boardPanel = createGridPanel();
 
     // GridBag setup
     GridBagConstraints gbc = new GridBagConstraints();
@@ -65,7 +59,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
 
     gbc.gridx = 1;
     gbc.weightx = 0.7;
-    frame.add(gridPanel, gbc);
+    frame.add(boardPanel.getPanel(), gbc);
 
     gbc.gridx = 2;
     gbc.weightx = 0.15;
@@ -79,7 +73,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   public void render() {
     redHand = createHandPanel(PlayerColor.RED);
     blueHand = createHandPanel(PlayerColor.BLUE);
-    gridPanel = createGridPanel();
+    boardPanel = createGridPanel();
 
     frame.revalidate();
     frame.repaint();
@@ -89,39 +83,14 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     return new HandPanel(handOfPlayer, handOfPlayer == player, model);
   }
 
-  private JPanel createGridPanel() {
-    Grid board = model.getGrid();
-    JPanel grid = new JPanel();
-    grid.setLayout(new GridLayout(board.getRows(), board.getCols()));
-    grid.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-    for (int row = 0; row < board.getRows(); row++) {
-      for (int col = 0; col < board.getCols(); col++) {
-        JButton cellButton = new JButton();
-        if (board.getCell(row, col).isHole()) {
-          cellButton.setBackground(Color.LIGHT_GRAY);
-        } else {
-          cellButton.setBackground(Color.YELLOW);
-        }
-        int finalRow = row;
-        int finalCol = col;
-        cellButton.addActionListener(e -> handleCellClick(finalRow, finalCol));
-        grid.add(cellButton);
-      }
+  private BoardPanelInterface createGridPanel() {
+    HandPanelInterface handOfPlayer;
+    if (player == PlayerColor.RED) {
+      handOfPlayer = redHand;
+    } else {
+      handOfPlayer = blueHand;
     }
-
-    return grid;
-  }
-
-  @Override
-  public void handleCellClick(int row, int col) {
-    if (row < 0 || row >= model.getGrid().getRows()) {
-      throw new IllegalArgumentException("Row index out of bounds");
-    }
-    if (col < 0 || col >= model.getGrid().getCols()) {
-      throw new IllegalArgumentException("Column index out of bounds");
-    }
-    System.out.println("(" + row + ", " + col + ")");
+    return new BoardPanel(model, handOfPlayer);
   }
 
   @Override

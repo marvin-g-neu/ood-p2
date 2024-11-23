@@ -125,4 +125,14 @@ public class HandPanel implements HandPanelInterface {
   public JPanel getPanel() {
     return hand;
   }
+
+  @Override
+  public JButton getSelected() {
+    return selection;
+  }
+
+  @Override
+  public void deselect() {
+    selection = null;
+  }
 }
