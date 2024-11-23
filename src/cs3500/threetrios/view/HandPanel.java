@@ -18,14 +18,23 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.util.List;
 
-
+/**
+ * Implementation of a representation of a player hand using a JPanel.
+ */
 public class HandPanel implements HandPanelInterface {
-  private JPanel hand;
+  private final JPanel hand;
   private JButton selection;
-  private PlayerColor player;
-  private boolean viewOfPlayer;
-  private ReadOnlyThreeTriosModelInterface model;
+  private final PlayerColor player;
+  private final boolean viewOfPlayer;
+  private final ReadOnlyThreeTriosModelInterface model;
 
+  /**
+   * Create a HandPanel with a given model and player whose hand this is for.
+   *
+   * @param player       the player whose hand this is
+   * @param viewOfPlayer the view of the player
+   * @param model        the model for the game
+   */
   public HandPanel(PlayerColor player, boolean viewOfPlayer,
                    ReadOnlyThreeTriosModelInterface model) {
     this.player = player;
@@ -33,9 +42,9 @@ public class HandPanel implements HandPanelInterface {
     this.model = model;
     List<CustomCard> handCards = model.getPlayerHand(player);
 
-    JPanel handPanel = new JPanel();
+    hand = new JPanel();
     int handSize = handCards.size();
-    handPanel.setLayout(new GridLayout(handSize, 1));
+    hand.setLayout(new GridLayout(handSize, 1));
 
     for (int i = 0; i < handSize; i++) {
       CustomCard card = handCards.get(i);
@@ -75,11 +84,12 @@ public class HandPanel implements HandPanelInterface {
       cardButton.addActionListener(e -> handleCardClick(finalI));
       cardButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
       cardButton.setBorderPainted(false);
-      handPanel.add(cardButton);
+      hand.add(cardButton);
     }
   }
 
-  private void setFonts(JPanel cardPanel, JLabel northLabel, JLabel southLabel, JLabel eastLabel, JLabel westLabel) {
+  private void setFonts(JPanel cardPanel, JLabel northLabel, JLabel southLabel,
+                        JLabel eastLabel, JLabel westLabel) {
     int width = cardPanel.getWidth();
     int height = cardPanel.getHeight();
     int fontSize = Math.min(width, height) / 3;

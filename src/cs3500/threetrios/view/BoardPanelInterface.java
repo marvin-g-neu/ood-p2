@@ -1,6 +1,7 @@
 package cs3500.threetrios.view;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+
 /**
  * An interface for managing the Panel representing the current board state.
  */

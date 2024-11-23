@@ -38,7 +38,9 @@ public class ComputerPlayer implements Player {
     MakePlay bestMove = this.strategy.getBestMove(model, this.playerColor);
     // Select card and cell
     boolean canPlay = features.selectCard(playerColor.toString(), bestMove.getCardInHand());
-    if (canPlay) features.selectCell(bestMove.getRow(), bestMove.getCol());
+    if (canPlay) {
+      features.selectCell(bestMove.getRow(), bestMove.getCol());
+    }
   }
 
   @Override

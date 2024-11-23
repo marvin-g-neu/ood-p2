@@ -1,6 +1,5 @@
 package cs3500.threetrios.view;
 
-import cs3500.threetrios.controller.Actions;
 import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
@@ -22,7 +21,6 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   private HandPanelInterface blueHand;
   private BoardPanelInterface boardPanel;
 
-  private Actions action;
   private final PlayerColor player;
 
   /**
@@ -46,7 +44,9 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Three Trios");
 
-    this.boardPanel = createGridPanel();
+    redHand = createHandPanel(PlayerColor.RED);
+    blueHand = createHandPanel(PlayerColor.BLUE);
+    boardPanel = createGridPanel();
 
     // GridBag setup
     GridBagConstraints gbc = new GridBagConstraints();
@@ -55,6 +55,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
 
     gbc.gridx = 0;
     gbc.weightx = 0.15;
+    System.out.println(redHand.getPanel());
     frame.add(redHand.getPanel(), gbc);
 
     gbc.gridx = 1;
@@ -101,9 +102,5 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   @Override
   public void displayMessage(String str) {
     JOptionPane.showMessageDialog(null, str);
-  }
-
-  public void setController(Actions action) {
-    this.action = action;
   }
 }
