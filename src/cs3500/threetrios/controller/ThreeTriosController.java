@@ -58,7 +58,7 @@ public class ThreeTriosController implements Actions, GameListeners {
 
       String endGameMsg = "The game is over! %s team wins with %d over %d.";
       // view.displayMessage(String.format(endGameMsg, winner, model.getScore(winner),
-          // model.getScore(loser)));
+      // model.getScore(loser)));
     } else {
       String tieMsg = "The game is over! It's a draw.";
       // view.displayMessage(tieMsg);
@@ -93,8 +93,8 @@ public class ThreeTriosController implements Actions, GameListeners {
   }
 
   @Override
-  public void makeScreenVisible() {
-    view.setVisible(true);
+  public void setScreenVisible(boolean visible) {
+    view.setVisible(visible);
   }
 
 
