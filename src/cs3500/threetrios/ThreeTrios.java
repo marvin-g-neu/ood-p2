@@ -1,5 +1,7 @@
 package cs3500.threetrios;
 
+import cs3500.threetrios.controller.ControllerManager;
+import cs3500.threetrios.controller.ControllerManagerInterface;
 import cs3500.threetrios.controller.players.ComputerPlayer;
 import cs3500.threetrios.controller.players.HumanPlayer;
 import cs3500.threetrios.controller.players.Player;
@@ -52,13 +54,15 @@ public final class ThreeTrios {
     ThreeTriosGUIViewInterface redView = new ThreeTriosGUIView(model, PlayerColor.RED);
     ThreeTriosGUIViewInterface blueView = new ThreeTriosGUIView(model, PlayerColor.BLUE);
 
-    // Create controllers for both players
-    ThreeTriosController redController = new ThreeTriosController(model, redPlayer, redView);
-    ThreeTriosController blueController = new ThreeTriosController(model, bluePlayer, blueView);
+    // Create controllers for both players and set them to their paired views
+    ControllerManagerInterface controllerManager = new ControllerManager(redPlayer, bluePlayer,
+        model, redView, blueView);
+    redView.setController(controllerManager.getController(PlayerColor.RED));
+    blueView.setController(controllerManager.getController(PlayerColor.BLUE));
 
     // Register controllers with players
-    redPlayer.callbackFeatures(redController);
-    bluePlayer.callbackFeatures(blueController);
+    redPlayer.callbackFeatures(controllerManager.getController(PlayerColor.RED));
+    bluePlayer.callbackFeatures(controllerManager.getController(PlayerColor.BLUE));
 
     redView.setVisible(true);
     blueView.setVisible(false);

@@ -1,5 +1,6 @@
 package cs3500.threetrios.view;
 
+import cs3500.threetrios.controller.GameListeners;
 import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
@@ -16,17 +17,19 @@ import javax.swing.JOptionPane;
 public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   private final ReadOnlyThreeTriosModelInterface model;
 
-  private final JFrame frame;
+  private JFrame frame;
   private HandPanelInterface redHand;
   private HandPanelInterface blueHand;
   private BoardPanelInterface boardPanel;
+  private GameListeners controller;
 
   private final PlayerColor player;
 
   /**
    * Creates a GUI view for a given model of Three Trios for the given player.
    *
-   * @param model the model to be accessed by the view
+   * @param model  the model to be accessed by the view
+   * @param player the owner of this view
    * @throws IllegalArgumentException if model is null
    * @throws IllegalArgumentException if model game has not been started
    */
@@ -39,7 +42,12 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     }
     this.model = model;
     this.player = player;
-    this.frame = new JFrame();
+    render();
+  }
+
+  @Override
+  public void render() {
+    frame = new JFrame();
     frame.setLayout(new GridBagLayout());
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Three Trios");
@@ -70,16 +78,6 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     frame.pack();
   }
 
-  @Override
-  public void render() {
-    redHand = createHandPanel(PlayerColor.RED);
-    blueHand = createHandPanel(PlayerColor.BLUE);
-    boardPanel = createGridPanel();
-
-    frame.revalidate();
-    frame.repaint();
-  }
-
   private HandPanelInterface createHandPanel(PlayerColor handOfPlayer) {
     return new HandPanel(handOfPlayer, handOfPlayer == player, model);
   }
@@ -91,7 +89,7 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     } else {
       handOfPlayer = blueHand;
     }
-    return new BoardPanel(model, handOfPlayer);
+    return new BoardPanel(model, handOfPlayer, controller);
   }
 
   @Override
@@ -102,5 +100,11 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   @Override
   public void displayMessage(String str) {
     JOptionPane.showMessageDialog(null, str);
+  }
+
+  @Override
+  public void setController(GameListeners controller) {
+    this.controller = controller;
+    boardPanel.setController(controller);
   }
 }

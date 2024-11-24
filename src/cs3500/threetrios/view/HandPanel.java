@@ -3,27 +3,19 @@ package cs3500.threetrios.view;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.card.Direction;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import java.util.List;
 
 /**
  * Implementation of a representation of a player hand using a JPanel.
  */
-public class HandPanel implements HandPanelInterface {
+public class HandPanel extends CardPanel implements HandPanelInterface {
   private final JPanel hand;
   private JButton selection;
+  private int selectionIndex;
   private final PlayerColor player;
   private final boolean viewOfPlayer;
   private final ReadOnlyThreeTriosModelInterface model;
@@ -48,57 +40,11 @@ public class HandPanel implements HandPanelInterface {
 
     for (int i = 0; i < handSize; i++) {
       CustomCard card = handCards.get(i);
-      JPanel cardPanel = new JPanel(new BorderLayout());
-      cardPanel.setOpaque(false);
-
-      JLabel northLabel = new JLabel(card.getAttackValue(Direction.NORTH).toString(),
-          SwingConstants.CENTER);
-      JLabel southLabel = new JLabel(card.getAttackValue(Direction.SOUTH).toString(),
-          SwingConstants.CENTER);
-      JLabel eastLabel = new JLabel(card.getAttackValue(Direction.EAST).toString());
-      JLabel westLabel = new JLabel(card.getAttackValue(Direction.WEST).toString());
-
-      cardPanel.add(northLabel, BorderLayout.NORTH);
-      cardPanel.add(southLabel, BorderLayout.SOUTH);
-      cardPanel.add(eastLabel, BorderLayout.EAST);
-      cardPanel.add(westLabel, BorderLayout.WEST);
-      setFonts(cardPanel, northLabel, southLabel, eastLabel, westLabel);
-      cardPanel.addComponentListener(new ComponentAdapter() {
-        // resize card text every time the window is resized
-        @Override
-        public void componentResized(ComponentEvent e) {
-          setFonts(cardPanel, northLabel, southLabel, eastLabel, westLabel);
-        }
-      });
-
-      JButton cardButton = new JButton();
-      cardButton.setLayout(new BorderLayout());
-      cardButton.add(cardPanel, BorderLayout.CENTER);
-
-      if (player == PlayerColor.RED) {
-        cardButton.setBackground(Color.RED);
-      } else if (player == PlayerColor.BLUE) {
-        cardButton.setBackground(Color.BLUE);
-      }
+      JButton cardButton = createCard(card);
       int finalI = i;
       cardButton.addActionListener(e -> handleCardClick(finalI));
-      cardButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-      cardButton.setBorderPainted(false);
       hand.add(cardButton);
     }
-  }
-
-  private void setFonts(JPanel cardPanel, JLabel northLabel, JLabel southLabel,
-                        JLabel eastLabel, JLabel westLabel) {
-    int width = cardPanel.getWidth();
-    int height = cardPanel.getHeight();
-    int fontSize = Math.min(width, height) / 3;
-    Font font = new Font("Arial", Font.PLAIN, fontSize);
-
-    northLabel.setFont(font);
-    southLabel.setFont(font);
-    eastLabel.setFont(font);
-    westLabel.setFont(font);
   }
 
   @Override
@@ -119,16 +65,20 @@ public class HandPanel implements HandPanelInterface {
     }
 
     if (clicked == selection) {
-      clicked.setBorderPainted(false);
-      selection = null;
+      deselect();
       System.out.println("Hand index " + handIndex + " of player: " + player);
       return;
     } else if (selection != null) {
-      selection.setBorderPainted(false);
+      deselect();
     }
-    selection = clicked;
-    selection.setBorderPainted(true);
+    setSelection(clicked, handIndex);
     System.out.println("Hand index " + handIndex + " of player: " + player);
+  }
+
+  private void setSelection(JButton selection, int selectionIndex) {
+    this.selection = selection;
+    this.selectionIndex = selectionIndex;
+    selection.setBorderPainted(true);
   }
 
   @Override
@@ -142,7 +92,14 @@ public class HandPanel implements HandPanelInterface {
   }
 
   @Override
+  public int getSelectedIndex() {
+    return selectionIndex;
+  }
+
+  @Override
   public void deselect() {
+    selection.setBorderPainted(false);
     selection = null;
+    selectionIndex = -1;
   }
 }

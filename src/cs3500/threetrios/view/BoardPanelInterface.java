@@ -1,5 +1,8 @@
 package cs3500.threetrios.view;
 
+import cs3500.threetrios.controller.GameListeners;
+import cs3500.threetrios.controller.ThreeTriosController;
+
 import javax.swing.JPanel;
 
 /**
@@ -21,4 +24,11 @@ public interface BoardPanelInterface {
    * @return the JPanel representing the board
    */
   JPanel getPanel();
+
+  /**
+   * Set the linked controller to this view.
+   *
+   * @param controller the linked controller
+   */
+  void setController(GameListeners controller);
 }

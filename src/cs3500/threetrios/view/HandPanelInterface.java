@@ -30,6 +30,13 @@ public interface HandPanelInterface {
   JButton getSelected();
 
   /**
+   * Gets the index of the selected JButton, or -1 if there is none selected.
+   *
+   * @return the index of selected or -1
+   */
+  int getSelectedIndex();
+
+  /**
    * Set the current selected button to null and reset the outline.
    */
   void deselect();
