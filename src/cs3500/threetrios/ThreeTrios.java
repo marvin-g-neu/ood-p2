@@ -5,7 +5,6 @@ import cs3500.threetrios.controller.ControllerManagerInterface;
 import cs3500.threetrios.controller.players.ComputerPlayer;
 import cs3500.threetrios.controller.players.HumanPlayer;
 import cs3500.threetrios.controller.players.Player;
-import cs3500.threetrios.controller.ThreeTriosController;
 import cs3500.threetrios.controller.readers.DeckFileReader;
 import cs3500.threetrios.controller.readers.GridFileReader;
 import cs3500.threetrios.model.ClassicalThreeTriosModel;
