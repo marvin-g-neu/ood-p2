@@ -42,6 +42,7 @@ public final class ThreeTrios {
     String gridPath = "docs/boards/boardWithSeparateGroups.config";
     Player redPlayer = configurePlayer(playerOrComp[0], PlayerColor.RED);
     Player bluePlayer = configurePlayer(playerOrComp[1], PlayerColor.BLUE);
+    s.close();
 
     Grid grid = new ThreeTriosBoard(new GridFileReader().readFile(gridPath));
     List<CustomCard> deck = new DeckFileReader().readFile("docs/cards/AllNecessaryCards.config");

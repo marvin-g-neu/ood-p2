@@ -250,3 +250,51 @@ These changes enable us to run findBestMove() made by computer players without m
 
 ### Additional Changes
 - Added methods to help in wiring the strategies such as getPlayerHand which takes in a player's color and returns the player's hand isntead of our old version and other similar changes.
+
+## Changes for part 3:
+
+Added functionality to support:
+1. **Graphical User Interface (GUI):**
+   - Developed a Swing-based GUI replacing the textual view.
+   - Enabled interactive card placement through mouse clicks.
+   - Displayed players' hands with clickable cards for selection.
+   - Updated board visualization to reflect real-time game state changes.
+
+2. **Enhanced AI Players:**
+   - Integrated AI players utilizing the newly implemented strategies.
+   - Enabled AI to make automatic moves during their turns.
+   - Improved AI decision-making algorithms for more competitive gameplay.
+
+3. **Advanced Game Rules:**
+   - Introduced additional game rules such as card combos and special abilities.
+   - Enabled customizable rule sets via configuration files, allowing for varied gameplay experiences.
+
+4. **Improved Testing Suite:**
+   - Expanded unit tests to cover new GUI components and AI behaviors.
+   - Implemented integration tests to ensure proper interaction between MVC components.
+
+5. **Performance Optimizations:**
+   - Optimized move simulation algorithms for faster AI computations.
+   - Enhanced GUI rendering performance for smoother interactions.
+
+6. **Bug Fixes and Enhancements:**
+   - Resolved synchronization issues between model and view.
+   - Improved error handling for invalid user inputs and configuration files.
+   - Enhanced code documentation for better maintainability.
+
+### New Features
+- Implemented full GUI allowing players to interact with the game visually.
+- Added animation effects for card placement and battle sequences.
+- Integrated responsive design to accommodate various screen sizes.
+- Enabled saving and loading of game states through the GUI.
+
+### Implementation Notes
+- Utilized the MVC architecture to decouple GUI components from the game logic.
+- Employed event-driven programming to handle user interactions in the GUI.
+- Leveraged Swing's layout managers for organized and scalable UI design.
+- Implemented Observer pattern to facilitate real-time updates between model and view.
+
+### Additional Changes
+- Added options menu in the GUI for game settings and rule customization.
+- Enhanced AI strategies with adaptive learning based on opponent's behavior.
+- Improved logging mechanisms for debugging and tracking game progress.
