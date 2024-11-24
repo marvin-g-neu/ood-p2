@@ -5,6 +5,10 @@ import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
 import cs3500.threetrios.view.ThreeTriosGUIViewInterface;
 
+/**
+ * Implementation of the controller manager which allows swapping between the
+ * two controllers based on which player is active.
+ */
 public class ControllerManager implements ControllerManagerInterface {
   private final ThreeTriosController redController;
   private final ThreeTriosController blueController;

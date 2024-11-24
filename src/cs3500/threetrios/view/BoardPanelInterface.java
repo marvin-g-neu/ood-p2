@@ -1,7 +1,6 @@
 package cs3500.threetrios.view;
 
 import cs3500.threetrios.controller.GameListeners;
-import cs3500.threetrios.controller.ThreeTriosController;
 
 import javax.swing.JPanel;
 

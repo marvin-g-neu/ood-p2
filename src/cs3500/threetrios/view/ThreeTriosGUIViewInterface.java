@@ -1,7 +1,7 @@
 package cs3500.threetrios.view;
 
 import cs3500.threetrios.controller.GameListeners;
-import cs3500.threetrios.controller.ThreeTriosController;
+
 /**
  * A view interface specific to a GUI view of Three Trios. For anything that
  * shouldn't be modifying the view, the base ThreeTriosView should be used.
