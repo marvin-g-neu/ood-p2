@@ -8,15 +8,14 @@ import cs3500.threetrios.controller.players.Player;
 import cs3500.threetrios.controller.readers.DeckFileReader;
 import cs3500.threetrios.controller.readers.GridFileReader;
 import cs3500.threetrios.model.ClassicalThreeTriosModel;
+import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
-import cs3500.threetrios.strategy.MaxFlipsStrategy;
 import cs3500.threetrios.strategy.CornerStrategy;
+import cs3500.threetrios.strategy.MaxFlipsStrategy;
 import cs3500.threetrios.view.ThreeTriosGUIView;
-import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.view.ThreeTriosGUIViewInterface;
-
 
 import java.util.List;
 import java.util.Scanner;
