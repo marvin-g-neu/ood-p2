@@ -1,7 +1,8 @@
 package cs3500.threetrios.view;
 
-import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.controller.GameListeners;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
+import cs3500.threetrios.model.cell.Cell;
 import cs3500.threetrios.model.grid.Grid;
 
 import java.awt.Color;
@@ -13,25 +14,27 @@ import javax.swing.JPanel;
 /**
  * Implementation of a representation of the game board using a JPanel.
  */
-public class BoardPanel implements BoardPanelInterface {
-  private JPanel grid;
-  private JButton selection;
-  private ReadOnlyThreeTriosModelInterface model;
+public class BoardPanel extends CardPanel implements BoardPanelInterface {
+  private final JPanel grid;
+  private final ReadOnlyThreeTriosModelInterface model;
+  private GameListeners controller;
 
-  private PlayerColor viewOfPlayer;
-  private HandPanelInterface hand;
+  private final HandPanelInterface hand;
 
-  private JButton[][] gridRep;
+  private final JButton[][] gridRep;
 
   /**
    * Create a BoardPanel with a given model and hand of the player whose view this is part of.
    *
-   * @param model the model being used for the game
-   * @param hand  the panel representation of the hand of the player whose panel this is
+   * @param model      the model being used for the game
+   * @param hand       the panel representation of the hand of the player whose panel this is
+   * @param controller the controller for the player whose panel this is
    */
-  public BoardPanel(ReadOnlyThreeTriosModelInterface model, HandPanelInterface hand) {
+  public BoardPanel(ReadOnlyThreeTriosModelInterface model,
+                    HandPanelInterface hand, GameListeners controller) {
     this.model = model;
     this.hand = hand;
+    this.controller = controller;
     grid = new JPanel();
 
     Grid board = model.getGrid();
@@ -42,10 +45,14 @@ public class BoardPanel implements BoardPanelInterface {
     for (int row = 0; row < board.getRows(); row++) {
       for (int col = 0; col < board.getCols(); col++) {
         JButton cellButton = new JButton();
-        if (board.getCell(row, col).isHole()) {
+        Cell cell = board.getCell(row, col);
+        if (cell.isHole()) {
           cellButton.setBackground(Color.LIGHT_GRAY);
-        } else {
+        } else if (cell.isEmpty()) {
           cellButton.setBackground(Color.YELLOW);
+        } else {
+          System.out.println("Yes");
+          cellButton = createCard(cell.getCard());
         }
         int finalRow = row;
         int finalCol = col;
@@ -68,10 +75,7 @@ public class BoardPanel implements BoardPanelInterface {
     JButton selected = hand.getSelected();
     JButton cellButton = gridRep[row][col];
     if (cellButton.getBackground() == Color.YELLOW && selected != null) {
-      int gridIndex = (row * col) + col;
-      grid.remove(gridIndex);
-      grid.add(selected, gridIndex);
-      gridRep[row][col] = selected;
+      controller.playMove(row, col, hand.getSelectedIndex());
       hand.deselect();
     }
   }
@@ -79,5 +83,10 @@ public class BoardPanel implements BoardPanelInterface {
   @Override
   public JPanel getPanel() {
     return grid;
+  }
+
+  @Override
+  public void setController(GameListeners controller) {
+    this.controller = controller;
   }
 }

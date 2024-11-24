@@ -21,17 +21,19 @@ public class ThreeTriosController implements Actions, GameListeners {
   private final ThreeTriosGUIViewInterface view;
   private final RuleKeeper rules;
   private int cardIdx;
-  private Player currentPlayer;
+  private final ControllerManagerInterface controllerManager;
 
   /**
    * Constructs the controller.
    *
-   * @param model  game model
-   * @param player game player
-   * @param view   game view
+   * @param model             game model
+   * @param player            game player
+   * @param view              game view
+   * @param controllerManager swaps between the controllers of players
    */
   public ThreeTriosController(ThreeTriosModelInterface model, Player player,
-                              ThreeTriosGUIViewInterface view) {
+                              ThreeTriosGUIViewInterface view,
+                              ControllerManagerInterface controllerManager) {
     if (model == null || player == null || view == null) {
       throw new IllegalArgumentException("model, player or view cannot be null.");
     }
@@ -40,8 +42,8 @@ public class ThreeTriosController implements Actions, GameListeners {
     this.view = view;
     this.rules = new BasicThreeTriosGame(model);
     this.cardIdx = -1;
+    this.controllerManager = controllerManager;
     player.callbackFeatures(this);
-    this.currentPlayer = player;
   }
 
   @Override
@@ -58,11 +60,17 @@ public class ThreeTriosController implements Actions, GameListeners {
 
       String endGameMsg = "The game is over! %s team wins with %d over %d.";
       // view.displayMessage(String.format(endGameMsg, winner, model.getScore(winner),
-          // model.getScore(loser)));
+      // model.getScore(loser)));
     } else {
       String tieMsg = "The game is over! It's a draw.";
       // view.displayMessage(tieMsg);
     }
+  }
+
+  @Override
+  public void playMove(int row, int col, int handIndex) {
+    model.playTurn(row, col, handIndex);
+    switchPlayer();
   }
 
   @Override
@@ -79,34 +87,21 @@ public class ThreeTriosController implements Actions, GameListeners {
     if (rules.isGameCompleted()) {
       runGameOver();
     }
-<<<<<<< HEAD
-    refreshScreen();
-=======
-    // view.render();
->>>>>>> 6498be6 (done)
     switchPlayer();
   }
 
   @Override
   public void refreshScreen() {
-<<<<<<< HEAD
     try {
       view.render();
     } catch (IOException e) { // IOException should not be a problem for GUI views
       throw new IllegalStateException("Unexpected error occurred while refreshing screen.");
     }
-=======
-    // view.render();
->>>>>>> 6498be6 (done)
   }
 
   @Override
-  public void makeScreenVisible() {
-<<<<<<< HEAD
-    view.setVisible(true);
-=======
-    // view.makeVisible();
->>>>>>> 6498be6 (done)
+  public void setScreenVisible(boolean visible) {
+    view.setVisible(visible);
   }
 
 
@@ -168,11 +163,6 @@ public class ThreeTriosController implements Actions, GameListeners {
   }
 
   private void switchPlayer() {
-    if (model.getCurrentPlayer() == PlayerColor.RED) {
-      currentPlayer = player;
-    } else {
-      currentPlayer = player;
-    }
-    runPlayerTurn();
+    controllerManager.swapTurn(player.getColor());
   }
 }

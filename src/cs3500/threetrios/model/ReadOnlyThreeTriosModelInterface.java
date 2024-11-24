@@ -43,7 +43,7 @@ public interface ReadOnlyThreeTriosModelInterface {
    *
    * @param player the player to get the hand of
    * @return the hand of the player
-   * @throws IllegalStateException    if the game has not been started or is over
+   * @throws IllegalStateException    if the game has not been started
    * @throws IllegalArgumentException if player is null
    */
   List<CustomCard> getPlayerHand(PlayerColor player);

@@ -95,7 +95,9 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
 
   @Override
   public Grid getGrid() {
-    checkGameInProgress();
+    if (gameState == GameState.NOT_STARTED) {
+      throw new IllegalStateException("Game is not started");
+    }
     return grid.copy();
   }
 
@@ -212,7 +214,9 @@ public abstract class BaseThreeTriosModel implements ThreeTriosModelInterface {
     if (player == null) {
       throw new IllegalArgumentException("Player cannot be null");
     }
-    checkGameInProgress();
+    if (gameState == GameState.NOT_STARTED) {
+      throw new IllegalStateException("Game is not started");
+    }
     switch (player) {
       case RED:
         return new ArrayList<>(redHand);
