@@ -9,12 +9,15 @@ import cs3500.threetrios.controller.readers.DeckFileReader;
 import cs3500.threetrios.controller.readers.GridFileReader;
 import cs3500.threetrios.model.ClassicalThreeTriosModel;
 import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.adapted.ThreeTriosModelAdaptor;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
+import cs3500.threetrios.provider.view.gui.ThreeTrioGuiView;
 import cs3500.threetrios.strategy.CornerStrategy;
 import cs3500.threetrios.strategy.MaxFlipsStrategy;
 import cs3500.threetrios.view.ThreeTriosGUIView;
+import cs3500.threetrios.view.adapted.ThreeTriosGUIViewAdaptor;
 import cs3500.threetrios.view.ThreeTriosGUIViewInterface;
 
 import java.util.List;
@@ -51,7 +54,10 @@ public final class ThreeTrios {
 
     // Create views
     ThreeTriosGUIViewInterface redView = new ThreeTriosGUIView(model, PlayerColor.RED);
-    ThreeTriosGUIViewInterface blueView = new ThreeTriosGUIView(model, PlayerColor.BLUE);
+
+
+    ThreeTriosGUIViewInterface blueView =
+        new ThreeTriosGUIViewAdaptor(new ThreeTrioGuiView(new ThreeTriosModelAdaptor()));
 
     // Create controllers for both players and set them to their paired views
     ControllerManagerInterface controllerManager = new ControllerManager(redPlayer, bluePlayer,

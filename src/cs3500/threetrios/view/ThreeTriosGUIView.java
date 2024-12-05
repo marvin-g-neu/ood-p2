@@ -49,7 +49,6 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   public void render() {
     frame = new JFrame();
     frame.setLayout(new GridBagLayout());
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Three Trios");
 
     redHand = createHandPanel(PlayerColor.RED);
