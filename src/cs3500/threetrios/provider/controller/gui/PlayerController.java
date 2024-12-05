@@ -7,7 +7,7 @@ import cs3500.threetrios.provider.view.gui.TtGuiView;
  * The base for a player controller where they can get notified
  * when it is their turn and play a move.
  */
-public interface PlayerController {
+public interface  PlayerController {
 
   /**
    * Informs the Player that the game has shifted to their turn.

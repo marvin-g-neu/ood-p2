@@ -13,7 +13,6 @@ import cs3500.threetrios.provider.model.players.ai.StrategyEnum;
  * This interface always mutation of the game state.
  */
 public interface ThreeTrioModel extends ReadOnlyThreeTrioModel {
-
   /**
    * Starts the game and sets up what is need for the game to start.
    * This method takes in a deck and a board and distributes the cell to the created players.

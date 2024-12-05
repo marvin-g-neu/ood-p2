@@ -4,7 +4,6 @@ package cs3500.threetrios.controller;
  * Represents model and view functionalities.
  */
 public interface GameListeners {
-
   /**
    * Refreshes the view screen.
    */
