@@ -13,6 +13,7 @@ import cs3500.threetrios.model.adapted.ThreeTriosModelAdaptor;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
+import cs3500.threetrios.provider.model.ThreeTrioColor;
 import cs3500.threetrios.provider.view.gui.ThreeTrioGuiView;
 import cs3500.threetrios.strategy.CornerStrategy;
 import cs3500.threetrios.strategy.MaxFlipsStrategy;
@@ -57,7 +58,8 @@ public final class ThreeTrios {
 
 
     ThreeTriosGUIViewInterface blueView =
-        new ThreeTriosGUIViewAdaptor(new ThreeTrioGuiView(new ThreeTriosModelAdaptor()));
+        new ThreeTriosGUIViewAdaptor(new ThreeTrioGuiView(new ThreeTriosModelAdaptor(model),
+            controller, ThreeTrioColor.BLUE));
 
     // Create controllers for both players and set them to their paired views
     ControllerManagerInterface controllerManager = new ControllerManager(redPlayer, bluePlayer,
