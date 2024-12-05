@@ -3,25 +3,26 @@ package cs3500.threetrios.model.adapted;
 import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosModelInterface;
-import cs3500.threetrios.model.card.AttackValue;
-import cs3500.threetrios.model.card.CustomCard;
-import cs3500.threetrios.model.card.Direction;
-import cs3500.threetrios.model.cell.CellState;
+import cs3500.threetrios.model.card.*;
+import cs3500.threetrios.model.cell.ThreeTriosCell;
 import cs3500.threetrios.model.grid.Grid;
+import cs3500.threetrios.model.grid.ThreeTriosBoard;
 import cs3500.threetrios.provider.model.ThreeTrioColor;
 import cs3500.threetrios.provider.model.ThreeTrioModel;
 import cs3500.threetrios.provider.model.cells.Cell;
 import cs3500.threetrios.provider.model.cells.Directions;
+import cs3500.threetrios.provider.model.players.Player;
 import cs3500.threetrios.provider.model.players.ai.StrategyEnum;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class ThreeTriosModelAdaptor implements ThreeTriosModelInterface {
-  private class DeckCell implements Cell {
+public class ThreeTriosModelAdaptor implements ThreeTrioModel {
+  ThreeTriosModelInterface origModel;
+
+  private class CardCell implements Cell {
     private AttackValue north;
     private AttackValue south;
     private AttackValue east;
@@ -29,7 +30,7 @@ public class ThreeTriosModelAdaptor implements ThreeTriosModelInterface {
     private ThreeTrioColor cardColor;
     private boolean isHole;
 
-    private DeckCell(boolean isHole) {
+    private CardCell(boolean isHole) {
       this.north = null;
       this.south = null;
       this.east = null;
@@ -38,7 +39,7 @@ public class ThreeTriosModelAdaptor implements ThreeTriosModelInterface {
       this.isHole = isHole;
     }
 
-    private DeckCell(AttackValue north, AttackValue south, AttackValue east,
+    private CardCell(AttackValue north, AttackValue south, AttackValue east,
                      AttackValue west) {
       this.north = north;
       this.south = south;
@@ -48,7 +49,7 @@ public class ThreeTriosModelAdaptor implements ThreeTriosModelInterface {
       isHole = false;
     }
 
-    private DeckCell(AttackValue north, AttackValue south, AttackValue east, AttackValue west,
+    private CardCell(AttackValue north, AttackValue south, AttackValue east, AttackValue west,
                      ThreeTrioColor cardColor) {
       this(north, south, east, west);
       this.cardColor = cardColor;
@@ -98,7 +99,7 @@ public class ThreeTriosModelAdaptor implements ThreeTriosModelInterface {
 
     @Override
     public Cell copy() {
-      return new DeckCell(north, south, east, west, cardColor);
+      return new CardCell(north, south, east, west, cardColor);
     }
 
     @Override
@@ -107,89 +108,131 @@ public class ThreeTriosModelAdaptor implements ThreeTriosModelInterface {
     }
   }
 
-  private ThreeTrioModel providerModel;
-
-  public ThreeTriosModelAdaptor(ThreeTrioModel providerModel) {
-    this.providerModel = providerModel;
+  public ThreeTriosModelAdaptor(ThreeTriosModelInterface model) {
+    origModel = model;
   }
 
   @Override
-  public void startGame(Grid gameGrid, List<CustomCard> deck) {
-    startGame(gameGrid, deck, true);
-  }
-
-  @Override
-  public void startGame(Grid gameGrid, List<CustomCard> deck, boolean shuffle) {
-    List<Cell> deckCells = new ArrayList<Cell>();
-    for (CustomCard card : deck) {
-      deckCells.add(new DeckCell(card.getAttackValue(Direction.NORTH),
-          card.getAttackValue(Direction.SOUTH), card.getAttackValue(Direction.EAST),
-          card.getAttackValue(Direction.WEST)));
-    }
-
-    Cell[][] board = new Cell[gameGrid.getRows()][gameGrid.getCols()];
+  public void startGame(List<Cell> deck, Cell[][] board, Map<ThreeTrioColor,
+      List<StrategyEnum>> strategyMap, boolean shuffle) {
+    cs3500.threetrios.model.cell.Cell[][] cellGrid =
+        new ThreeTriosCell[board.length][board[0].length];
     for (int row = 0; row < board.length; row++) {
-      for (int col = 0; col < board[row].length; col++) {
-        cs3500.threetrios.model.cell.Cell cell = gameGrid.getCell(row, col);
-        board[row][col] = new DeckCell(cell.isHole());
+      for (int col = 0; col < board[0].length; col++) {
+        cellGrid[row][col] = new ThreeTriosCell(board[row][col].isaHole());
       }
     }
 
-    Map<ThreeTrioColor, List<StrategyEnum>> map = new HashMap<ThreeTrioColor, List<StrategyEnum>>();
-    map.put(ThreeTrioColor.RED, null);
-    map.put(ThreeTrioColor.BLUE, null);
+    Grid grid = new ThreeTriosBoard(cellGrid);
+    List<CustomCard> origDeck = new ArrayList<>();
+    for (Cell cell : deck) {
+      origDeck.add(new ThreeTriosCard(cell.toString(),
+          AttackValue.getValue(cell.getValue(Directions.NORTH)),
+          AttackValue.getValue(cell.getValue(Directions.SOUTH)),
+          AttackValue.getValue(cell.getValue(Directions.EAST)),
+          AttackValue.getValue(cell.getValue(Directions.WEST))));
+    }
 
-
-    providerModel.startGame(deckCells, board, map, shuffle);
+    origModel.startGame(grid, origDeck);
   }
 
   @Override
-  public void playTurn(int row, int col, int handIndex) {
-
+  public void playCell(Cell cell, int x, int y) {
   }
 
   @Override
-  public Grid endGame() {
+  public Player getPlayer(ThreeTrioColor color) {
     return null;
   }
 
   @Override
-  public ThreeTriosModelInterface copy() {
-    return null;
+  public List<Cell> getHand(ThreeTrioColor color) {
+    PlayerColor origColor;
+    if (color == ThreeTrioColor.RED) {
+      origColor = PlayerColor.RED;
+    } else if (color == ThreeTrioColor.BLUE) {
+      origColor = PlayerColor.BLUE;
+    } else {
+      throw new IllegalArgumentException("Unknown color: " + color);
+    }
+
+    List<CustomCard> origHand = origModel.getPlayerHand(origColor);
+
+    List<Cell> hand = new ArrayList<>();
+    for (CustomCard card : origHand) {
+      hand.add(new CardCell(card.getAttackValue(Direction.NORTH),
+          card.getAttackValue(Direction.SOUTH), card.getAttackValue(Direction.EAST),
+          card.getAttackValue(Direction.WEST), color));
+    }
+
+    return hand;
   }
 
   @Override
-  public CellState getCellStateAt(int row, int col) {
-    return null;
+  public Cell[][] getBoard() {
+    Grid grid = origModel.getGrid();
+    Cell[][] board = new Cell[grid.getRows()][grid.getCols()];
+    for (int row = 0; row < board.length; row++) {
+      for (int col = 0; col < board[0].length; col++) {
+        cs3500.threetrios.model.cell.Cell cell = grid.getCell(row, col);
+        if (cell.isHole()) {
+          board[row][col] = new CardCell(true);
+        } else if (cell.isEmpty()) {
+          board[row][col] = new CardCell(false);
+        } else {
+          CustomCard card = cell.getCard();
+          ThreeTrioColor color;
+          if (card.getCurrentColor() == CardColor.RED) {
+            color = ThreeTrioColor.RED;
+          } else if (card.getCurrentColor() == CardColor.BLUE) {
+            color = ThreeTrioColor.BLUE;
+          } else {
+            throw new IllegalStateException("Unexpected color: " + card.getCurrentColor());
+          }
+
+          board[row][col] = new CardCell(card.getAttackValue(Direction.NORTH),
+              card.getAttackValue(Direction.SOUTH), card.getAttackValue(Direction.EAST),
+              card.getAttackValue(Direction.NORTH), color);
+        }
+      }
+    }
+
+    return board;
   }
 
   @Override
-  public PlayerColor getCurrentPlayer() {
-    return null;
+  public List<ThreeTrioColor> getAllPlayers() {
+    return List.of(ThreeTrioColor.RED, ThreeTrioColor.BLUE);
   }
 
   @Override
-  public List<CustomCard> getCurrentPlayerHand() {
-    return List.of();
+  public boolean isGameOver() {
+    return origModel.getGameState() != GameState.IN_PROGRESS
+        && origModel.getGameState() != GameState.NOT_STARTED;
   }
 
   @Override
-  public List<CustomCard> getPlayerHand(PlayerColor player) {
-    return List.of();
+  public boolean hasGameStarted() {
+    return origModel.getGameState() != GameState.NOT_STARTED;
   }
 
   @Override
-  public Grid getGrid() {
-    return null;
+  public List<ThreeTrioColor> getWinner() {
+    switch (origModel.getGameState()) {
+      case RED_WIN:
+        return List.of(ThreeTrioColor.RED);
+      case BLUE_WIN:
+        return List.of(ThreeTrioColor.BLUE);
+      case DRAW:
+        return null;
+      default:
+        throw new IllegalStateException("Game not completed");
+    }
   }
 
   @Override
-  public int getScore(PlayerColor player) {
-    return 0;
-  }
-
-  @Override
-  public GameState getGameState() {
-    return null;
+  public Map<ThreeTrioColor, Integer> getScores() {
+    return Map.of(ThreeTrioColor.RED, origModel.getScore(PlayerColor.RED),
+        ThreeTrioColor.BLUE, origModel.getScore(PlayerColor.BLUE));
   }
 }
