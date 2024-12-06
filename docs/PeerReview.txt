@@ -1,1 +1,36 @@
-TK...
+Design Critique:
+The provider’s code generally reflects good architectural decisions, 
+mainly through the solid design using MVC principles and the extension of 
+JPanel for both the board and hand panels. These choices enhance modularity and make 
+the UI components easier to maintain and evolve. However, the decision to have the 
+play method accept a cell object, rather than using a hand index to identify which 
+card to play, complicates integration with other systems. And the controller did not 
+have callback methods to notify the controller manager of the actions taken. This 
+approach increases coupling between the view and controller, making it less intuitive 
+and flexible.
+
+Implementation Critique:
+From an implementation standpoint, the code is well-structured and follows good 
+coding conventions. The integration of Swing components is logical, 
+and the separation between the classes is clear. Still, tying the play 
+function so closely to cell objects, rather than indices, diminishes the 
+controller’s adaptability. Without a more standard interface for handling 
+actions, we found it challenging to build upon the existing functionality 
+using the adapter design pattern.
+
+Documentation Critique: 
+The code is well-documented at a high level, with helpful Javadoc comments and 
+clear explanations of class responsibilities. Nonetheless, the documentation should 
+better explain complex design decisions, such as why cells are passed directly into 
+the play method or why no callback methods exist for the controller manager. Improved 
+explanations would enable other developers like us to understand the rationale behind these 
+choices and adapt the code more confidently without having to edit our own code heavily.
+
+Design/Code Limitations & Suggestions: 
+To address these issues, we would ask this team to consider revising the play method 
+signature to accept a hand index instead of a cell object. This change would reduce 
+coupling and make the controller easier to integrate with other systems. Additionally, 
+introducing callback mechanisms or observer patterns would allow the controller to 
+communicate more effectively with a controller manager, enabling better handling 
+of asynchronous events. Lastly, having a more through Javadoc would be helpful, and 
+even in-line comments in the view implementation would be beneficial. 
