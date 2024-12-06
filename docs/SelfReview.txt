@@ -1,7 +1,8 @@
 What We Would Have Done Differently:
 Reflecting on the integration process, we wish we had designed the overall game 
 functionality with clearer separation between the logic that chooses 
-a card and the logic that executes playing it. This would have help very much 
+a card and the logic that executes playing it. We also should have done better 
+keeping our MVC design seprated better as well. This would have help very much 
 with understanding and wokring on our providers code. This small change could 
 have streamlined our logic, made our controller more flexible, and eased the 
 process of adapting our code to different view or model implementations. From 
