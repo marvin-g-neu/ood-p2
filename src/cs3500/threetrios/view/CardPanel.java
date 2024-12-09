@@ -16,9 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- * Allows Hand and Board panels both to create cards when being painted.
+ * Allows Hand and Board panels both to create cards when being painted and act as JPanels.
  */
-public abstract class CardPanel {
+public abstract class CardPanel extends JPanel {
   private void setFonts(JPanel cardPanel, JLabel northLabel, JLabel southLabel,
                         JLabel eastLabel, JLabel westLabel) {
     int width = cardPanel.getWidth();

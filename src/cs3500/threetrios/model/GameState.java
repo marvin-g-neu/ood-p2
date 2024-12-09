@@ -6,5 +6,5 @@ package cs3500.threetrios.model;
  * inside the model.
  */
 public enum GameState {
-  NOT_STARTED, IN_PROGRESS, RED_WIN, BLUE_WIN, EARLY_QUIT
+  NOT_STARTED, IN_PROGRESS, RED_WIN, DRAW, BLUE_WIN, EARLY_QUIT
 }

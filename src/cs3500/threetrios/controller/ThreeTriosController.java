@@ -104,7 +104,6 @@ public class ThreeTriosController implements Actions, GameListeners {
     view.setVisible(visible);
   }
 
-
   @Override
   public boolean selectCard(String playerColor, int cardIdx) {
     if (rules.isGameCompleted()) {

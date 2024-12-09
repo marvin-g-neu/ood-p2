@@ -5,11 +5,13 @@ import cs3500.threetrios.model.GameState;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * A view for the game ThreeTrios using a Java Swing GUI view.
@@ -17,7 +19,9 @@ import javax.swing.JOptionPane;
 public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   private final ReadOnlyThreeTriosModelInterface model;
 
-  private JFrame frame;
+  private final JFrame frame;
+  private final GridBagConstraints gbc;
+
   private HandPanelInterface redHand;
   private HandPanelInterface blueHand;
   private BoardPanelInterface boardPanel;
@@ -42,40 +46,43 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
     }
     this.model = model;
     this.player = player;
+
+    frame = new JFrame();
+    frame.setLayout(new GridBagLayout());
+    frame.setTitle(player.toString());
+    // GridBag setup
+    gbc = new GridBagConstraints();
+    gbc.fill = GridBagConstraints.BOTH;
+    gbc.weighty = 1.0;
+
+    frame.setPreferredSize(new Dimension(800, 600));
+    frame.pack();
+
     render();
   }
 
   @Override
   public void render() {
-    frame = new JFrame();
-    frame.setLayout(new GridBagLayout());
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setTitle("Three Trios");
-
     redHand = createHandPanel(PlayerColor.RED);
     blueHand = createHandPanel(PlayerColor.BLUE);
     boardPanel = createGridPanel();
 
-    // GridBag setup
-    GridBagConstraints gbc = new GridBagConstraints();
-    gbc.fill = GridBagConstraints.BOTH;
-    gbc.weighty = 1.0;
+    Container cont = frame.getContentPane();
+
+    cont.removeAll();
+    cont.revalidate();
 
     gbc.gridx = 0;
     gbc.weightx = 0.15;
-    System.out.println(redHand.getPanel());
-    frame.add(redHand.getPanel(), gbc);
+    cont.add((JPanel) redHand, gbc);
 
     gbc.gridx = 1;
     gbc.weightx = 0.7;
-    frame.add(boardPanel.getPanel(), gbc);
+    cont.add((JPanel) boardPanel, gbc);
 
     gbc.gridx = 2;
     gbc.weightx = 0.15;
-    frame.add(blueHand.getPanel(), gbc);
-
-    frame.setPreferredSize(new Dimension(800, 600));
-    frame.pack();
+    cont.add((JPanel) blueHand, gbc);
   }
 
   private HandPanelInterface createHandPanel(PlayerColor handOfPlayer) {
@@ -95,6 +102,8 @@ public class ThreeTriosGUIView implements ThreeTriosGUIViewInterface {
   @Override
   public void setVisible(boolean visible) {
     frame.setVisible(visible);
+    System.out.println(visible + " " + player);
+    System.out.println(frame.isVisible());
   }
 
   @Override

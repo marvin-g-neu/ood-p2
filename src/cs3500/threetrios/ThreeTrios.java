@@ -59,10 +59,6 @@ public final class ThreeTrios {
     redView.setController(controllerManager.getController(PlayerColor.RED));
     blueView.setController(controllerManager.getController(PlayerColor.BLUE));
 
-    // Register controllers with players
-    redPlayer.callbackFeatures(controllerManager.getController(PlayerColor.RED));
-    bluePlayer.callbackFeatures(controllerManager.getController(PlayerColor.BLUE));
-
     redView.setVisible(true);
     blueView.setVisible(false);
   }

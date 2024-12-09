@@ -9,13 +9,11 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 /**
  * Implementation of a representation of the game board using a JPanel.
  */
 public class BoardPanel extends CardPanel implements BoardPanelInterface {
-  private final JPanel grid;
   private final ReadOnlyThreeTriosModelInterface model;
   private GameListeners controller;
 
@@ -35,11 +33,10 @@ public class BoardPanel extends CardPanel implements BoardPanelInterface {
     this.model = model;
     this.hand = hand;
     this.controller = controller;
-    grid = new JPanel();
 
     Grid board = model.getGrid();
-    grid.setLayout(new GridLayout(board.getRows(), board.getCols()));
-    grid.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    this.setLayout(new GridLayout(board.getRows(), board.getCols()));
+    this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
     gridRep = new JButton[board.getRows()][board.getCols()];
     for (int row = 0; row < board.getRows(); row++) {
@@ -51,13 +48,12 @@ public class BoardPanel extends CardPanel implements BoardPanelInterface {
         } else if (cell.isEmpty()) {
           cellButton.setBackground(Color.YELLOW);
         } else {
-          System.out.println("Yes");
           cellButton = createCard(cell.getCard());
         }
         int finalRow = row;
         int finalCol = col;
         cellButton.addActionListener(e -> handleCellClick(finalRow, finalCol));
-        grid.add(cellButton);
+        this.add(cellButton);
         gridRep[finalRow][finalCol] = cellButton;
       }
     }
@@ -78,11 +74,6 @@ public class BoardPanel extends CardPanel implements BoardPanelInterface {
       controller.playMove(row, col, hand.getSelectedIndex());
       hand.deselect();
     }
-  }
-
-  @Override
-  public JPanel getPanel() {
-    return grid;
   }
 
   @Override

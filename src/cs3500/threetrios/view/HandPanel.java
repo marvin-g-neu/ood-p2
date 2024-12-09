@@ -5,15 +5,13 @@ import cs3500.threetrios.model.ReadOnlyThreeTriosModelInterface;
 import cs3500.threetrios.model.card.CustomCard;
 
 import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
 import java.util.List;
+import javax.swing.JButton;
 
 /**
- * Implementation of a representation of a player hand using a JPanel.
+ * Implementation of a representation of a player hand by extending JPanel.
  */
 public class HandPanel extends CardPanel implements HandPanelInterface {
-  private final JPanel hand;
   private JButton selection;
   private int selectionIndex;
   private final PlayerColor player;
@@ -34,16 +32,15 @@ public class HandPanel extends CardPanel implements HandPanelInterface {
     this.model = model;
     List<CustomCard> handCards = model.getPlayerHand(player);
 
-    hand = new JPanel();
     int handSize = handCards.size();
-    hand.setLayout(new GridLayout(handSize, 1));
+    this.setLayout(new GridLayout(handSize, 1));
 
     for (int i = 0; i < handSize; i++) {
       CustomCard card = handCards.get(i);
       JButton cardButton = createCard(card);
       int finalI = i;
       cardButton.addActionListener(e -> handleCardClick(finalI));
-      hand.add(cardButton);
+      this.add(cardButton);
     }
   }
 
@@ -59,7 +56,7 @@ public class HandPanel extends CardPanel implements HandPanelInterface {
     JButton clicked;
     // Color c;
     try {
-      clicked = (JButton) hand.getComponent(handIndex);
+      clicked = (JButton) this.getComponent(handIndex);
     } catch (ClassCastException e) {
       throw new IllegalStateException("Hand panel should only contain JButtons.");
     }
@@ -79,11 +76,6 @@ public class HandPanel extends CardPanel implements HandPanelInterface {
     this.selection = selection;
     this.selectionIndex = selectionIndex;
     selection.setBorderPainted(true);
-  }
-
-  @Override
-  public JPanel getPanel() {
-    return hand;
   }
 
   @Override
