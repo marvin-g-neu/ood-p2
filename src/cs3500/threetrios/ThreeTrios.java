@@ -9,21 +9,16 @@ import cs3500.threetrios.controller.readers.DeckFileReader;
 import cs3500.threetrios.controller.readers.GridFileReader;
 import cs3500.threetrios.model.ClassicalThreeTriosModel;
 import cs3500.threetrios.model.PlayerColor;
-import cs3500.threetrios.model.adapted.ThreeTriosModelAdaptor;
 import cs3500.threetrios.model.card.CustomCard;
 import cs3500.threetrios.model.grid.Grid;
 import cs3500.threetrios.model.grid.ThreeTriosBoard;
-import cs3500.threetrios.provider.model.ThreeTrioColor;
-import cs3500.threetrios.provider.view.gui.ThreeTrioGuiView;
 import cs3500.threetrios.strategy.CornerStrategy;
 import cs3500.threetrios.strategy.MaxFlipsStrategy;
 import cs3500.threetrios.view.ThreeTriosGUIView;
-import cs3500.threetrios.view.adapted.ThreeTriosGUIViewAdaptor;
 import cs3500.threetrios.view.ThreeTriosGUIViewInterface;
-
 import java.util.List;
 import java.util.Scanner;
-
+import java.io.File;
 /**
  * Main class for the Three Trios game.
  * Accepts command line arguments to determine player types:
@@ -41,13 +36,13 @@ public final class ThreeTrios {
     // Configure players
     Scanner s = new Scanner(System.in);
     String[] playerOrComp = s.nextLine().split(" ");
-    String gridPath = "docs/boards/boardWithSeparateGroups.config";
+    String gridPath = "boards" + File.separator + "boardWithSeparateGroups.config";
     Player redPlayer = configurePlayer(playerOrComp[0], PlayerColor.RED);
     Player bluePlayer = configurePlayer(playerOrComp[1], PlayerColor.BLUE);
     s.close();
 
     Grid grid = new ThreeTriosBoard(new GridFileReader().readFile(gridPath));
-    List<CustomCard> deck = new DeckFileReader().readFile("docs/cards/AllNecessaryCards.config");
+    List<CustomCard> deck = new DeckFileReader().readFile("cards" + File.separator + "AllNecessaryCards.config");
 
     // Create model
     ClassicalThreeTriosModel model = new ClassicalThreeTriosModel();
@@ -55,11 +50,7 @@ public final class ThreeTrios {
 
     // Create views
     ThreeTriosGUIViewInterface redView = new ThreeTriosGUIView(model, PlayerColor.RED);
-
-
-    ThreeTriosGUIViewInterface blueView =
-        new ThreeTriosGUIViewAdaptor(new ThreeTrioGuiView(new ThreeTriosModelAdaptor(model),
-            controller, ThreeTrioColor.BLUE));
+    ThreeTriosGUIViewInterface blueView = new ThreeTriosGUIView(model, PlayerColor.BLUE);
 
     // Create controllers for both players and set them to their paired views
     ControllerManagerInterface controllerManager = new ControllerManager(redPlayer, bluePlayer,
